@@ -9,7 +9,8 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Robot extends TimedRobot {
   
-  public static Joystick driver = new Joystick(0);
+  public static Controller driver = new Controller(0);
+  //public static Joystick driver = new Joystick(0);
 	private static CommandScheduler scheduler = CommandScheduler.getInstance();
 
   @Override

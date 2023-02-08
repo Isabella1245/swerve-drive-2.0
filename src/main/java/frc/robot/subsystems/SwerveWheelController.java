@@ -15,7 +15,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     
     private static SwerveWheelController instance = null;
     
-
+    
     //stating the drive motors
     private SwerveWheelDrive frontRightDrive = null;
     private SwerveWheelDrive frontLeftDrive = null;
@@ -69,7 +69,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
          // x = strafe, y = speed, z = rotation 
     // Holonomic drive
-    public void drive(double x, double y, double z, double zeroOffset, double gyroValue) {
+    public void drive(double x, double y, double z, double gyroValue) {
     
         y = -1;
 
