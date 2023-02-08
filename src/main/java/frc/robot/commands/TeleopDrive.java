@@ -1,19 +1,19 @@
-package frc.robot.output.commands.drivetrain;
+package frc.robot.commands;
 
 import frc.robot.Robot;
-import frc.robot.subsystems.drivetrain.SwerveWheelController;
+import frc.robot.subsystems.SwerveWheelController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
 
-/*
+
 public class TeleopDrive extends CommandBase {
 
-	private Joystick swerve = null;
+	private SwerveWheelController swerve = null;
 
 	private boolean currentFOD = false;
 
 	public TeleopDrive() {
-		swerve = Joystick.getInstance();
+		swerve = SwerveWheelController.getInstance();
 
 		addRequirements(swerve);
 	}
@@ -40,4 +40,3 @@ public class TeleopDrive extends CommandBase {
 					 Robot.driver.getControllerRightStickX(), swerve.gyroAngle());
 	}
 }
-*/

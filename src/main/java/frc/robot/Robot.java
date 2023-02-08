@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.drivetrain.SwerveWheelController;
+import frc.robot.subsystems.SwerveWheelController;
 //i think we can use the wpilib import for joysticks instead of the vikings' import for controller
 //import viking.Controller;
 import edu.wpi.first.wpilibj.Joystick;

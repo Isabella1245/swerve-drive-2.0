@@ -1,6 +1,6 @@
-package frc.robot.subsystems.drivetrain;
+package frc.robot;
 
-public interface SwerveDriveTrainConstants{
+public interface Constants{
     
     //dimensions of robot in inches
     public final double L = 12;

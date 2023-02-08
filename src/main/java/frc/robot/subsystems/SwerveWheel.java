@@ -1,4 +1,4 @@
-package frc.robot.subsystems.drivetrain;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -7,10 +7,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 
-public class SwerveWheel extends PIDSubsystem implements SwerveDriveTrainConstants {
+public class SwerveWheel extends PIDSubsystem implements Constants {
 
     public String name;
     
@@ -19,13 +20,13 @@ public class SwerveWheel extends PIDSubsystem implements SwerveDriveTrainConstan
 
     private int countsWhenFrwd;
 
-    private double drive;
+    private SwerveWheelDrive drive;
 
-    public SwerveWheel(double drive, int m_steer, int analogEnc, int zeroOffset, String name) 
+    public SwerveWheel(SwerveWheelDrive drive, int m_steer, int analogEnc, int zeroOffset, String m_name) 
 {
         super(new PIDController(kP, kI, kD));
 
-        this.name = name;
+        this.name = m_name;
 
         this.drive = drive;
 
@@ -48,6 +49,7 @@ public class SwerveWheel extends PIDSubsystem implements SwerveDriveTrainConstan
     }
 
     MotorController controller;
+
 
     /**
 	 * Sets speed of the swerve wheel drive motor controller

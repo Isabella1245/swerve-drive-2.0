@@ -1,8 +1,9 @@
-package frc.robot.subsystems.drivetrain;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.output.commands.drivetrain.TeleopDrive;
-import frc.robot.subsystems.drivetrain.SwerveWheel;
+import frc.robot.Constants;
+import frc.robot.commands.TeleopDrive;
+import frc.robot.subsystems.SwerveWheelDrive.SwerveWheelDriveType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -10,16 +11,16 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.kauailabs.navx.frc.AHRS;
 
-public class SwerveWheelController<SwerveWheelDrive> extends SubsystemBase implements SwerveDriveTrainConstants  {
+public class SwerveWheelController extends SubsystemBase implements Constants  {
     
     private static SwerveWheelController instance = null;
     
 
     //stating the drive motors
-    private TalonSRX frontRightDrive = null;
-    private TalonSRX frontLeftDrive = null;
-    private TalonSRX backRightDrive = null;
-    private TalonSRX backLeftDrive = null;
+    private SwerveWheelDrive frontRightDrive = null;
+    private SwerveWheelDrive frontLeftDrive = null;
+    private SwerveWheelDrive backRightDrive = null;
+    private SwerveWheelDrive backLeftDrive = null;
 
     //turn motors
     private SwerveWheel frontRight = null;
@@ -39,11 +40,12 @@ public class SwerveWheelController<SwerveWheelDrive> extends SubsystemBase imple
     
         //the motor controls are all talon srx
         //drive motors
-        frontRightDrive = new TalonSRX(FRDid);
-        frontLeftDrive = new TalonSRX(FLDid);
-        backRightDrive = new TalonSRX(BRDid);
-        backLeftDrive = new TalonSRX(BLDid);
-
+        //potential robot container content
+        frontRightDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, FRDid, true);
+        frontLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, FLDid, true);
+        backRightDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BRDid, true);
+        backLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BLDid, true);
+        //potential robot container content
         frontRight = new SwerveWheel(frontRightDrive, FRTid, FRTencoderID, FRTencoderOffset, "Front Right");
         frontLeft = new SwerveWheel(frontLeftDrive, FLTid, FLTencoderID, FLTencoderOffset, "Front Left");
         backRight = new SwerveWheel(backRightDrive, BRTid, BRTencoderID, BRTencoderOffset, "Back Right");
