@@ -37,6 +37,12 @@ public interface Constants{
     public final int BRTencoderID = 0;
     public final int BLTencoderID = 1;
 
+    //drive encoders ID
+    public final int FRDencID = 0;
+    public final int FLDencID = 0;
+    public final int BLDencID = 5;
+    public final int BRDencID = 0;
+
     // Offset of encoders to make them face forwards
     public final int FRTencoderOffset = 50;
     public final int FLTencoderOffset = 90;

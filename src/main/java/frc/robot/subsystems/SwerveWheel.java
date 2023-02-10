@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class SwerveWheel extends PIDSubsystem implements Constants {
@@ -45,19 +46,20 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
         //set name for viewing in smart dashboard
         this.setName(name);
-
     }
 
-    MotorController controller;
+    //MotorController controller;
 
 
-    /**
+    /*
 	 * Sets speed of the swerve wheel drive motor controller
 	 * @param speed
 	 */
-	public void setSpeed(double speed) {
+	/*
+     public void setSpeed(double speed) {
 		controller.set(speed);
 	}
+    */
 
 
     //get the current angle of the analog encoder

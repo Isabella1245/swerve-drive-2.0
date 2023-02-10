@@ -1,8 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.SwerveWheel;
 import frc.robot.subsystems.SwerveWheelController;
+import frc.robot.subsystems.SwerveWheelDrive;
 //i think we can use the wpilib import for joysticks instead of the vikings' import for controller
 //import viking.Controller;
 import edu.wpi.first.wpilibj.Joystick;
@@ -16,10 +19,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     SwerveWheelController.getInstance();
+
+    //put the schedule instance on the smart dashboard when the robot initializes
+    SmartDashboard.putData(CommandScheduler.getInstance());
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+
+  }
 
   @Override
   public void disabledInit() {

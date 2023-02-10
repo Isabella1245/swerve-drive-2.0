@@ -4,10 +4,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.SwerveWheelDrive.SwerveWheelDriveType;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.SwerveWheel;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -22,7 +26,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     private SwerveWheelDrive backRightDrive = null;
     private SwerveWheelDrive backLeftDrive = null;
 
-    //turn motors
+    //swerve wheels
     private SwerveWheel frontRight = null;
     private SwerveWheel frontLeft = null;
     private SwerveWheel backRight = null;
@@ -70,12 +74,16 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
          // x = strafe, y = speed, z = rotation 
     // Holonomic drive
     public void drive(double x, double y, double z, double gyroValue) {
-    
-        y = -1;
 
         //calculate magnitude of joystick
         // Calculate magnitude of joystick
+
+        y *= -1;
         double magnitude = Math.sqrt((Math.pow(x, 2)) + (Math.pow(y,2)));
+        double frontLeftSpeed = 0;
+        double frontRightSpeed = 0;
+        double backRightSpeed = 0;
+        double backLeftSpeed = 0;
    
         if (magnitude >= 0.15) {
 
@@ -84,6 +92,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 // Convert gyro angle to radians
                 double gyro = gyroValue * Math.PI / 180;
 
+                //field orientation math
                 double temp = x * Math.cos(gyro) + y * Math.sin(gyro); 
                 y = -x * Math.sin(gyro) + y * Math.cos(gyro); 
                 x = temp;
@@ -97,15 +106,15 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             double c = y - z * (W / r);
             double d = y + z * (W / r);
 
-            double frontLeftSpeed = Math.sqrt((b * b) + (c * c));
-            double frontRightSpeed = Math.sqrt((b * b) + (d * d));
-            double backRightSpeed = Math.sqrt((a * a) + (d * d));
-            double backLeftSpeed = Math.sqrt((a * a) + (c * c));
+            frontLeftSpeed = Math.sqrt((b * b) + (c * c));
+            frontRightSpeed = Math.sqrt((b * b) + (d * d));
+            backRightSpeed = Math.sqrt((a * a) + (d * d));
+            backLeftSpeed = Math.sqrt((a * a) + (c * c));
 
             double backRightAngle = Math.atan2(a, d) * 180 / Math.PI;
             double backLeftAngle = Math.atan2(a, c) * 180 / Math.PI;
             double frontRightAngle = Math.atan2(b, d) * 180 / Math.PI;
-            double frontLeftAngle = Math.atan2(b, c) * 180 / Math.PI ;            
+            double frontLeftAngle = Math.atan2(b, c) * 180 / Math.PI ;      
 
             // This bit of code normalizes the speed
             double max = frontLeftSpeed;
@@ -136,6 +145,18 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             backRight.setspeed(0);
             backLeft.setspeed(0);
         }
+
+        SmartDashboard.putNumber("magnitude", magnitude);
+        SmartDashboard.putNumber("fr angle", frontRight.getSetpoint());
+        SmartDashboard.putNumber("fl angle", frontLeft.getSetpoint());
+        SmartDashboard.putNumber("br angle", backRight.getSetpoint());
+        SmartDashboard.putNumber("bl angle", backLeft.getSetpoint());
+        SmartDashboard.putNumber("gyro", gyroValue);
+        SmartDashboard.putNumber("fl speed", frontLeftSpeed);
+        SmartDashboard.putNumber("fr speed", frontRightSpeed);
+        SmartDashboard.putNumber("Bl speed", backLeftSpeed);
+        SmartDashboard.putNumber("br speed", backRightSpeed);
+
     }
 
     // Zero the Gryo
