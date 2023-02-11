@@ -7,14 +7,14 @@ public class Controller {
 	private XboxController controller;
 	
 
-	private double lTriggerDeadband = 0.1;
-	private double rTriggerDeadband = 0.1;
+	private double lTriggerDeadband = 0;
+	private double rTriggerDeadband = 0;
 
-	private double lJoystickDeadbandX = 0.1;
-	private double lJoystickDeadbandY = 0.1;
+	private double lJoystickDeadbandX = 0;
+	private double lJoystickDeadbandY = 0;
 
-	private double rJoystickDeadbandX = 0.1;
-	private double rJoystickDeadbandY = 0.1;
+	private double rJoystickDeadbandX = 0;
+	private double rJoystickDeadbandY = 0;
 
 	/**
 	 * Creates a new Controller to handle input from an Xbox One/360 Controller

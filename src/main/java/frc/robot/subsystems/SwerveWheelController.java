@@ -19,7 +19,6 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     
     private static SwerveWheelController instance = null;
     
-    
     //stating the drive motors
     private SwerveWheelDrive frontRightDrive = null;
     private SwerveWheelDrive frontLeftDrive = null;
@@ -134,16 +133,16 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             backRight.setSetpoint(backRightAngle);
             backLeft.setSetpoint(backLeftAngle);
 
-            frontLeft.setspeed(frontLeftSpeed);
-            frontRight.setspeed(frontRightSpeed);
-            backRight.setspeed(backRightSpeed);
-            backLeft.setspeed(backLeftSpeed);
+            frontLeft.setSpeed(frontLeftSpeed);
+            frontRight.setSpeed(frontRightSpeed);
+            backRight.setSpeed(backRightSpeed);
+            backLeft.setSpeed(backLeftSpeed);
         } 
         else {
-            frontLeft.setspeed(0);
-            frontRight.setspeed(0);
-            backRight.setspeed(0);
-            backLeft.setspeed(0);
+            frontLeft.setSpeed(0);
+            frontRight.setSpeed(0);
+            backRight.setSpeed(0);
+            backLeft.setSpeed(0);
         }
 
         SmartDashboard.putNumber("magnitude", magnitude);
@@ -156,6 +155,11 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("fr speed", frontRightSpeed);
         SmartDashboard.putNumber("Bl speed", backLeftSpeed);
         SmartDashboard.putNumber("br speed", backRightSpeed);
+        SmartDashboard.putNumber("measurement", frontRight.getMeasurement());
+        SmartDashboard.putNumber("abs angle deg", frontRight.getAbsAngleDeg());
+        SmartDashboard.putNumber("ticks", frontRight.getTicks());
+        SmartDashboard.putNumber("ticks to angle", frontRight.ticksToAngle());
+
 
     }
 
@@ -187,6 +191,13 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         }
 
         return instance;
+    }
+
+    public void stop(){
+        frontLeft.setSpeed(0);
+        frontRight.setSpeed(0);
+        backRight.setSpeed(0);
+        backLeft.setSpeed(0);
     }
 
 }

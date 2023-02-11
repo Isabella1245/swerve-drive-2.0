@@ -16,7 +16,7 @@ public class SwerveWheelDrive {
 
 	MotorController controller;
 
-	double driveENC;
+	//double driveENC;
 
 	/**
 	 * Configures specified motor type for the swerve wheel drive system. 
@@ -40,12 +40,14 @@ public class SwerveWheelDrive {
 			controller = drive;
 		}
 	}
-/**
+	
+	/**
 	 * Sets speed of the swerve wheel drive motor controller
 	 * @param speed
 	 */
 	public void setSpeed(double speed) {
 		controller.set(speed);
 	}
+	
 	
 }

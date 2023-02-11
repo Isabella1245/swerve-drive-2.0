@@ -39,4 +39,13 @@ public class TeleopDrive extends CommandBase {
 		swerve.drive(Robot.driver.getControllerLeftStickX(), Robot.driver.getControllerLeftStickY(),
 					 Robot.driver.getControllerRightStickX(), swerve.gyroAngle());
 	}
+
+	
+	@Override
+	public void end(boolean interrupted){
+		swerve.stop();
+	}
+	
 }
+
+//add the method teleopdrive interrupted to try to fix turn wheels

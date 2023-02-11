@@ -16,18 +16,18 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
     public String name;
     
-    private com.ctre.phoenix.motorcontrol.can.TalonSRX steerMotor;
+    private TalonSRX steerMotor;
     private AnalogInput absoluteEncoder;
 
     private int countsWhenFrwd;
 
     private SwerveWheelDrive drive;
 
-    public SwerveWheel(SwerveWheelDrive drive, int m_steer, int analogEnc, int zeroOffset, String m_name) 
+    public SwerveWheel(SwerveWheelDrive drive, int m_steer, int analogEnc, int zeroOffset, String name) 
 {
         super(new PIDController(kP, kI, kD));
 
-        this.name = m_name;
+        this.name = name;
 
         this.drive = drive;
 
@@ -39,6 +39,13 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         //reset all settings when startup
         steerMotor.configFactoryDefault();
 
+        // Set the feedback device for the steering (turning) Talon SRX
+		steerMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
+		// Set the current quadrature position relative to the analog position to make sure motor
+		// has 0 position on startup
+		steerMotor.setSelectedSensorPosition(getAbsAngleDeg() * quadCountsPerRotation / 180);
+
         // sets the current quadrature position relative to the analog position to make sure the motor has 0 position on startup
         //sets the input range of the PIDF so that it will only accept angles between -180 and 180
         // or in our case, -90 to 90
@@ -48,23 +55,9 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         this.setName(name);
     }
 
-    //MotorController controller;
-
-
-    /*
-	 * Sets speed of the swerve wheel drive motor controller
-	 * @param speed
-	 */
-	/*
-     public void setSpeed(double speed) {
-		controller.set(speed);
-	}
-    */
-
-
     //get the current angle of the analog encoder
     //not sure how the math works
-    private int getAbsAngleDeg() {
+    public int getAbsAngleDeg() {
         return (int)(180 * absoluteEncoder.getValue() - countsWhenFrwd) / 4096;
     }
 
@@ -72,10 +65,10 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     public int getTicks() {
         return (int)steerMotor.getSelectedSensorPosition();
     }
-
-    public void setspeed(double speed) {
-        drive.setSpeed(speed);
-    }
+    
+     public void setSpeed(double speed) {
+		drive.setSpeed(speed);
+	}
 
     //convert ticks to angle bound from -180 to 180
     public double ticksToAngle(int ticks) {
