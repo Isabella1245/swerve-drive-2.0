@@ -89,10 +89,37 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         return ticksToAngle(getTicks());
     }
 
+    public double getTurnMotorSpeed() {
+        return steerMotor.getMotorOutputPercent();
+    }
+
+    public int getAbsEncValue() {
+        return (int)absoluteEncoder.getValue();
+    }
+
+    public int getQuadEncZeroSetpoint() {
+        return (int)(getAbsAngleDeg() * quadCountsPerRotation / 180);
+    }
+
     //not sure what this class does
     @Override
     protected void useOutput(double output, double setpoint) {
 		steerMotor.set(ControlMode.PercentOutput, output);
 	}
+
+    public int getPValues() {
+        int coefficientP = (int)getController().getP();
+        return (int) (coefficientP);
+    }
+
+    public int getIValues() {
+        int coefficientI = (int)getController().getI();
+        return (int) (coefficientI);
+    }
+
+    public int getDValues() {
+        int coefficientD = (int)getController().getD();
+        return (int) (coefficientD);
+    }
     
 }

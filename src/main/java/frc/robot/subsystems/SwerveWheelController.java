@@ -155,10 +155,43 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("fr speed", frontRightSpeed);
         SmartDashboard.putNumber("Bl speed", backLeftSpeed);
         SmartDashboard.putNumber("br speed", backRightSpeed);
-        SmartDashboard.putNumber("measurement", frontRight.getMeasurement());
-        SmartDashboard.putNumber("abs angle deg", frontRight.getAbsAngleDeg());
-        SmartDashboard.putNumber("ticks", frontRight.getTicks());
-        SmartDashboard.putNumber("ticks to angle", frontRight.ticksToAngle());
+
+        //front right
+        SmartDashboard.putNumber("FR AbsEnc Value", frontRight.getAbsEncValue());
+        SmartDashboard.putNumber("FR AbsEnc Angle ", frontRight.getAbsAngleDeg());
+        SmartDashboard.putNumber("FR QuadEnc Zero Setpoint", frontRight.getQuadEncZeroSetpoint());
+        SmartDashboard.putNumber("FR QuadEnc Actual Value", frontRight.getTicks());
+        SmartDashboard.putNumber("FR QuadEnc Angle", frontRight.getMeasurement());
+        SmartDashboard.putNumber("FR Turn Motor speed", frontRight.getTurnMotorSpeed());
+
+        SmartDashboard.putNumber("p values", frontRight.getPValues());
+        SmartDashboard.putNumber("i values", frontRight.getIValues());
+        SmartDashboard.putNumber("d values", frontRight.getDValues());
+
+        //front left
+        SmartDashboard.putNumber("FL AbsEnc Value", frontLeft.getAbsEncValue());
+        SmartDashboard.putNumber("FL AbsEnc Angle ", frontLeft.getAbsAngleDeg());
+        SmartDashboard.putNumber("FL QuadEnc Zero Setpoint", frontLeft.getQuadEncZeroSetpoint());
+        SmartDashboard.putNumber("FL QuadEnc Actual Value", frontLeft.getTicks());
+        SmartDashboard.putNumber("FL QuadEnc Angle", frontLeft.getMeasurement());
+        SmartDashboard.putNumber("FL Turn Motor speed", frontLeft.getTurnMotorSpeed());
+
+        //back right
+        SmartDashboard.putNumber("BR AbsEnc Value", backRight.getAbsEncValue());
+        SmartDashboard.putNumber("BR AbsEnc Angle ", backRight.getAbsAngleDeg());
+        SmartDashboard.putNumber("BR QuadEnc Zero Setpoint", backRight.getQuadEncZeroSetpoint());
+        SmartDashboard.putNumber("BR QuadEnc Actual Value", backRight.getTicks());
+        SmartDashboard.putNumber("BR QuadEnc Angle", backRight.getMeasurement());
+        SmartDashboard.putNumber("BR Turn Motor speed", backRight.getTurnMotorSpeed());
+
+        //back left
+        SmartDashboard.putNumber("BL AbsEnc Value", backLeft.getAbsEncValue());
+        SmartDashboard.putNumber("BL AbsEnc Angle ", backLeft.getAbsAngleDeg());
+        SmartDashboard.putNumber("BL QuadEnc Zero Setpoint", backLeft.getQuadEncZeroSetpoint());
+        SmartDashboard.putNumber("BL QuadEnc Actual Value", backLeft.getTicks());
+        SmartDashboard.putNumber("BL QuadEnc Angle", backLeft.getMeasurement());
+        SmartDashboard.putNumber("BL Turn Motor speed", backLeft.getTurnMotorSpeed());
+        //SmartDashboard.putNumber("ticks to angle", frontRight.ticksToAngle());
 
 
     }

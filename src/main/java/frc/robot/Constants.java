@@ -10,13 +10,13 @@ public interface Constants{
     //the difference between PID and PIDF:
     //PID has proportional, integral, and derivative controller actions
     //PIDF has proportional, integral, and derivative with first-order filter on derivative term
-    public final double kP = 0.02;
+    public final double kP = 0.005;
     public final double kI = 0.0;
     public final double kD = 0.0;
     public final double kF = 0.0;
 
     //quadrature encoder ticks per rotation
-    public final int quadCountsPerRotation = 1000;
+    public final int quadCountsPerRotation = 2710;
 
     //Turn motor CAN ID
     // *** im not quite sure what the IDs are for ***
@@ -37,17 +37,11 @@ public interface Constants{
     public final int BRTencoderID = 0;
     public final int BLTencoderID = 1;
 
-    //drive encoders ID
-    public final int FRDencID = 0;
-    public final int FLDencID = 0;
-    public final int BLDencID = 5;
-    public final int BRDencID = 0;
-
     // Offset of encoders to make them face forwards
-    public final int FRTencoderOffset = 50;
-    public final int FLTencoderOffset = 90;
-    public final int BRTencoderOffset = 198;
-    public final int BLTencoderOffset = 15;
+    public final int FRTencoderOffset = 0;
+    public final int FLTencoderOffset = 0;
+    public final int BRTencoderOffset = 0;
+    public final int BLTencoderOffset = 0;
 
 }
 
