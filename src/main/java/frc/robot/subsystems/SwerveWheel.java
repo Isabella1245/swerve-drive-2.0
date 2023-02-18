@@ -34,6 +34,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         countsWhenFrwd = zeroOffset;
 
         steerMotor = new TalonSRX(m_steer);
+        //steerMotor.setInverted(true);
+
         absoluteEncoder = new AnalogInput(analogEnc);
 
         //reset all settings when startup
@@ -44,26 +46,31 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
 		// Set the current quadrature position relative to the analog position to make sure motor
 		// has 0 position on startup
-		steerMotor.setSelectedSensorPosition(getAbsAngleDeg() * quadCountsPerRotation / 180);
+		steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
 
         // sets the current quadrature position relative to the analog position to make sure the motor has 0 position on startup
         //sets the input range of the PIDF so that it will only accept angles between -180 and 180
-        // or in our case, -90 to 90
-        getController().enableContinuousInput(-180, 180);
+        getController().enableContinuousInput(0, 360);
+        getController().setTolerance(200);
 
         //set name for viewing in smart dashboard
         this.setName(name);
     }
 
     //get the current angle of the analog encoder
-    //not sure how the math works
+    /*
+    this math is similar to the one we created when converting the pg encoders to degrees, we found
+    the values it is reading at 0, 90, 180, 270, and 360 degrees. then we used google sheets to
+    create a linear relation between them, this linear equation is wrong (obviously) and it may be
+    whats messing up our math
+    */
     public int getAbsAngleDeg() {
-        return (int)(180 * absoluteEncoder.getValue() - countsWhenFrwd) / 4096;
+        return (int)((absoluteEncoder.getValue() * 360) / analogCountsPerRotation);
     }
 
     //get current ticks
     public int getTicks() {
-        return (int)steerMotor.getSelectedSensorPosition();
+        return (int) steerMotor.getSelectedSensorPosition();
     }
     
      public void setSpeed(double speed) {
@@ -74,20 +81,22 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     public double ticksToAngle(int ticks) {
         double angleTicks = ticks % quadCountsPerRotation;
 
-        double result = (angleTicks / (quadCountsPerRotation / 2)) * 180;
+        double result = (angleTicks / (quadCountsPerRotation)) * 360;
 
         //make sure the ticks is alsways within the limit
-        if (result > 180) {
+        if (result > 360) {
             result -= 360;
         }
 
         return result;
     }
 
+
     @Override
     protected double getMeasurement() {
         return ticksToAngle(getTicks());
     }
+    
 
     public double getTurnMotorSpeed() {
         return steerMotor.getMotorOutputPercent();
@@ -120,6 +129,21 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     public int getDValues() {
         int coefficientD = (int)getController().getD();
         return (int) (coefficientD);
+    }
+
+    public double getTolerance() {
+        double tolerance = (double)getController().getPositionTolerance();
+        return (double) (tolerance);
+    }
+
+    public double getError() {
+        double error = (double)getController().getPositionError();
+        return (double) (error);
+    }
+
+    public double getCalculation() {
+        double calculation = (double)getController().calculate(getMeasurement());
+        return (double) (calculation);
     }
     
 }

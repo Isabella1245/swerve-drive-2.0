@@ -45,9 +45,9 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //drive motors
         //potential robot container content
         frontRightDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, FRDid, true);
-        frontLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, FLDid, true);
+        frontLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, FLDid, false);
         backRightDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BRDid, true);
-        backLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BLDid, true);
+        backLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BLDid, false);
         //potential robot container content
         frontRight = new SwerveWheel(frontRightDrive, FRTid, FRTencoderID, FRTencoderOffset, "Front Right");
         frontLeft = new SwerveWheel(frontLeftDrive, FLTid, FLTencoderID, FLTencoderOffset, "Front Left");
@@ -161,12 +161,16 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("FR AbsEnc Angle ", frontRight.getAbsAngleDeg());
         SmartDashboard.putNumber("FR QuadEnc Zero Setpoint", frontRight.getQuadEncZeroSetpoint());
         SmartDashboard.putNumber("FR QuadEnc Actual Value", frontRight.getTicks());
-        SmartDashboard.putNumber("FR QuadEnc Angle", frontRight.getMeasurement());
+        SmartDashboard.putNumber("FR QuadEnc angle (ticks to angle)", frontRight.getMeasurement());
         SmartDashboard.putNumber("FR Turn Motor speed", frontRight.getTurnMotorSpeed());
 
         SmartDashboard.putNumber("p values", frontRight.getPValues());
         SmartDashboard.putNumber("i values", frontRight.getIValues());
         SmartDashboard.putNumber("d values", frontRight.getDValues());
+
+        SmartDashboard.putNumber("position tolerance", frontRight.getTolerance());
+        SmartDashboard.putNumber("position error", frontRight.getError());
+        SmartDashboard.putNumber("calculation", frontRight.getCalculation());
 
         //front left
         SmartDashboard.putNumber("FL AbsEnc Value", frontLeft.getAbsEncValue());
