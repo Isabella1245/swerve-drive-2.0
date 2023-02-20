@@ -23,7 +23,9 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
     private SwerveWheelDrive drive;
 
-    public SwerveWheel(SwerveWheelDrive drive, int m_steer, int analogEnc, int zeroOffset, String name) 
+    private boolean reversePhase;
+
+    public SwerveWheel(SwerveWheelDrive drive, int m_steer, int analogEnc, int zeroOffset, String name, boolean isReversePhase) 
 {
         super(new PIDController(kP, kI, kD));
 
@@ -34,7 +36,7 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         countsWhenFrwd = zeroOffset;
 
         steerMotor = new TalonSRX(m_steer);
-        //steerMotor.setInverted(true);
+        steerMotor.setSensorPhase(isReversePhase);
 
         absoluteEncoder = new AnalogInput(analogEnc);
 

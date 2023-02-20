@@ -49,11 +49,12 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         backRightDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BRDid, true);
         backLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BLDid, false);
         //potential robot container content
-        frontRight = new SwerveWheel(frontRightDrive, FRTid, FRTencoderID, FRTencoderOffset, "Front Right");
-        frontLeft = new SwerveWheel(frontLeftDrive, FLTid, FLTencoderID, FLTencoderOffset, "Front Left");
-        backRight = new SwerveWheel(backRightDrive, BRTid, BRTencoderID, BRTencoderOffset, "Back Right");
-        backLeft = new SwerveWheel(backLeftDrive, BLTid, BLTencoderID, BLTencoderOffset, "Back Left");
-    
+        frontRight = new SwerveWheel(frontRightDrive, FRTid, FRTencoderID, FRTencoderOffset, "Front Right", true);
+        frontLeft = new SwerveWheel(frontLeftDrive, FLTid, FLTencoderID, FLTencoderOffset, "Front Left", true);
+        backRight = new SwerveWheel(backRightDrive, BRTid, BRTencoderID, BRTencoderOffset, "Back Right", true);
+        backLeft = new SwerveWheel(backLeftDrive, BLTid, BLTencoderID, BLTencoderOffset, "Back Left", true);
+        
+
         try {
             gyro = new AHRS(SPI.Port.kMXP); 
             gyroEnabled = true;
@@ -163,7 +164,6 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("FR QuadEnc Actual Value", frontRight.getTicks());
         SmartDashboard.putNumber("FR QuadEnc angle (ticks to angle)", frontRight.getMeasurement());
         SmartDashboard.putNumber("FR Turn Motor speed", frontRight.getTurnMotorSpeed());
-
         SmartDashboard.putNumber("p values", frontRight.getPValues());
         SmartDashboard.putNumber("i values", frontRight.getIValues());
         SmartDashboard.putNumber("d values", frontRight.getDValues());

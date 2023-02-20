@@ -10,9 +10,9 @@ public interface Constants{
     //the difference between PID and PIDF:
     //PID has proportional, integral, and derivative controller actions
     //PIDF has proportional, integral, and derivative with first-order filter on derivative term
-    public final double kP = 1.5;
-    public final double kI = 0.01;
-    public final double kD = 0.5;
+    public final double kP = 2.25;
+    public final double kI = 0.0;
+    public final double kD = 50;
     public final double kF = 0.0;
 
     //quadrature encoder ticks per rotation
@@ -21,10 +21,10 @@ public interface Constants{
 
     //Turn motor CAN ID
     // *** im not quite sure what the IDs are for ***
-    public final int FLTid = 2;
-    public final int FRTid = 3;
-    public final int BRTid = 5;
-    public final int BLTid = 7;
+    public final int FLTid = 2; //2
+    public final int FRTid = 3; //3
+    public final int BRTid = 5; //5
+    public final int BLTid = 7; //7
 
     //IDs for drive motors
     public final int FRDid = 4;
