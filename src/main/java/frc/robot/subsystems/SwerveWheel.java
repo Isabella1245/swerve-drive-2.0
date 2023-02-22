@@ -52,8 +52,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
         // sets the current quadrature position relative to the analog position to make sure the motor has 0 position on startup
         //sets the input range of the PIDF so that it will only accept angles between -180 and 180
-        getController().enableContinuousInput(0, 360);
-        getController().setTolerance(200);
+        getController().enableContinuousInput(-180, 180);
+        getController().setTolerance(5);
 
         //set name for viewing in smart dashboard
         this.setName(name);
@@ -67,7 +67,7 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     whats messing up our math
     */
     public int getAbsAngleDeg() {
-        return (int)((absoluteEncoder.getValue() * 360) / analogCountsPerRotation);
+        return (int)(Math.abs(absoluteEncoder.getValue() * 360) / analogCountsPerRotation);
     }
 
     //get current ticks
@@ -87,7 +87,7 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
         //make sure the ticks is alsways within the limit
         if (result > 360) {
-            result -= 360;
+            result -= 180;
         }
 
         return result;
@@ -113,10 +113,15 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     }
 
     //not sure what this class does
+    
     @Override
     protected void useOutput(double output, double setpoint) {
 		steerMotor.set(ControlMode.PercentOutput, output);
+        //steerMotor.set(ControlMode.PercentOutput, output);
+        //where does output come from??????????????
+
 	}
+    
 
     public int getPValues() {
         int coefficientP = (int)getController().getP();

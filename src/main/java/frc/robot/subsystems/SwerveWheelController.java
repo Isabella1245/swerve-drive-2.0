@@ -78,7 +78,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //calculate magnitude of joystick
         // Calculate magnitude of joystick
 
-        y *= -1;
+        //y *= -1;
         double magnitude = Math.sqrt((Math.pow(x, 2)) + (Math.pow(y,2)));
         double frontLeftSpeed = 0;
         double frontRightSpeed = 0;
@@ -144,6 +144,11 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             frontRight.setSpeed(0);
             backRight.setSpeed(0);
             backLeft.setSpeed(0);
+
+            frontRight.setSetpoint(0);
+            frontLeft.setSetpoint(0);
+            backRight.setSetpoint(0);
+            backLeft.setSetpoint(0);
         }
 
         SmartDashboard.putNumber("magnitude", magnitude);

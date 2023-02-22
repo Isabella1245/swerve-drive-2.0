@@ -10,9 +10,9 @@ public interface Constants{
     //the difference between PID and PIDF:
     //PID has proportional, integral, and derivative controller actions
     //PIDF has proportional, integral, and derivative with first-order filter on derivative term
-    public final double kP = 2.25;
+    public final double kP = 4;//2.25
     public final double kI = 0.0;
-    public final double kD = 50;
+    public final double kD = 50;//50
     public final double kF = 0.0;
 
     //quadrature encoder ticks per rotation
