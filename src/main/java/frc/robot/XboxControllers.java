@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 
-public class Controller {
+public class XboxControllers {
 
 	private XboxController controller;
 	
@@ -20,7 +20,7 @@ public class Controller {
 	 * Creates a new Controller to handle input from an Xbox One/360 Controller
 	 * @param port
 	 */
-	public Controller(int port) {
+	public XboxControllers(int port) {
 		controller = new XboxController(port); 
 	}
 	

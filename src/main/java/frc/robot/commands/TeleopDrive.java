@@ -3,7 +3,7 @@ package frc.robot.commands;
 import frc.robot.Robot;
 import frc.robot.subsystems.SwerveWheelController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Controller;
+import frc.robot.XboxControllers;
 
 
 public class TeleopDrive extends CommandBase {
@@ -27,17 +27,21 @@ public class TeleopDrive extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (Robot.driver.getControllerAButtonPressed()) {
+
+		if (Robot.LowerDriver.getControllerButton3()){
 			swerve.resetGyro();
 		}
 
-		if (Robot.driver.getControllerBButtonPressed()) {
+		if (Robot.LowerDriver.getControllerButton4()) {
 			currentFOD = !currentFOD;
 			swerve.setFOD(currentFOD);
 		}
-
-		swerve.drive(Robot.driver.getControllerLeftStickX(), Robot.driver.getControllerLeftStickY(),
+		/*
+		 * swerve.drive(Robot.driver.getControllerLeftStickX(), Robot.driver.getControllerLeftStickY(),
 					 Robot.driver.getControllerRightStickX(), swerve.gyroAngle());
+		 */
+		swerve.drive(Robot.LowerDriver.getControllerXAxis(), Robot.LowerDriver.getControllerYAxis(),
+					 Robot.LowerDriver.getControllerZAxis(), swerve.gyroAngle());
 	}
 
 	

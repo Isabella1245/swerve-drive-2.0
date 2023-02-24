@@ -15,8 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SwerveWheel extends PIDSubsystem implements Constants {
 
     public String name;
+
+    public double PIDoutput;
     
     private TalonSRX steerMotor;
+
+    private MotorController controller;
+
     private AnalogInput absoluteEncoder;
 
     private int countsWhenFrwd;
@@ -114,13 +119,20 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
     //not sure what this class does
     
+    
     @Override
     protected void useOutput(double output, double setpoint) {
 		steerMotor.set(ControlMode.PercentOutput, output);
         //steerMotor.set(ControlMode.PercentOutput, output);
         //where does output come from??????????????
+        PIDoutput = output;
 
 	}
+
+    public double getOutput(){
+        return PIDoutput;
+    }
+    
     
 
     public int getPValues() {
