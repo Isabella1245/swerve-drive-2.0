@@ -12,9 +12,9 @@ public interface Constants{
     //PIDF has proportional, integral, and derivative with first-order filter on derivative term
     
     //try inverting to a negative proportional gain
-    public final double kP = 500;//2.25
-    public final double kI = 0.0;
-    public final double kD = 5000;//50
+    public final double kP = 5000;//2.25 //500
+    public final double kI = 0.5; //0.05
+    public final double kD = 0.5;//50 //5
     public final double kF = 0.0;
 
     //quadrature encoder ticks per rotation
