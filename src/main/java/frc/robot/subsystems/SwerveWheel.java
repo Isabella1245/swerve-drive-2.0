@@ -30,6 +30,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
     private boolean reversePhase;
 
+    //double initialPoint;
+
     public SwerveWheel(SwerveWheelDrive drive, int m_steer, int analogEnc, int zeroOffset, String name, boolean isReversePhase) 
 {
         super(new PIDController(kP, kI, kD));
@@ -53,6 +55,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
 		// Set the current quadrature position relative to the analog position to make sure motor
 		// has 0 position on startup
+
+        //we reviewed this and it is correct :)
 		steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
 
         // sets the current quadrature position relative to the analog position to make sure the motor has 0 position on startup
@@ -62,6 +66,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
         //set name for viewing in smart dashboard
         this.setName(name);
+
+        //initialPoint = steerMotor.getSelectedSensorPosition();
     }
 
     //get the current angle of the analog encoder
@@ -71,8 +77,9 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     create a linear relation between them, this linear equation is wrong (obviously) and it may be
     whats messing up our math
     */
+     //we reviewed this and it is correct :)
     public int getAbsAngleDeg() {
-        return (int)(Math.abs(absoluteEncoder.getValue() * 360) / analogCountsPerRotation);
+        return (int)((absoluteEncoder.getValue() - countsWhenFrwd) * 360 / analogCountsPerRotation);
     }
 
     //get current ticks
@@ -86,13 +93,13 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
     //convert ticks to angle bound from -180 to 180
     public double ticksToAngle(int ticks) {
-        double angleTicks = ticks % quadCountsPerRotation;
+        double angleTicks = ticks % quadCountsPerRotation; //820
 
-        double result = (angleTicks / (quadCountsPerRotation)) * 360;
+        double result = (angleTicks / (quadCountsPerRotation)) * 360; //820/1640*360 = 180
 
         //make sure the ticks is alsways within the limit
-        if (result > 360) {
-            result -= 180;
+        if (result > 180) { //180
+            result -= 360; //360
         }
 
         return result;
@@ -164,5 +171,12 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         double calculation = (double)getController().calculate(getMeasurement());
         return (double) (calculation);
     }
+
+
+    /*
+    public double getInitialPgValue() {
+        return (double) (initialPoint);
+    }
+    */
     
 }

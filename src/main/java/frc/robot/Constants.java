@@ -12,9 +12,9 @@ public interface Constants{
     //PIDF has proportional, integral, and derivative with first-order filter on derivative term
     
     //try inverting to a negative proportional gain
-    public final double kP = 5000;//2.25 //500
-    public final double kI = 0.5; //0.05
-    public final double kD = 0.5;//50 //5
+    public final double kP = 0.05;//2.25 //500
+    public final double kI = 0.0; //0.05
+    public final double kD = 0.0009;//50 //5
     public final double kF = 0.0;
 
     //quadrature encoder ticks per rotation
@@ -42,7 +42,7 @@ public interface Constants{
 
     // Offset of encoders to make them face forwards
     public final int FRTencoderOffset = 0;
-    public final int FLTencoderOffset = 0;
+    public final int FLTencoderOffset = 171;
     public final int BRTencoderOffset = 0;
     public final int BLTencoderOffset = 0;
 

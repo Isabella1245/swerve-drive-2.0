@@ -153,10 +153,10 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             backRight.setSpeed(0);
             backLeft.setSpeed(0);
 
-            frontRight.setSetpoint(0);
-            frontLeft.setSetpoint(0);
-            backRight.setSetpoint(0);
-            backLeft.setSetpoint(0);
+            //frontRight.setSetpoint(0);
+            //frontLeft.setSetpoint(0);
+            //backRight.setSetpoint(0);
+            //backLeft.setSetpoint(0);
         }
 
         SmartDashboard.putNumber("magnitude", magnitude);
@@ -174,6 +174,8 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("Bl angle", backLeftAngle);
         SmartDashboard.putNumber("br angle", backRightAngle);
 
+        //SmartDashboard.putData("pid", SubsystemBase.);
+
         //front right
         SmartDashboard.putNumber("FR AbsEnc Value", frontRight.getAbsEncValue());
         SmartDashboard.putNumber("FR AbsEnc Angle ", frontRight.getAbsAngleDeg());
@@ -190,6 +192,8 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("calculation", frontRight.getCalculation());
 
         SmartDashboard.putNumber("pid output", frontRight.getOutput());
+
+        //SmartDashboard.putNumber("init value", frontLeft.getInitialPgValue());
 
         //front left
         SmartDashboard.putNumber("FL AbsEnc Value", frontLeft.getAbsEncValue());
