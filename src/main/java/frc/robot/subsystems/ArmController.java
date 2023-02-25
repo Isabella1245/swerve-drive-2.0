@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.TeleopArm;
@@ -15,12 +16,13 @@ public class ArmController extends SubsystemBase implements Constants {
     private ArmPart extension = null;
     private ArmPart armRotation = null;
     private PneumaticClaw claw = null;
+    
 
     public ArmController() {
 
-        actuatorArm = new ArmPart("Arm Angle", actuatorMotorID, 10, 10, analogPotID, analogPotMax, analogPotMin);
-        extension = new ArmPart("Arm Extension", extensionMotorID, extensionEncoderA, extensionEncoderB, 10, 10, 10);
-        armRotation = new ArmPart("Arm Rotation", clawTwistMotorID, clawEncoderA, clawEncoderB, 10, 10, 10);
+        actuatorArm = new ArmPart("Arm Angle", actuatorMotorID, 9, 8, analogPotID, analogPotMax, analogPotMin);
+        extension = new ArmPart("Arm Extension", extensionMotorID, extensionEncoderA, extensionEncoderB, 7, 10, 10);
+        armRotation = new ArmPart("Arm Rotation", clawTwistMotorID, clawEncoderA, clawEncoderB, 6, 10, 10);
         claw = new PneumaticClaw("claw", compressorModule, solenoidChannel, counterChannel);
 
     }
@@ -34,7 +36,7 @@ public class ArmController extends SubsystemBase implements Constants {
      */
 
     
-    public void armControl(double leftY, double rightY, double leftTrigger, double rightTrigger, boolean aButton, boolean xButton) {
+    public void armControl(double leftY, double rightY, double leftTrigger, double rightTrigger, boolean aButton, boolean xButton, boolean yButton, boolean bButton) {
 
         //here is where we'll need to calculate angle and distance and rotation.
         //the angle sould calculate somewhere between like 0 to a little over 90 degrees, but
@@ -42,25 +44,27 @@ public class ArmController extends SubsystemBase implements Constants {
         //the distance the actuator is pushing on the arm to lift it.
         //i dont think we'll need to measure the turning one.
         //and we might want to measure the distance but idk.
-        if (leftY > 0 && actuatorArm.getPot() < 3000){
+        if (leftY > 0.15 && actuatorArm.getPot() < 3000){
             actuatorArm.setspeed(leftY * 0.7);
         }
-        else if (leftY < 0 && actuatorArm.getPot() > 60){
+        else if (leftY < -0.15 && actuatorArm.getPot() > 60){
             actuatorArm.setspeed(leftY * 0.7);
         }
-        if (rightY > 0 && extension.getArmEnc() < 24576){
+        if (rightY > 0.15 && extension.getArmEnc() < 24576){
             extension.setspeed(rightY * 0.7);
         }
-        else if (rightY < 0 && extension.getArmEnc() > 0){
+        else if (rightY < -0.15 && extension.getArmEnc() > 0){
             extension.setspeed(rightY * 0.7);
         }
-        if (rightTrigger > 0 && armRotation.getArmEnc() < 1024){
+        if (rightTrigger > 0.15 && armRotation.getArmEnc() < 1024){
             armRotation.setspeed(rightTrigger * 0.7);
         }
-        if (leftTrigger > 0 && armRotation.getArmEnc() > -1024){
+        else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1024){
             armRotation.setspeed(-leftTrigger * 0.7);
+        }else{
+            armRotation.setspeed(0);
         }
-        
+
         //pneumatic claw
         if (xButton) {
             claw.solenoidSet(false);
@@ -68,10 +72,34 @@ public class ArmController extends SubsystemBase implements Constants {
         if (aButton) {
             claw.solenoidSet(true);
         }
+        //Location 3 Automated turn
+        if (yButton){
+            if (actuatorArm.getPot() < 3100){
+                actuatorArm.setspeed(0.7);
+            }
+            else if(actuatorArm.getPot()<3300 && actuatorArm.getPot() >3100){
+                actuatorArm.setspeed(0.5);
+            }else{
+                actuatorArm.setspeed(0);
+            }
+            if(extension.getArmEnc()< 24576){
+                extension.setspeed(0.7);
+            }
+            else if(extension.getArmEnc() > 24576 && extension.getArmEnc() < 28672){
+                extension.setspeed(0.5);
+            }
+            else{
+                actuatorArm.setspeed(0);
+                extension.setspeed(0);
+            }
+        }
 
-
+    SmartDashboard.putNumber("Extension Encoder",extension.getArmEnc());
+    SmartDashboard.putNumber("Actuator Potentiometer",actuatorArm.getPot());
+    SmartDashboard.putNumber("Arm Rotation",armRotation.getArmEnc());
 
     }
+    
 
     //doing the instance thing that the vikings were doing
     //returns the instance

@@ -29,7 +29,8 @@ public class TeleopArm extends CommandBase {
         //binding the arm to the xbox controller
 		arm.armControl(Robot.UpperDriver.getControllerLeftStickY(), Robot.UpperDriver.getControllerRightStickY(),
 					 Robot.UpperDriver.getControllerLTrigger(), Robot.UpperDriver.getControllerRTrigger(), 
-                     Robot.UpperDriver.getControllerAButtonPressed(), Robot.UpperDriver.getControllerXButtonPressed());
+                     Robot.UpperDriver.getControllerAButtonPressed(), Robot.UpperDriver.getControllerXButtonPressed(), 
+					 Robot.UpperDriver.getControllerYButtonPressed(), Robot.UpperDriver.getControllerBButtonPressed());
 	}
 
     @Override

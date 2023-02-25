@@ -24,22 +24,22 @@ public interface Constants{
     public final int armQuadCountsPerRotation = 8192;
     //Turn motor CAN ID
     // *** im not quite sure what the IDs are for ***
-    public final int FLTid = 2; //2
-    public final int FRTid = 3; //3
-    public final int BRTid = 5; //5
-    public final int BLTid = 7; //7
+    public final int FLTid = 1; //2
+    public final int FRTid = 2; //3
+    public final int BRTid = 3; //5
+    public final int BLTid = 5; //7
 
     //IDs for drive motors
-    public final int FRDid = 4;
-    public final int FLDid = 1;
-    public final int BRDid = 6;
-    public final int BLDid = 8;
+    public final int FRDid = 6; //4
+    public final int FLDid = 1; //1
+    public final int BRDid = 1; //6
+    public final int BLDid = 1; //8
 
     // Analog Encoder ID (i think they are refering to turning encoders)
-    public final int FRTencoderID = 2;
-    public final int FLTencoderID = 3;
-    public final int BRTencoderID = 0;
-    public final int BLTencoderID = 1;
+    public final int FRTencoderID = 2; //2
+    public final int FLTencoderID = 3; //3
+    public final int BRTencoderID = 0; //0
+    public final int BLTencoderID = 4; //1
 
     // Offset of encoders to make them face forwards
     public final int FRTencoderOffset = 0;
@@ -49,12 +49,12 @@ public interface Constants{
 
     //ARM STUFF
     //IDs for arm motors
-    public final int actuatorMotorID = 9;
-    public final int extensionMotorID = 10;
-    public final int clawTwistMotorID = 11;
+    public final int actuatorMotorID = 8;
+    public final int extensionMotorID = 7;
+    public final int clawTwistMotorID = 4;
 
     //analog potentiometer
-    public final int analogPotID = 0;
+    public final int analogPotID = 1;
     public final int analogPotMax = 3600;
     public final int analogPotMin = -100;
     //arm encoders
@@ -68,6 +68,9 @@ public interface Constants{
     public final int solenoidChannel = 0;
     public final int counterChannel = 5;
     //tbd
+
+    //arm preset values
+
 }
 
 //that is all that was included in this module
