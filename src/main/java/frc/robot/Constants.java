@@ -20,7 +20,8 @@ public interface Constants{
     //quadrature encoder ticks per rotation
     public final int quadCountsPerRotation = 1640;
     public final int analogCountsPerRotation = 2700;
-
+    
+    public final int armQuadCountsPerRotation = 8192;
     //Turn motor CAN ID
     // *** im not quite sure what the IDs are for ***
     public final int FLTid = 2; //2
@@ -54,6 +55,13 @@ public interface Constants{
 
     //analog potentiometer
     public final int analogPotID = 0;
+    public final int analogPotMax = 3600;
+    public final int analogPotMin = -100;
+    //arm encoders
+    public final int extensionEncoderA = 0;
+    public final int extensionEncoderB = 1;
+    public final int clawEncoderA = 2;
+    public final int clawEncoderB = 3;
 
     //PNEUMATICS
     public final int compressorModule = 0;

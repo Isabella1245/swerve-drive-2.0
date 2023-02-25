@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.TeleopArm;
@@ -17,9 +18,9 @@ public class ArmController extends SubsystemBase implements Constants {
 
     public ArmController() {
 
-        actuatorArm = new ArmPart("Arm Angle", actuatorMotorID, analogPotID);
-        extension = new ArmPart("Arm Extension", extensionMotorID, 5);
-        armRotation = new ArmPart("Arm Rotation", clawTwistMotorID, 5);
+        actuatorArm = new ArmPart("Arm Angle", actuatorMotorID, 10, 10, analogPotID, analogPotMax, analogPotMin);
+        extension = new ArmPart("Arm Extension", extensionMotorID, extensionEncoderA, extensionEncoderB, 10, 10, 10);
+        armRotation = new ArmPart("Arm Rotation", clawTwistMotorID, clawEncoderA, clawEncoderB, 10, 10, 10);
         claw = new PneumaticClaw("claw", compressorModule, solenoidChannel, counterChannel);
 
     }
@@ -41,7 +42,25 @@ public class ArmController extends SubsystemBase implements Constants {
         //the distance the actuator is pushing on the arm to lift it.
         //i dont think we'll need to measure the turning one.
         //and we might want to measure the distance but idk.
-
+        if (leftY > 0 && actuatorArm.getPot() < 3000){
+            actuatorArm.setspeed(leftY * 0.7);
+        }
+        else if (leftY < 0 && actuatorArm.getPot() > 60){
+            actuatorArm.setspeed(leftY * 0.7);
+        }
+        if (rightY > 0 && extension.getArmEnc() < 24576){
+            extension.setspeed(rightY * 0.7);
+        }
+        else if (rightY < 0 && extension.getArmEnc() > 0){
+            extension.setspeed(rightY * 0.7);
+        }
+        if (rightTrigger > 0 && armRotation.getArmEnc() < 1024){
+            armRotation.setspeed(rightTrigger * 0.7);
+        }
+        if (leftTrigger > 0 && armRotation.getArmEnc() > -1024){
+            armRotation.setspeed(-leftTrigger * 0.7);
+        }
+        
         //pneumatic claw
         if (xButton) {
             claw.solenoidSet(false);
@@ -49,6 +68,7 @@ public class ArmController extends SubsystemBase implements Constants {
         if (aButton) {
             claw.solenoidSet(true);
         }
+
 
 
     }

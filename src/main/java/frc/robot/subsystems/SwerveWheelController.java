@@ -121,7 +121,8 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             backRightAngle = Math.atan2(a, d) * 180 / Math.PI;
             backLeftAngle = Math.atan2(a, c) * 180 / Math.PI;
             frontRightAngle = Math.atan2(b, d) * 180 / Math.PI;
-            frontLeftAngle = Math.atan2(b, c) * 180 / Math.PI ;      
+            frontLeftAngle = Math.atan2(b, c) * 180 / Math.PI ;   
+            
 
             // This bit of code normalizes the speed
             double max = frontLeftSpeed;
@@ -137,15 +138,58 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             }
 
             /* *********** */
-            frontRight.setSetpoint(frontRightAngle);
-            frontLeft.setSetpoint(frontLeftAngle);
-            backRight.setSetpoint(backRightAngle);
-            backLeft.setSetpoint(backLeftAngle);
 
-            frontLeft.setSpeed(frontLeftSpeed);
-            frontRight.setSpeed(frontRightSpeed);
-            backRight.setSpeed(backRightSpeed);
-            backLeft.setSpeed(backLeftSpeed);
+
+            //Q1 and Q2
+            if (y > 0 && !isFieldCentric) {
+                frontRight.setSetpoint(frontRightAngle);
+                frontLeft.setSetpoint(frontLeftAngle);
+                backRight.setSetpoint(backRightAngle);
+                backLeft.setSetpoint(backLeftAngle);
+
+                frontLeft.setSpeed(frontLeftSpeed);
+                frontRight.setSpeed(frontRightSpeed);
+                backRight.setSpeed(backRightSpeed);
+                backLeft.setSpeed(backLeftSpeed);
+
+            } else if (y > 0 && isFieldCentric) {
+                //fixing the field centric angles because they are off by 90                
+                frontRight.setSetpoint(frontRightAngle - 90);
+                frontLeft.setSetpoint(frontLeftAngle - 90);
+                backRight.setSetpoint(backRightAngle - 90);
+                backLeft.setSetpoint(backLeftAngle - 90);
+
+                frontLeft.setSpeed(frontLeftSpeed);
+                frontRight.setSpeed(frontRightSpeed);
+                backRight.setSpeed(backRightSpeed);
+                backLeft.setSpeed(backLeftSpeed);
+            }
+            //Q3 and Q4
+            if (y < 0 && !isFieldCentric) {
+                frontRight.setSetpoint(frontRightAngle - 180);
+                frontLeft.setSetpoint(frontLeftAngle - 180);
+                backRight.setSetpoint(backRightAngle - 180);
+                backLeft.setSetpoint(backLeftAngle - 180);
+
+                frontLeft.setSpeed(-frontLeftSpeed);
+                frontRight.setSpeed(-frontRightSpeed);
+                backRight.setSpeed(-backRightSpeed);
+                backLeft.setSpeed(-backLeftSpeed);
+
+            } else if (y < 0 && isFieldCentric) {
+                //fixing the field centric angles because they are off by 90
+                //original substracted 180 from the angle
+                frontRight.setSetpoint(frontRightAngle - 270);
+                frontLeft.setSetpoint(frontLeftAngle - 270);
+                backRight.setSetpoint(backRightAngle - 270);
+                backLeft.setSetpoint(backLeftAngle - 270);
+
+                frontLeft.setSpeed(-frontLeftSpeed);
+                frontRight.setSpeed(-frontRightSpeed);
+                backRight.setSpeed(-backRightSpeed);
+                backLeft.setSpeed(-backLeftSpeed);
+            }
+            
         } 
         else {
             frontLeft.setSpeed(0);
@@ -153,6 +197,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             backRight.setSpeed(0);
             backLeft.setSpeed(0);
 
+            //sets the motors back to 0 if we are not driving anymore
             //frontRight.setSetpoint(0);
             //frontLeft.setSetpoint(0);
             //backRight.setSetpoint(0);
