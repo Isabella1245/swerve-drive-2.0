@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
-
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,7 +13,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 
-public class ArmPart extends SubsystemBase implements Constants {
+public class ArmPart extends PIDSubsystem implements Constants {
 
     //constructors
 
@@ -26,10 +28,12 @@ public class ArmPart extends SubsystemBase implements Constants {
     //encoder/potentiometer ID
     private int encIDA;
     private int encIDB;
-    private int analogId;
+    public int analogId;
     private int analogMax;
     private int AnalogMin;
     public ArmPart(String name, int motorID, int armEncA, int armEncB, int analogPort, int analogMax, int analogMin){
+
+        super(new PIDController(P, I, D));
 
         this.name = name;
         armMotor = new WPI_TalonSRX(motorID);
@@ -41,6 +45,8 @@ public class ArmPart extends SubsystemBase implements Constants {
         
         //set name for viewing in smart dashboard
         this.setName(name);
+
+        analogId = analogPort;
         
     }
 
@@ -55,6 +61,20 @@ public class ArmPart extends SubsystemBase implements Constants {
     }
     public double getArmEnc(){
         return(double) encoder.getDistance();
+    }
+
+    @Override
+    protected void useOutput(double output, double setpoint) {
+		armMotor.set(ControlMode.PercentOutput, output);
+	}
+
+    @Override
+    protected double getMeasurement() {
+        if (analogId == 1) {
+            return (double) analogPot.get();
+        } else {
+            return (double) encoder.getDistance();
+        }
     }
     
 

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.TeleopArm;
 import frc.robot.subsystems.ArmPart;
+import edu.wpi.first.wpilibj.Timer;
 
 
 public class ArmController extends SubsystemBase implements Constants {
@@ -16,6 +17,7 @@ public class ArmController extends SubsystemBase implements Constants {
     private ArmPart extension = null;
     private ArmPart armRotation = null;
     private PneumaticClaw claw = null;
+    private Timer timer;
     
 
     public ArmController() {
@@ -49,13 +51,24 @@ public class ArmController extends SubsystemBase implements Constants {
         }
         else if (leftY < -0.15 && actuatorArm.getPot() > 60){
             actuatorArm.setspeed(leftY * 0.7);
+        } else {
+            actuatorArm.setspeed(0);
         }
-        if (rightY > 0.15 && extension.getArmEnc() < 24576){
+
+        double position = 0;
+
+        if (rightY > 0.15 && extension.getArmEnc() < 8000){
             extension.setspeed(rightY * 0.7);
+            position = extension.getArmEnc();
         }
-        else if (rightY < -0.15 && extension.getArmEnc() > 0){
+        else if (rightY < -0.15 && extension.getArmEnc() > -1000){
             extension.setspeed(rightY * 0.7);
+            position = extension.getArmEnc();
         }
+        else if (rightY > -0.15 && rightY < 0.15){
+            extension.setSetpoint(position);
+        }
+
         if (rightTrigger > 0.15 && armRotation.getArmEnc() < 1024){
             armRotation.setspeed(rightTrigger * 0.7);
         }
@@ -73,24 +86,18 @@ public class ArmController extends SubsystemBase implements Constants {
             claw.solenoidSet(true);
         }
         //Location 3 Automated turn
+         if (yButton){
+            actuatorArm.setSetpoint(topHeight); //2900
+            if (actuatorArm.getPot() > potThreshold) {
+            extension.setSetpoint(topExtenstion); //7000
+            }
+        }
+
+        //Location 2 Automated turn
         if (yButton){
-            if (actuatorArm.getPot() < 3100){
-                actuatorArm.setspeed(0.7);
-            }
-            else if(actuatorArm.getPot()<3300 && actuatorArm.getPot() >3100){
-                actuatorArm.setspeed(0.5);
-            }else{
-                actuatorArm.setspeed(0);
-            }
-            if(extension.getArmEnc()< 24576){
-                extension.setspeed(0.7);
-            }
-            else if(extension.getArmEnc() > 24576 && extension.getArmEnc() < 28672){
-                extension.setspeed(0.5);
-            }
-            else{
-                actuatorArm.setspeed(0);
-                extension.setspeed(0);
+            actuatorArm.setSetpoint(midHeight); //find value
+            if (actuatorArm.getPot() > potThreshold) {
+            extension.setSetpoint(midExtenstion); //find value
             }
         }
 

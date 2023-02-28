@@ -11,11 +11,16 @@ public interface Constants{
     //PID has proportional, integral, and derivative controller actions
     //PIDF has proportional, integral, and derivative with first-order filter on derivative term
     
-    //try inverting to a negative proportional gain
     public final double kP = 0.05;//2.25 //500
     public final double kI = 0.0; //0.05
     public final double kD = 0.0009;//50 //5
     public final double kF = 0.0;
+
+    //arm pid
+    public final double P = 0.0;
+    public final double I = 0.0;
+    public final double D = 0.0;
+    public final double F = 0.0;
 
     //quadrature encoder ticks per rotation
     public final int quadCountsPerRotation = 1640;
@@ -69,7 +74,21 @@ public interface Constants{
     public final int counterChannel = 5;
     //tbd
 
-    //arm preset values
+    //arm auton constants
+    //angles in potentiometer values
+    public final double floorHeight = 2900;
+    public final double midHeight = 2900;
+    public final double topHeight = 2900; //2900
+
+    public final double floorExtenstion = 7000;
+    public final double midExtenstion = 7000;
+    public final double topExtenstion = 7000; //7000
+
+    public final double retractHeight = 1000;
+    public final double retractExtension = -100;
+
+    public final double potThreshold = 1000;
+    public final double retractThreshold = 1000;
 
 }
 
