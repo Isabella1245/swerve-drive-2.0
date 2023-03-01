@@ -148,6 +148,10 @@ public class XboxControllers {
 	public boolean getControllerYButtonPressed() {
 		return controller.getYButtonPressed();
 	}
+
+	public boolean getControllerYButton() {
+		return controller.getYButton();
+	}
 	/**
 	 * Checks if the Start button was pressed since the last check
 	 * @return Whether the button was pressed since last check 

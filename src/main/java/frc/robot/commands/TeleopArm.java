@@ -30,7 +30,7 @@ public class TeleopArm extends CommandBase {
 		arm.armControl(Robot.UpperDriver.getControllerLeftStickY(), Robot.UpperDriver.getControllerRightStickY(),
 					 Robot.UpperDriver.getControllerLTrigger(), Robot.UpperDriver.getControllerRTrigger(), 
                      Robot.UpperDriver.getControllerAButtonPressed(), Robot.UpperDriver.getControllerXButtonPressed(), 
-					 Robot.UpperDriver.getControllerYButtonPressed(), Robot.UpperDriver.getControllerBButtonPressed());
+					 Robot.UpperDriver.getControllerYButton(), Robot.UpperDriver.getControllerBButton());
 	}
 
     @Override

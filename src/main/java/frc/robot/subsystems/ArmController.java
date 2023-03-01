@@ -40,12 +40,15 @@ public class ArmController extends SubsystemBase implements Constants {
     
     public void armControl(double leftY, double rightY, double leftTrigger, double rightTrigger, boolean aButton, boolean xButton, boolean yButton, boolean bButton) {
 
+        boolean ybutton = false;
         //here is where we'll need to calculate angle and distance and rotation.
         //the angle sould calculate somewhere between like 0 to a little over 90 degrees, but
         //it will be intersting because out potentiometer is not calculating the angle, but its actually calculating
         //the distance the actuator is pushing on the arm to lift it.
         //i dont think we'll need to measure the turning one.
         //and we might want to measure the distance but idk.
+
+        
         if (leftY > 0.15 && actuatorArm.getPot() < 3000){
             actuatorArm.setspeed(leftY * 0.7);
         }
@@ -88,13 +91,22 @@ public class ArmController extends SubsystemBase implements Constants {
         //Location 3 Automated turn
          if (yButton){
             actuatorArm.setSetpoint(topHeight); //2900
-            if (actuatorArm.getPot() > potThreshold) {
+            
+            /*if (actuatorArm.getPot() > potThreshold) {
             extension.setSetpoint(topExtenstion); //7000
             }
-        }
+            
+            if (actuatorArm.getPot() < midHeight) {
+                actuatorArm.setspeed(-0.4);
+            } else {
+                actuatorArm.setspeed(0);
+            }
+            */
+         }
+        
 
         //Location 2 Automated turn
-        if (yButton){
+        if (bButton){
             actuatorArm.setSetpoint(midHeight); //find value
             if (actuatorArm.getPot() > potThreshold) {
             extension.setSetpoint(midExtenstion); //find value

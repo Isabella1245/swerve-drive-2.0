@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
@@ -15,8 +14,6 @@ public class SwerveWheelDrive {
 	SwerveWheelDriveType type;
 
 	MotorController controller;
-
-	//double driveENC;
 
 	/**
 	 * Configures specified motor type for the swerve wheel drive system. 
@@ -48,6 +45,5 @@ public class SwerveWheelDrive {
 	public void setSpeed(double speed) {
 		controller.set(speed);
 	}
-	
 	
 }

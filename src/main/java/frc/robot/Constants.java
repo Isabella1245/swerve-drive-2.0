@@ -17,9 +17,9 @@ public interface Constants{
     public final double kF = 0.0;
 
     //arm pid
-    public final double P = 0.0;
+    public final double P = 0.2;
     public final double I = 0.0;
-    public final double D = 0.0;
+    public final double D = 0.0009;
     public final double F = 0.0;
 
     //quadrature encoder ticks per rotation
@@ -39,6 +39,9 @@ public interface Constants{
     public final int FLDid = 1; //1
     public final int BRDid = 1; //6
     public final int BLDid = 1; //8
+
+    //drive ecoder IDs
+    public final int FRDencoderID = 5; //2
 
     // Analog Encoder ID (i think they are refering to turning encoders)
     public final int FRTencoderID = 2; //2
@@ -77,7 +80,7 @@ public interface Constants{
     //arm auton constants
     //angles in potentiometer values
     public final double floorHeight = 2900;
-    public final double midHeight = 2900;
+    public final double midHeight = 1900;
     public final double topHeight = 2900; //2900
 
     public final double floorExtenstion = 7000;
@@ -89,6 +92,15 @@ public interface Constants{
 
     public final double potThreshold = 1000;
     public final double retractThreshold = 1000;
+
+    //drive Auton Constants
+
+    //position 1
+    public final double blueDrive1a = 337.3;
+    public final double blueDriveAngle1a = 0;
+    public final double blueDrive1b = 173.93;
+    public final double blueDriveAngle1b = 41.83;
+
 
 }
 

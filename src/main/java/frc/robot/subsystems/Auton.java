@@ -7,9 +7,12 @@ import frc.robot.Constants;
 import frc.robot.commands.TeleopArm;
 import frc.robot.subsystems.ArmPart;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.subsystems.SwerveWheelController;
+import frc.robot.subsystems.SwerveWheelDrive.SwerveWheelDriveType;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 
-public class AutonArm extends SubsystemBase implements Constants {
+public class Auton extends SubsystemBase implements Constants {
 
     private static ArmController instance = null;
 
@@ -18,15 +21,37 @@ public class AutonArm extends SubsystemBase implements Constants {
     private ArmPart armRotation = null;
     private PneumaticClaw claw = null;
     private Timer timer;
+
+    private SwerveWheelDrive frontRightDrive = null;
+    private SwerveWheelDrive frontLeftDrive = null;
+    private SwerveWheelDrive backRightDrive = null;
+    private SwerveWheelDrive backLeftDrive = null;
+
+    //swerve wheels
+    private SwerveWheel frontRight = null;
+    private SwerveWheel frontLeft = null;
+    private SwerveWheel backRight = null;
+    private SwerveWheel backLeft = null;
+
+    AnalogInput FRDenc = new AnalogInput(FRDencoderID);
     
 
-    public AutonArm() {
+    public Auton() {
 
-        actuatorArm = new ArmPart("Arm Angle", actuatorMotorID, 9, 8, analogPotID, analogPotMax, analogPotMin);
-        extension = new ArmPart("Arm Extension", extensionMotorID, extensionEncoderA, extensionEncoderB, 7, 10, 10);
-        armRotation = new ArmPart("Arm Rotation", clawTwistMotorID, clawEncoderA, clawEncoderB, 6, 10, 10);
-        claw = new PneumaticClaw("claw", compressorModule, solenoidChannel, counterChannel);
+        //actuatorArm = new ArmPart("Arm Angle", actuatorMotorID, 9, 8, analogPotID, analogPotMax, analogPotMin);
+        //extension = new ArmPart("Arm Extension", extensionMotorID, extensionEncoderA, extensionEncoderB, 7, 10, 10);
+        //armRotation = new ArmPart("Arm Rotation", clawTwistMotorID, clawEncoderA, clawEncoderB, 6, 10, 10);
+        //claw = new PneumaticClaw("claw", compressorModule, solenoidChannel, counterChannel);
 
+        //frontRightDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, FRDid, true, FRDencoderID);
+        //frontLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, FLDid, false, 6);
+        //backRightDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BRDid, true, 7);
+        //backLeftDrive = new SwerveWheelDrive(SwerveWheelDriveType.TalonSRX, BLDid, false, 8);
+        //potential robot container content
+        frontRight = new SwerveWheel(frontRightDrive, FRTid, FRTencoderID, FRTencoderOffset, "Front Right", true);
+        frontLeft = new SwerveWheel(frontLeftDrive, FLTid, FLTencoderID, FLTencoderOffset, "Front Left", true);
+        backRight = new SwerveWheel(backRightDrive, BRTid, BRTencoderID, BRTencoderOffset, "Back Right", true);
+        backLeft = new SwerveWheel(backLeftDrive, BLTid, BLTencoderID, BLTencoderOffset, "Back Left", true);
     }
 
     /*
@@ -64,23 +89,23 @@ public class AutonArm extends SubsystemBase implements Constants {
        placePiece();
        // drive out & turn & retract,
        retractArm(retractHeight, retractExtension);
-       moveDistance();
+       //moveDistance();
        extendArm(floorHeight, floorExtenstion);
        // grab cone from location B3, 
        grabPiece();
        //drive & turn & extend,
-       moveDistance();
+       //moveDistance();
        extendArm(topHeight, topExtenstion); 
        //place cone (top C), 
        placePiece();
        //drive & turn & retract, 
        retractArm(retractHeight, retractExtension);
-       moveDistance();
+       //moveDistance();
        extendArm(floorHeight, floorExtenstion);
        //grab cone from location B4, 
        grabPiece();
        //drive & turn & extend, 
-       moveDistance();
+       //moveDistance();
        extendArm(topHeight, topExtenstion);
        //place cone (top A)
        placePiece();
@@ -99,23 +124,25 @@ public class AutonArm extends SubsystemBase implements Constants {
         placePiece();
         // drive out & turn & retract,
         retractArm(retractHeight, retractExtension);
-        moveDistance();
+        moveDistance(blueDrive1a, blueDriveAngle1a);
+        //turnRobot();
+        moveDistance(blueDrive1b, blueDriveAngle1b);
         extendArm(floorHeight, floorExtenstion);
         // grab cone from location B3, 
         grabPiece();
         //drive & turn & extend,
-        moveDistance();
+        //moveDistance();
         extendArm(topHeight, topExtenstion); 
         //place cone (top C), 
         placePiece();
         //drive & turn & retract, 
         retractArm(retractHeight, retractExtension);
-        moveDistance();
+        //moveDistance();
         extendArm(floorHeight, floorExtenstion);
         //grab cone from location B4, 
         grabPiece();
         //drive & turn & extend, 
-        moveDistance();
+        //moveDistance();
         extendArm(topHeight, topExtenstion);
         //place cone (top A)
         placePiece();
@@ -141,7 +168,7 @@ public class AutonArm extends SubsystemBase implements Constants {
         }
     }
 
-    public void moveDistance() {
+    public void moveDistance(double distance, double angle) {
 
     }
 
@@ -150,4 +177,12 @@ public class AutonArm extends SubsystemBase implements Constants {
         claw.solenoidSet(true);
 
     }
+    
+    public void turnRobot(double frAngle, double flAngle, double speed, double turnDistance) {
+        
+    }
+
+    public double getDriveEnc(){
+		return (double) FRDenc.getValue();
+	}
 } 
