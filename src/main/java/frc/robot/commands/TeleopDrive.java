@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import frc.robot.Robot;
 import frc.robot.subsystems.SwerveWheelController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.XboxControllers;
 
@@ -27,7 +28,7 @@ public class TeleopDrive extends CommandBase {
 
 	@Override
 	public void execute() {
-
+SmartDashboard.putBoolean("fod", currentFOD);
 		if (Robot.LowerDriver.getControllerButton3()){
 			swerve.resetGyro();
 		}

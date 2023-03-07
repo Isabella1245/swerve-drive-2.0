@@ -36,7 +36,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     // Get distance between wheels
     private double r = Math.sqrt((L * L) + (W * W));
 
-    private boolean isFieldCentric = true;
+    private boolean isFieldCentric = false;
     private boolean gyroEnabled = false;
 
     private SwerveWheelController(){
@@ -75,7 +75,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     // Holonomic drive
     public void drive(double x, double y, double z, double gyroValue) {
 
-        //calculate magnitude of joystick
+        //calculate magnitude of joystick using z as well
         // Calculate magnitude of joystick
 
         //y *= -1;
@@ -108,10 +108,23 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             // -------------------------------------
             // Do the swerve wheel math for speed and angles
             // -------------------------------------
-            double a = x - z * (L / r);
-            double b = x + z * (L / r);
-            double c = y - z * (W / r);
-            double d = y + z * (W / r);
+            double a;
+            double b;
+            double c;
+            double d;
+
+            if (z > 0.2 || z < -0.2){
+            a = x - z * (L / r);
+            b = x + z * (L / r);
+            c = y - z * (W / r);
+            d = y + z * (W / r);
+            } else {
+                a = x - (L / r);
+                b = x + (L / r);
+                c = y - (W / r);
+                d = y + (W / r);
+            }
+
 
             frontLeftSpeed = Math.sqrt((b * b) + (c * c));
             frontRightSpeed = Math.sqrt((b * b) + (d * d));
@@ -179,10 +192,10 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             } else if (y < 0 && isFieldCentric) {
                 //fixing the field centric angles because they are off by 90
                 //original substracted 180 from the angle
-                frontRight.setSetpoint(frontRightAngle - 270);
-                frontLeft.setSetpoint(frontLeftAngle - 270);
-                backRight.setSetpoint(backRightAngle - 270);
-                backLeft.setSetpoint(backLeftAngle - 270);
+                frontRight.setSetpoint(frontRightAngle - 180);
+                frontLeft.setSetpoint(frontLeftAngle - 180);
+                backRight.setSetpoint(backRightAngle - 180);
+                backLeft.setSetpoint(backLeftAngle - 180);
 
                 frontLeft.setSpeed(-frontLeftSpeed);
                 frontRight.setSpeed(-frontRightSpeed);
@@ -204,7 +217,8 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             //backLeft.setSetpoint(0);
         }
 
-        SmartDashboard.putNumber("magnitude", magnitude);
+        //SmartDashboard.putNumber("magnitude", magnitude);
+        /*
         SmartDashboard.putNumber("fr angle", frontRight.getSetpoint());
         SmartDashboard.putNumber("fl angle", frontLeft.getSetpoint());
         SmartDashboard.putNumber("br angle", backRight.getSetpoint());
@@ -218,32 +232,31 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("fr angle", frontRightAngle);
         SmartDashboard.putNumber("Bl angle", backLeftAngle);
         SmartDashboard.putNumber("br angle", backRightAngle);
+        */
 
         //SmartDashboard.putData("pid", SubsystemBase.);
 
         //front right
         SmartDashboard.putNumber("FR AbsEnc Value", frontRight.getAbsEncValue());
         SmartDashboard.putNumber("FR AbsEnc Angle ", frontRight.getAbsAngleDeg());
-        SmartDashboard.putNumber("FR QuadEnc Zero Setpoint", frontRight.getQuadEncZeroSetpoint());
         SmartDashboard.putNumber("FR QuadEnc Actual Value", frontRight.getTicks());
-        SmartDashboard.putNumber("FR QuadEnc angle (ticks to angle)", frontRight.getMeasurement());
+        SmartDashboard.putNumber("FR QuadEnc Angle", frontRight.getMeasurement());
         SmartDashboard.putNumber("FR Turn Motor speed", frontRight.getTurnMotorSpeed());
-        SmartDashboard.putNumber("p values", frontRight.getPValues());
-        SmartDashboard.putNumber("i values", frontRight.getIValues());
-        SmartDashboard.putNumber("d values", frontRight.getDValues());
+        //SmartDashboard.putNumber("p values", frontRight.getPValues());
+        //SmartDashboard.putNumber("i values", frontRight.getIValues());
+        //SmartDashboard.putNumber("d values", frontRight.getDValues());
 
-        SmartDashboard.putNumber("position tolerance", frontRight.getTolerance());
-        SmartDashboard.putNumber("position error", frontRight.getError());
-        SmartDashboard.putNumber("calculation", frontRight.getCalculation());
+        //SmartDashboard.putNumber("position tolerance", frontRight.getTolerance());
+        //SmartDashboard.putNumber("position error", frontRight.getError());
+        //SmartDashboard.putNumber("calculation", frontRight.getCalculation());
 
-        SmartDashboard.putNumber("pid output", frontRight.getOutput());
+        //SmartDashboard.putNumber("pid output", frontRight.getOutput());
 
         //SmartDashboard.putNumber("init value", frontLeft.getInitialPgValue());
 
         //front left
         SmartDashboard.putNumber("FL AbsEnc Value", frontLeft.getAbsEncValue());
         SmartDashboard.putNumber("FL AbsEnc Angle ", frontLeft.getAbsAngleDeg());
-        SmartDashboard.putNumber("FL QuadEnc Zero Setpoint", frontLeft.getQuadEncZeroSetpoint());
         SmartDashboard.putNumber("FL QuadEnc Actual Value", frontLeft.getTicks());
         SmartDashboard.putNumber("FL QuadEnc Angle", frontLeft.getMeasurement());
         SmartDashboard.putNumber("FL Turn Motor speed", frontLeft.getTurnMotorSpeed());
@@ -251,7 +264,6 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //back right
         SmartDashboard.putNumber("BR AbsEnc Value", backRight.getAbsEncValue());
         SmartDashboard.putNumber("BR AbsEnc Angle ", backRight.getAbsAngleDeg());
-        SmartDashboard.putNumber("BR QuadEnc Zero Setpoint", backRight.getQuadEncZeroSetpoint());
         SmartDashboard.putNumber("BR QuadEnc Actual Value", backRight.getTicks());
         SmartDashboard.putNumber("BR QuadEnc Angle", backRight.getMeasurement());
         SmartDashboard.putNumber("BR Turn Motor speed", backRight.getTurnMotorSpeed());
@@ -259,7 +271,6 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //back left
         SmartDashboard.putNumber("BL AbsEnc Value", backLeft.getAbsEncValue());
         SmartDashboard.putNumber("BL AbsEnc Angle ", backLeft.getAbsAngleDeg());
-        SmartDashboard.putNumber("BL QuadEnc Zero Setpoint", backLeft.getQuadEncZeroSetpoint());
         SmartDashboard.putNumber("BL QuadEnc Actual Value", backLeft.getTicks());
         SmartDashboard.putNumber("BL QuadEnc Angle", backLeft.getMeasurement());
         SmartDashboard.putNumber("BL Turn Motor speed", backLeft.getTurnMotorSpeed());

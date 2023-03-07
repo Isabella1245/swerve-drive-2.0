@@ -48,18 +48,52 @@ public class ArmController extends SubsystemBase implements Constants {
         //i dont think we'll need to measure the turning one.
         //and we might want to measure the distance but idk.
 
-        
+        //actuator code
         if (leftY > 0.15 && actuatorArm.getPot() < 3000){
             actuatorArm.setspeed(leftY * 0.7);
         }
         else if (leftY < -0.15 && actuatorArm.getPot() > 60){
             actuatorArm.setspeed(leftY * 0.7);
+
+        } 
+        //mid extension height button
+        else if (bButton && actuatorArm.getPot() < midHeight && actuatorArm.getPot() < potThreshold){
+            actuatorArm.setspeed(-0.8); 
+            extension.setspeed(0.05);
+
+        } else if (bButton && actuatorArm.getPot() < midHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < midExtenstion){
+            actuatorArm.setspeed(-0.8); 
+            extension.setspeed(0.4);
+
+        } else if (bButton && actuatorArm.getPot() >= midHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < midExtenstion){
+            extension.setspeed(0.4);
+
+        } else if (bButton && actuatorArm.getPot() < midHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() >= midExtenstion){
+            actuatorArm.setspeed(-0.8);
+            extension.setspeed(0.05);
+        //high extension height button
+        } else if (yButton && actuatorArm.getPot() < topHeight && actuatorArm.getPot() < potThreshold){
+            actuatorArm.setspeed(-0.8); 
+            extension.setspeed(0.05);
+
+        } else if (yButton && actuatorArm.getPot() < topHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < topExtenstion){
+            actuatorArm.setspeed(-0.8); 
+            extension.setspeed(-0.4);
+
+        } else if (yButton && actuatorArm.getPot() >= topHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < topExtenstion){
+            extension.setspeed(-0.4);
+
+        } else if (yButton && actuatorArm.getPot() < topHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() >= topExtenstion){
+            actuatorArm.setspeed(-0.8);
+            extension.setspeed(0.05);
+
         } else {
             actuatorArm.setspeed(0);
+            extension.setspeed(0.0);
         }
 
         double position = 0;
-
+        // arm extension code
         if (rightY > 0.15 && extension.getArmEnc() < 8000){
             extension.setspeed(rightY * 0.7);
             position = extension.getArmEnc();
@@ -87,30 +121,6 @@ public class ArmController extends SubsystemBase implements Constants {
         }
         if (aButton) {
             claw.solenoidSet(true);
-        }
-        //Location 3 Automated turn
-         if (yButton){
-            actuatorArm.setSetpoint(topHeight); //2900
-            
-            /*if (actuatorArm.getPot() > potThreshold) {
-            extension.setSetpoint(topExtenstion); //7000
-            }
-            
-            if (actuatorArm.getPot() < midHeight) {
-                actuatorArm.setspeed(-0.4);
-            } else {
-                actuatorArm.setspeed(0);
-            }
-            */
-         }
-        
-
-        //Location 2 Automated turn
-        if (bButton){
-            actuatorArm.setSetpoint(midHeight); //find value
-            if (actuatorArm.getPot() > potThreshold) {
-            extension.setSetpoint(midExtenstion); //find value
-            }
         }
 
     SmartDashboard.putNumber("Extension Encoder",extension.getArmEnc());
