@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.Auton1;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ArmController;
 import frc.robot.subsystems.SwerveWheel;
@@ -24,7 +25,11 @@ public class Robot extends TimedRobot {
   //public static Joystick driver = new Joystick(0);
 	private static CommandScheduler scheduler = CommandScheduler.getInstance();
   Timer timer = new Timer();
+
   public final SendableChooser<String> autonChooser = new SendableChooser<String>();
+
+  private TeleopDrive  teleDrive;
+  private Auton1 auton;
 
   
 
@@ -44,7 +49,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    //scheduler.run(); //if it doesnt make a difference delete it
+    scheduler.run();
   }
 
   @Override

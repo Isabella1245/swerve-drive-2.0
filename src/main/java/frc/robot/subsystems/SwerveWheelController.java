@@ -20,26 +20,26 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     private static SwerveWheelController instance = null;
     
     //stating the drive motors
-    private SwerveWheelDrive frontRightDrive = null;
-    private SwerveWheelDrive frontLeftDrive = null;
-    private SwerveWheelDrive backRightDrive = null;
-    private SwerveWheelDrive backLeftDrive = null;
+    public SwerveWheelDrive frontRightDrive = null;
+    public SwerveWheelDrive frontLeftDrive = null;
+    public SwerveWheelDrive backRightDrive = null;
+    public SwerveWheelDrive backLeftDrive = null;
 
     //swerve wheels
-    private SwerveWheel frontRight = null;
-    private SwerveWheel frontLeft = null;
-    private SwerveWheel backRight = null;
-    private SwerveWheel backLeft = null;
+    public SwerveWheel frontRight = null;
+    public SwerveWheel frontLeft = null;
+    public SwerveWheel backRight = null;
+    public SwerveWheel backLeft = null;
 
-    private AHRS gyro = null;
+    public AHRS gyro = null;
 
     // Get distance between wheels
-    private double r = Math.sqrt((L * L) + (W * W));
+    public double r = Math.sqrt((L * L) + (W * W));
 
-    private boolean isFieldCentric = false;
-    private boolean gyroEnabled = false;
+    public boolean isFieldCentric = false;
+    public boolean gyroEnabled = false;
 
-    private SwerveWheelController(){
+    public SwerveWheelController(){
     
         //the motor controls are all talon srx
         //drive motors
@@ -113,17 +113,17 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             double c;
             double d;
 
-            if (z > 0.2 || z < -0.2){
+            //if (z > 0.2 || z < -0.2){
             a = x - z * (L / r);
             b = x + z * (L / r);
             c = y - z * (W / r);
             d = y + z * (W / r);
-            } else {
+            /* } else {
                 a = x - (L / r);
                 b = x + (L / r);
                 c = y - (W / r);
                 d = y + (W / r);
-            }
+            }*/
 
 
             frontLeftSpeed = Math.sqrt((b * b) + (c * c));
@@ -277,6 +277,20 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //SmartDashboard.putNumber("ticks to angle", frontRight.ticksToAngle());
 
 
+    }
+    //auton drive
+    public void auton(double time) {
+        if (time < 3) {
+            frontLeft.setSpeed(0.3);
+            frontRight.setSpeed(0.3);
+            backRight.setSpeed(0.3);
+            backLeft.setSpeed(0.3);
+
+            frontRight.setSetpoint(0);
+            frontLeft.setSetpoint(0);
+            backRight.setSetpoint(0);
+            backLeft.setSetpoint(0);
+        }
     }
 
     // Zero the Gryo
