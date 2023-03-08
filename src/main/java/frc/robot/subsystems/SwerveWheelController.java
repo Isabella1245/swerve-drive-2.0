@@ -75,10 +75,13 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     // Holonomic drive
     public void drive(double x, double y, double z, double gyroValue) {
 
-        //calculate magnitude of joystick using z as well
-        // Calculate magnitude of joystick
-
+        //inverts y for drive
         y *= -1;
+
+        //caps z at 0.2
+        z *= 0.3;
+
+        //calculate magnitude
         double magnitude = Math.sqrt((Math.pow(x, 2)) + (Math.pow(y,2)));
         
         double frontLeftSpeed = 0;
@@ -92,7 +95,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         double backRightAngle = 0;
 
    
-        if (magnitude >= 0.25) {
+        if (magnitude >= 0.3) {
 
             // I got this bit of code from the NavX website
             if (isFieldCentric == true && gyroEnabled == true) {
@@ -160,10 +163,10 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 backRight.setSetpoint(backRightAngle);
                 backLeft.setSetpoint(backLeftAngle);
 
-                frontLeft.setSpeed(frontLeftSpeed * 0.6);
-                frontRight.setSpeed(frontRightSpeed * 0.6);
-                backRight.setSpeed(backRightSpeed * 0.6);
-                backLeft.setSpeed(backLeftSpeed * 0.6);
+                frontLeft.setSpeed(frontLeftSpeed);
+                frontRight.setSpeed(frontRightSpeed);
+                backRight.setSpeed(backRightSpeed);
+                backLeft.setSpeed(backLeftSpeed);
 
             } else if (isFieldCentric) {
                 //fixing the field centric angles because they are off by 90                
@@ -281,20 +284,48 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
 
     }
-    //auton drive
-    public void auton(double time) {
-        if (time < 3) {
-            frontLeft.setSpeed(0.3);
-            frontRight.setSpeed(0.3);
-            backRight.setSpeed(0.3);
-            backLeft.setSpeed(0.3);
 
-            frontRight.setSetpoint(0);
-            frontLeft.setSetpoint(0);
-            backRight.setSetpoint(0);
-            backLeft.setSetpoint(0);
+
+    //AUTON STUFF
+    public void turnRobot(double frAngle, double flAngle, double turnAngle) {
+        frontRight.setSetpoint(frAngle);
+        frontLeft.setSetpoint(flAngle);
+        backRight.setSetpoint(flAngle);
+        backLeft.setSetpoint(frAngle);
+
+        if (turnAngle > gyro.getYaw()) {
+            if (gyro.getYaw() < turnAngle/2) {
+                frontRight.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))-0.1));
+                frontLeft.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+                backRight.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))-0.1));
+                backLeft.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+            } else if (gyro.getYaw() > turnAngle/2 ) {
+                frontRight.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
+                frontLeft.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
+                backRight.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
+                backLeft.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
+            }   
+        } else if (turnAngle < gyro.getYaw()) {
+            if (gyro.getYaw() > 90) {
+                frontRight.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
+                frontLeft.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
+                backRight.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
+                backLeft.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
+            } else if (gyro.getYaw() < 90 ) {
+                frontRight.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+                frontLeft.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+                backRight.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+                backLeft.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+            }
+        } else {
+            frontRight.setSpeed(0);
+            frontLeft.setSpeed(0);
+            backRight.setSpeed(0);
+            backLeft.setSpeed(0);
+
         }
     }
+    
 
     // Zero the Gryo
     public void resetGyro() {

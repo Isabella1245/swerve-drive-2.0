@@ -57,7 +57,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 		// has 0 position on startup
 
         //we reviewed this and it is correct :)
-		steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
+		//steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
+        steerMotor.setSelectedSensorPosition(0);
 
         // sets the current quadrature position relative to the analog position to make sure the motor has 0 position on startup
         //sets the input range of the PIDF so that it will only accept angles between -180 and 180

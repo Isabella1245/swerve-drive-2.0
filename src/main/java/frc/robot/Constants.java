@@ -50,7 +50,7 @@ public interface Constants{
 
     // Offset of encoders to make them face forwards
     public final int FRTencoderOffset = 0;
-    public final int FLTencoderOffset = 171; //171?
+    public final int FLTencoderOffset = 0; //171?
     public final int BRTencoderOffset = 0;
     public final int BLTencoderOffset = 0;
 
@@ -65,8 +65,8 @@ public interface Constants{
     public final int analogPotMax = 3600;
     public final int analogPotMin = -100;
     //arm encoders (digital)
-    public final int extensionEncoderA = 0;
-    public final int extensionEncoderB = 1;
+    public final int extensionEncoderA = 1;
+    public final int extensionEncoderB = 0;
     public final int clawEncoderA = 2;
     public final int clawEncoderB = 3;
 

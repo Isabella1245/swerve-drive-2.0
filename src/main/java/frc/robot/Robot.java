@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Auton1;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ArmController;
 import frc.robot.subsystems.SwerveWheel;
@@ -12,6 +11,9 @@ import frc.robot.subsystems.SwerveWheelDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.AnalogInput;
+
+import javax.sound.midi.Sequence;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
@@ -26,16 +28,20 @@ public class Robot extends TimedRobot {
 	private static CommandScheduler scheduler = CommandScheduler.getInstance();
   Timer timer = new Timer();
 
+  private SwerveWheelController swerve;
+  private ArmController arm;
+
   public final SendableChooser<String> autonChooser = new SendableChooser<String>();
 
   private TeleopDrive  teleDrive;
-  private Auton1 auton;
 
   
 
   @Override
   public void robotInit() {
-    SwerveWheelController.getInstance();
+    swerve = SwerveWheelController.getInstance();
+    arm = ArmController.getInstance();
+
     ArmController.getInstance();
     CameraServer.startAutomaticCapture();
     //put the schedule instance on the smart dashboard when the robot initializes
@@ -45,6 +51,7 @@ public class Robot extends TimedRobot {
     autonChooser.addOption("3 piece red side", "R1");
     autonChooser.addOption("1 piece and balance blue side", "B2");
     autonChooser.addOption("1 piece and balace red side", "R2");
+    SmartDashboard.putData(autonChooser);
   }
 
   @Override
@@ -60,11 +67,12 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     System.out.println("Autonomous");
+    scheduler.cancelAll();
   }
 
   @Override
   public void autonomousPeriodic() {
-    scheduler.run();
+   scheduler.run();
   }
 
   @Override
@@ -72,6 +80,8 @@ public class Robot extends TimedRobot {
     System.out.println("Teleop");
     timer.reset();
     timer.start();
+    scheduler.cancelAll();
+    scheduler.schedule(teleDrive);
 
   }
 

@@ -48,12 +48,12 @@ public class AutonOne extends SubsystemBase implements Constants {
         
     }
 
-    /*
+/*     
     SCORE LABELING LOCATION
     Top Cone A    ||   Top Cube B  || Top Cone C
     Middle Cone A || Middle Cube B || Middle Cone C
     Bottom A      ||    Bottom B   || Bottom C
-     */
+     
     public void BlueAutonPosition3(){
         //blue alliance side, by the wall
 
@@ -171,26 +171,7 @@ public class AutonOne extends SubsystemBase implements Constants {
         //place cone (top A)
         placePiece();
 
-    }
-
-    public void placePiece() {
-        //lets go of piece
-        claw.solenoidSet(false);
-    }
-
-    public void extendArm(double potentiometerAngle, double extensionLength) {
-        actuatorArm.setSetpoint(potentiometerAngle);
-        if (actuatorArm.getPot() > potThreshold) {
-        extension.setSetpoint(extensionLength);
-        } 
-    }
-
-    public void retractArm(double retractAngle, double retractLength) {
-        extension.setSetpoint(retractLength);
-        if (retractLength < retractThreshold) {
-            actuatorArm.setSetpoint(retractAngle);
-        }
-    }
+    } */
 
     public void moveDistance(double speed, double angle, double ramprate, double time) {
         moveDistanceTimer.reset();
@@ -220,52 +201,5 @@ public class AutonOne extends SubsystemBase implements Constants {
         }
     }
 
-    public void grabPiece() {
-        //grabs piece
-        claw.solenoidSet(true);
 
-    }
-    
-    public void turnRobot(double frAngle, double flAngle, double turnAngle) {
-        frontRight.setSetpoint(frAngle);
-        frontLeft.setSetpoint(flAngle);
-        backRight.setSetpoint(flAngle);
-        backLeft.setSetpoint(frAngle);
-
-        if (turnAngle > gyro.getYaw()) {
-            if (gyro.getYaw() < turnAngle/2) {
-                frontRight.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))-0.1));
-                frontLeft.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
-                backRight.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))-0.1));
-                backLeft.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
-            } else if (gyro.getYaw() > turnAngle/2 ) {
-                frontRight.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
-                frontLeft.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
-                backRight.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
-                backLeft.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
-            }   
-        } else if (turnAngle < gyro.getYaw()) {
-            if (gyro.getYaw() > 90) {
-                frontRight.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
-                frontLeft.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
-                backRight.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
-                backLeft.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
-            } else if (gyro.getYaw() < 90 ) {
-                frontRight.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
-                frontLeft.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
-                backRight.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
-                backLeft.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
-            }
-        } else {
-            frontRight.setSpeed(0);
-            frontLeft.setSpeed(0);
-            backRight.setSpeed(0);
-            backLeft.setSpeed(0);
-
-        }
-    }
-
-    public double getDriveEnc(){
-		return (double) FRDenc.getValue();
-	}
 } 
