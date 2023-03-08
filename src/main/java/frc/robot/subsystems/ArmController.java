@@ -52,10 +52,14 @@ public class ArmController extends SubsystemBase implements Constants {
         if (leftY > 0.15 && actuatorArm.getPot() < 3000){
             actuatorArm.setspeed(leftY * 0.7);
         }
-        else if (leftY < -0.15 && actuatorArm.getPot() > 60){
+        else if (leftY < -0.15 && actuatorArm.getPot() > 250){
             actuatorArm.setspeed(leftY * 0.7);
-
         } 
+        else if (leftY < -0.15 && actuatorArm.getPot() < 250){
+            actuatorArm.setspeed(0);
+        }
+
+        //fix the height buttons to te right encoder value
         //mid extension height button
         else if (bButton && actuatorArm.getPot() < midHeight && actuatorArm.getPot() < potThreshold){
             actuatorArm.setspeed(-0.8); 
@@ -89,7 +93,7 @@ public class ArmController extends SubsystemBase implements Constants {
 
         } else {
             actuatorArm.setspeed(0);
-            extension.setspeed(0.0);
+            extension.setspeed(0.1);
         }
 
         double position = 0;
@@ -103,16 +107,16 @@ public class ArmController extends SubsystemBase implements Constants {
             position = extension.getArmEnc();
         }
         else if (rightY > -0.15 && rightY < 0.15){
-            extension.setSetpoint(position);
+            extension.setspeed(0.1);
         }
 
         if (rightTrigger > 0.15 && armRotation.getArmEnc() < 1024){
             armRotation.setspeed(rightTrigger * 0.7);
         }
-        else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1024){
+        else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1200){
             armRotation.setspeed(-leftTrigger * 0.7);
         }else{
-            armRotation.setspeed(0);
+            armRotation.setspeed(0.05);
         }
 
         //pneumatic claw

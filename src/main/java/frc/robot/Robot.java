@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Robot extends TimedRobot {
   
-  public static Joysticks LowerDriver = new Joysticks(1);
+  public static XboxControllers LowerDriver = new XboxControllers(2);
   public static XboxControllers UpperDriver = new XboxControllers(0);
   //public static Joystick driver = new Joystick(0);
 	private static CommandScheduler scheduler = CommandScheduler.getInstance();

@@ -78,7 +78,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //calculate magnitude of joystick using z as well
         // Calculate magnitude of joystick
 
-        //y *= -1;
+        y *= -1;
         double magnitude = Math.sqrt((Math.pow(x, 2)) + (Math.pow(y,2)));
         
         double frontLeftSpeed = 0;
@@ -92,7 +92,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         double backRightAngle = 0;
 
    
-        if (magnitude >= 0.15) {
+        if (magnitude >= 0.25) {
 
             // I got this bit of code from the NavX website
             if (isFieldCentric == true && gyroEnabled == true) {
@@ -154,18 +154,18 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
 
             //Q1 and Q2
-            if (y > 0 && !isFieldCentric) {
+            if (!isFieldCentric) {
                 frontRight.setSetpoint(frontRightAngle);
                 frontLeft.setSetpoint(frontLeftAngle);
                 backRight.setSetpoint(backRightAngle);
                 backLeft.setSetpoint(backLeftAngle);
 
-                frontLeft.setSpeed(frontLeftSpeed);
-                frontRight.setSpeed(frontRightSpeed);
-                backRight.setSpeed(backRightSpeed);
-                backLeft.setSpeed(backLeftSpeed);
+                frontLeft.setSpeed(frontLeftSpeed * 0.6);
+                frontRight.setSpeed(frontRightSpeed * 0.6);
+                backRight.setSpeed(backRightSpeed * 0.6);
+                backLeft.setSpeed(backLeftSpeed * 0.6);
 
-            } else if (y > 0 && isFieldCentric) {
+            } else if (isFieldCentric) {
                 //fixing the field centric angles because they are off by 90                
                 frontRight.setSetpoint(frontRightAngle - 90);
                 frontLeft.setSetpoint(frontLeftAngle - 90);
@@ -178,16 +178,17 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 backLeft.setSpeed(backLeftSpeed);
             }
             //Q3 and Q4
+            /* 
             if (y < 0 && !isFieldCentric) {
                 frontRight.setSetpoint(frontRightAngle - 180);
                 frontLeft.setSetpoint(frontLeftAngle - 180);
                 backRight.setSetpoint(backRightAngle - 180);
                 backLeft.setSetpoint(backLeftAngle - 180);
 
-                frontLeft.setSpeed(-frontLeftSpeed);
-                frontRight.setSpeed(-frontRightSpeed);
-                backRight.setSpeed(-backRightSpeed);
-                backLeft.setSpeed(-backLeftSpeed);
+                frontLeft.setSpeed(-frontLeftSpeed * 0.6);
+                frontRight.setSpeed(-frontRightSpeed * 0.6);
+                backRight.setSpeed(-backRightSpeed * 0.6);
+                backLeft.setSpeed(-backLeftSpeed * 0.6);
 
             } else if (y < 0 && isFieldCentric) {
                 //fixing the field centric angles because they are off by 90
@@ -202,6 +203,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 backRight.setSpeed(-backRightSpeed);
                 backLeft.setSpeed(-backLeftSpeed);
             }
+            */
             
         } 
         else {
@@ -228,11 +230,12 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("fr speed", frontRightSpeed);
         SmartDashboard.putNumber("Bl speed", backLeftSpeed);
         SmartDashboard.putNumber("br speed", backRightSpeed);
+        */
         SmartDashboard.putNumber("fl angle", frontLeftAngle);
         SmartDashboard.putNumber("fr angle", frontRightAngle);
         SmartDashboard.putNumber("Bl angle", backLeftAngle);
         SmartDashboard.putNumber("br angle", backRightAngle);
-        */
+        
 
         //SmartDashboard.putData("pid", SubsystemBase.);
 

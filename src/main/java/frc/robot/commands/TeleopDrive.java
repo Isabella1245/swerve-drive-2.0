@@ -29,11 +29,11 @@ public class TeleopDrive extends CommandBase {
 	@Override
 	public void execute() {
 SmartDashboard.putBoolean("fod", currentFOD);
-		if (Robot.LowerDriver.getControllerButton3()){
+		if (Robot.LowerDriver.getControllerAButtonPressed()){
 			swerve.resetGyro();
 		}
 
-		if (Robot.LowerDriver.getControllerButton4()) {
+		if (Robot.LowerDriver.getControllerBButtonPressed()) {
 			currentFOD = !currentFOD;
 			swerve.setFOD(currentFOD);
 		}
@@ -41,8 +41,8 @@ SmartDashboard.putBoolean("fod", currentFOD);
 		 * swerve.drive(Robot.driver.getControllerLeftStickX(), Robot.driver.getControllerLeftStickY(),
 					 Robot.driver.getControllerRightStickX(), swerve.gyroAngle());
 		 */
-		swerve.drive(Robot.LowerDriver.getControllerXAxis(), Robot.LowerDriver.getControllerYAxis(),
-					 Robot.LowerDriver.getControllerZAxis(), swerve.gyroAngle());
+		swerve.drive(Robot.LowerDriver.getControllerLeftStickX(), Robot.LowerDriver.getControllerLeftStickY(),
+		Robot.LowerDriver.getControllerRightStickX(), swerve.gyroAngle());
 	}
 
 	

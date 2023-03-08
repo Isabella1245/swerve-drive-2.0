@@ -11,7 +11,7 @@ public interface Constants{
     //PID has proportional, integral, and derivative controller actions
     //PIDF has proportional, integral, and derivative with first-order filter on derivative term
     
-    public final double kP = 0.05;//2.25 //500
+    public final double kP = 0.06;//2.25 //500 //0.8
     public final double kI = 0.0; //0.05
     public final double kD = 0.0009;//50 //5
     public final double kF = 0.0;
@@ -49,8 +49,8 @@ public interface Constants{
     public final int BLTencoderID = 1; //1
 
     // Offset of encoders to make them face forwards
-    public final int FRTencoderOffset = 0; //171?
-    public final int FLTencoderOffset = 0; //171?
+    public final int FRTencoderOffset = 0;
+    public final int FLTencoderOffset = 171; //171?
     public final int BRTencoderOffset = 0;
     public final int BLTencoderOffset = 0;
 
@@ -64,7 +64,7 @@ public interface Constants{
     public final int analogPotID = 4;
     public final int analogPotMax = 3600;
     public final int analogPotMin = -100;
-    //arm encoders
+    //arm encoders (digital)
     public final int extensionEncoderA = 0;
     public final int extensionEncoderB = 1;
     public final int clawEncoderA = 2;
@@ -78,11 +78,11 @@ public interface Constants{
 
     //arm auton constants
     //angles in potentiometer values
-    public final double floorHeight = 2900;
+    public final double floorHeight = 400;
     public final double midHeight = 2420;
     public final double topHeight = 3000; //2900
 
-    public final double floorExtenstion = 7000;
+    public final double floorExtenstion = 250;
     public final double midExtenstion = 0;
     public final double topExtenstion = 5185; //7000
 

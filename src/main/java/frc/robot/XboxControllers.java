@@ -38,9 +38,9 @@ public class XboxControllers {
 	 * @return If the Joystick is being pushed Up or Down
 	 */
 	public double getControllerLeftStickY() {
-		if (Math.abs(controller.getRawAxis(1) * -1) < lJoystickDeadbandY)
+		if (Math.abs(controller.getRawAxis(1)) < lJoystickDeadbandY)
 			return 0;
-		return controller.getRawAxis(1) * -1;
+		return controller.getRawAxis(1);
 	}
 	/**
 	 * Finds whether the Right Joystick is being pushed Left or Right
