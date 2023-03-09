@@ -102,11 +102,11 @@ public interface Constants{
     //MOBILITY
         //speed
     public final double B1MobSpeed = -0.2;
-    public final double B2MobSpeed = 0;
-    public final double B3MobSpeed = 0;
+    public final double B2MobSpeed = -0.4;
+    public final double B3MobSpeed = -0.4;
         
-    public final double R1MobSpeed = 0;
-    public final double R2MobSpeed = 0;
+    public final double R1MobSpeed = -0.4;
+    public final double R2MobSpeed = -0.4;
     public final double R3MobSpeed = -0.2;
         //angle
     public final double B1MobAngle = 0;
@@ -124,6 +124,59 @@ public interface Constants{
     public final double R1MobTime = 4;
     public final double R2MobTime = 4;
     public final double R3MobTime = 2;
+    
+
+    //DOCKING
+        //speed
+     public final double B1DockSpeed1 = -0.2; //B1MobSpeed
+     public final double B1DockSpeed2 = -0.2;
+
+     public final double B2DockSpeed1 = -0.4; //B2MobSpeed
+
+     public final double B3DockSpeed1 = -0.4; //B3MobSpeed
+     public final double B3DockSpeed2 = -0.4;
+
+     public final double R1DockSpeed1 = -0.4; //R1ModSpeed
+     public final double R1DockSpeed2 = -.04;
+
+     public final double R2DockSpeed1 = -0.4; //R2MobSpeed
+
+     public final double R3DockSpeed1 = -0.2; //R3MobSpeed
+     public final double R3DockSpeed2 = -0.2;
+
+         //angle
+     public final double B1DockAngle1 = 0; //B1MobAngle
+     public final double B1DockAngle2 = 90;
+
+     public final double B2DockAngle1 = 0; //B2MobAngle
+
+     public final double B3DockAngle1 = 0; //B3MobAngle
+     public final double B3DockAngle2 = -90;
+
+     public final double R1DockAngle1 = 0; //R1MobAngle
+     public final double R1DockAngle2 = -90;
+
+     public final double R2DockAngle1 = 0; //R2MobAngle
+
+     public final double R3DockAngle1 = 0; //R3MobAngle
+     public final double R3DockAngle2 = 90;
+
+         //time
+     public final double B1DockTime1 = 2; //B1MobTime
+     public final double B1DockTime2 = 2;
+
+     public final double B2DockTime1 = 4; //B2MobTime
+
+     public final double B3DockTime1 = 4; //B3MobTime
+     public final double B3DockTime2 = 2;
+
+     public final double R1DockTime1 = 4; //R1MobTime
+     public final double R1DockTime2 = 2;
+
+     public final double R2DockTime1 = 4; //R2MobTime
+
+     public final double R3DockTime1 = 2; //R3MobTime
+     public final double R3DockTime2 = 2;
 
     //position 1 - blue
     public final double p1BlueSpeed = 1;

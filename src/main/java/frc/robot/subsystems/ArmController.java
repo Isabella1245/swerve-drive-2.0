@@ -218,10 +218,10 @@ public class ArmController extends SubsystemBase implements Constants {
     }
 
     //auton claw buttons
-    public void OpenClaw() {
+    public void openClaw() {
             claw.solenoidSet(true);
     }
-    public void CloseClaw() {
+    public void closeClaw() {
             claw.solenoidSet(false);
     }
     

@@ -275,7 +275,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("Bl angle", backLeftAngle);
         SmartDashboard.putNumber("br angle", backRightAngle);
         
-
+        SmartDashboard.putNumber("gyro balance", gyro.getRoll());
         //SmartDashboard.putData("pid", SubsystemBase.);
 
         //front right
@@ -391,6 +391,11 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
     }
 
+    public void balanceRobot(){
+        if(gyro.getRoll() > 4 && gyro.getRoll() < 8) {
+            
+        }
+    }
     //might not use
     public void moveDistance(double speed, double angle, double ramprate, double time) {
         Timer moveDistanceTimer = new Timer();
@@ -421,7 +426,6 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         }
     }
     
-
     // Zero the Gryo
     public void resetGyro() {
         gyro.reset();

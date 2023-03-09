@@ -13,6 +13,6 @@ public class CloseClaw extends CommandBase {
 
     @Override
     public void execute() {
-        arm.CloseClaw();
+        arm.closeClaw();
     }
 }
