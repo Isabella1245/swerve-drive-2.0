@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.OpenClaw;
 import frc.robot.commands.CloseClaw;
+import frc.robot.commands.DriveSegment;
 import frc.robot.commands.SetGamePiece;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ArmController;
@@ -63,7 +64,7 @@ public class Robot extends TimedRobot implements Constants{
     //put the schedule instance on the smart dashboard when the robot initializes
     SmartDashboard.putData(CommandScheduler.getInstance());
 
-    autonChooser.setDefaultOption("B1: Score + Mobility", kScoreMobilityB1);
+    autonChooser.addOption("B1: Score + Mobility", kScoreMobilityB1);
     autonChooser.addOption("B2: Score + Mobility", kScoreMobilityB2);
     autonChooser.addOption("B3: Score + Mobility", kScoreMobilityB3);
 
@@ -89,9 +90,43 @@ public class Robot extends TimedRobot implements Constants{
     Command sequence;
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
+    //score+mobility
+    /*B1*/
     if (autonSelection.equals(kScoreMobilityB1)) {
       sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
+      sequence = sequence.andThen(new DriveSegment(swerve, B1MobSpeed, B1MobAngle, B1MobTime));
+    /*B2*/
+    } else if (autonSelection.equals(kScoreMobilityB2)) {
+      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
+      sequence = sequence.andThen(new OpenClaw(arm));
+      sequence = sequence.andThen(new DriveSegment(swerve, B2MobSpeed, B2MobAngle, B2MobTime));
+    /*B3*/
+    } else if (autonSelection.equals(kScoreMobilityB3)) {
+      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
+      sequence = sequence.andThen(new OpenClaw(arm));
+      sequence = sequence.andThen(new DriveSegment(swerve, B3MobSpeed, B3MobAngle, B3MobTime));
+    /*R1*/
+    } else if (autonSelection.equals(kScoreMobilityR1)) {
+      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
+      sequence = sequence.andThen(new OpenClaw(arm));
+      sequence = sequence.andThen(new DriveSegment(swerve, R1MobSpeed, R1MobAngle, R1MobTime));
+    /*R2*/
+    } else if (autonSelection.equals(kScoreMobilityR2)) {
+      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
+      sequence = sequence.andThen(new OpenClaw(arm));
+      sequence = sequence.andThen(new DriveSegment(swerve, R2MobSpeed, R2MobAngle, R2MobTime));
+    /*R3*/
+    } else if (autonSelection.equals(kScoreMobilityR3)) {
+      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
+      sequence = sequence.andThen(new OpenClaw(arm));
+      sequence = sequence.andThen(new DriveSegment(swerve, R3MobSpeed, R3MobAngle, R3MobTime));
     } else {
       sequence = new OpenClaw(arm);
     }

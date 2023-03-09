@@ -81,13 +81,15 @@ public interface Constants{
     //angles in potentiometer values
     public final double floorHeight = 400;
     public final double midHeight = 2420;
-    public final double topHeight = 3000; //2900
+    
+    public final double topHeight = 2103; //2103
+    public final double topHeight2 = 2014;
 
     public final double floorExtenstion = 250;
     public final double midExtenstion = 0;
-    public final double topExtenstion = 5185; //7000
+    public final double topExtenstion = 6745; //6745
 
-    public final double wristSet = 0;
+    public final double wristSet = 1087;
 
     public final double retractHeight = 1000;
     public final double retractExtension = -100;
@@ -95,7 +97,33 @@ public interface Constants{
     public final double potThreshold = 1000;
     public final double retractThreshold = 1000;
 
-    //drive Auton Constants
+    //AUTON CONSTANTE
+
+    //MOBILITY
+        //speed
+    public final double B1MobSpeed = -0.2;
+    public final double B2MobSpeed = 0;
+    public final double B3MobSpeed = 0;
+        
+    public final double R1MobSpeed = 0;
+    public final double R2MobSpeed = 0;
+    public final double R3MobSpeed = -0.2;
+        //angle
+    public final double B1MobAngle = 0;
+    public final double B2MobAngle = 0;
+    public final double B3MobAngle = 0;
+
+    public final double R1MobAngle = 0;
+    public final double R2MobAngle = 0;
+    public final double R3MobAngle = 0;
+        //time
+    public final double B1MobTime = 2;
+    public final double B2MobTime = 4;
+    public final double B3MobTime = 4;
+
+    public final double R1MobTime = 4;
+    public final double R2MobTime = 4;
+    public final double R3MobTime = 2;
 
     //position 1 - blue
     public final double p1BlueSpeed = 1;

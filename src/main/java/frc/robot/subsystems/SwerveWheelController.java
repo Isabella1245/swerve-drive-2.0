@@ -35,6 +35,9 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
     public AHRS gyro = null;
 
+    Timer moveDistanceTimer = new Timer();
+
+
     // Get distance between wheels
     public double r = Math.sqrt((L * L) + (W * W));
 
@@ -82,12 +85,12 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     // Holonomic drive
     public void drive(double x, double y, double z, double gyroValue, boolean aButton) {
 
-        if (aButton) {
+        /*if (aButton) {
             frontRight.resetTurnMotors();
             frontLeft.resetTurnMotors();
             backRight.resetTurnMotors();
             backLeft.resetTurnMotors();
-        }
+        }*/
         //inverts y for drive
         y *= -1;
         //gves max speed
@@ -359,6 +362,36 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         }
     }
 
+    public void driveSegment(double speed, double angle, double timeSeconds) {
+        moveDistanceTimer.reset();
+        moveDistanceTimer.start();
+
+        frontRight.setSetpoint(angle);
+        frontLeft.setSetpoint(angle);
+        backRight.setSetpoint(angle);
+        backLeft.setSetpoint(angle);
+
+        if(moveDistanceTimer.get() < timeSeconds) {
+            frontRight.setSpeed(speed);
+            frontLeft.setSpeed(speed);
+            backRight.setSpeed(speed);
+            backLeft.setSpeed(speed);
+            
+            frontRight.setSetpoint(angle);
+            frontLeft.setSetpoint(angle);
+            backRight.setSetpoint(angle);
+            backLeft.setSetpoint(angle);
+        } else {
+            frontRight.setSpeed(0);
+            frontLeft.setSpeed(0);
+            backRight.setSpeed(0);
+            backLeft.setSpeed(0);
+            moveDistanceTimer.stop();
+        }
+
+    }
+
+    //might not use
     public void moveDistance(double speed, double angle, double ramprate, double time) {
         Timer moveDistanceTimer = new Timer();
         moveDistanceTimer.reset();

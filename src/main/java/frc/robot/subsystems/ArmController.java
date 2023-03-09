@@ -201,15 +201,17 @@ public class ArmController extends SubsystemBase implements Constants {
             actuatorArm.setspeed(-0.8);
             extension.setspeed(0.05);
 
-        } else if (actuatorArm.getPot() > setHeight && extension.getArmEnc() > setExtension && armRotation.getArmEnc() > setWrist) {
+        } else if (actuatorArm.getPot() >= setHeight && extension.getArmEnc() >= setExtension && armRotation.getArmEnc() < setWrist) {
             actuatorArm.setspeed(0);
             extension.setspeed(0);
-            armRotation.setspeed(0.3);
+            //tried negative speed
+            armRotation.setspeed(-0.3);
         }
         else {
             actuatorArm.setspeed(0);
             extension.setspeed(0.05);
-            armRotation.setspeed(-0.1);
+            //tried positive speed 
+            armRotation.setspeed(0.1);
         }
 
 
