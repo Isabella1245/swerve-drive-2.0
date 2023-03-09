@@ -23,8 +23,9 @@ public interface Constants{
     public final double F = 0.0;
 
     //quadrature encoder ticks per rotation
-    public final int quadCountsPerRotation = 1640;
+    public final int quadCountsPerRotation = 1658;
     public final int analogCountsPerRotation = 2700;
+    public final int twoAnalogCountsPerRotation = 4000;
     
     public final int armQuadCountsPerRotation = 8192;
     //Turn motor CAN ID
@@ -85,6 +86,8 @@ public interface Constants{
     public final double floorExtenstion = 250;
     public final double midExtenstion = 0;
     public final double topExtenstion = 5185; //7000
+
+    public final double wristSet = 0;
 
     public final double retractHeight = 1000;
     public final double retractExtension = -100;

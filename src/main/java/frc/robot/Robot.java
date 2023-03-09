@@ -3,8 +3,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.CloseClaw;
 import frc.robot.commands.OpenClaw;
+import frc.robot.commands.CloseClaw;
+import frc.robot.commands.SetGamePiece;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ArmController;
 import frc.robot.subsystems.SwerveWheel;
@@ -14,6 +15,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //i think we can use the wpilib import for joysticks instead of the vikings' import for controller
 //import viking.Controller;
 
-public class Robot extends TimedRobot {
+public class Robot extends TimedRobot implements Constants{
   
   public static XboxControllers LowerDriver = new XboxControllers(2);
   public static XboxControllers UpperDriver = new XboxControllers(0);
@@ -36,6 +39,11 @@ public class Robot extends TimedRobot {
 
   private TeleopDrive  teleDrive;
 
+  private String autonSelection;
+
+  private static final String kB1 = "B1";
+  private static final String kOnePiece = "One piece drive out";
+
   
 
   @Override
@@ -48,10 +56,11 @@ public class Robot extends TimedRobot {
     //put the schedule instance on the smart dashboard when the robot initializes
     SmartDashboard.putData(CommandScheduler.getInstance());
 
-    autonChooser.setDefaultOption("3 piece blue side", "B1");
+    autonChooser.setDefaultOption("1 piece drive out", kOnePiece);
+    autonChooser.addOption("3 piece blue side (B1)", kB1);
     autonChooser.addOption("3 piece red side", "R1");
     autonChooser.addOption("1 piece and balance blue side", "B2");
-    autonChooser.addOption("1 piece and balace red side", "R2");
+    autonChooser.addOption("1 piece and balance red side", "R2");
     SmartDashboard.putData(autonChooser);
   }
 
@@ -68,8 +77,13 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     Command sequence;
     scheduler.cancelAll();
-    sequence = new OpenClaw(arm);
-    sequence = sequence.andThen(new CloseClaw(arm));
+    autonSelection = autonChooser.getSelected();
+    if (autonSelection.equals(kOnePiece)) {
+      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = sequence.andThen(new OpenClaw(arm));
+    } else {
+      sequence = new OpenClaw(arm);
+    }
     scheduler.schedule(sequence);
   }
 

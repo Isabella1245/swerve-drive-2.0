@@ -30,6 +30,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
     private boolean reversePhase;
 
+    private double steerValue;
+
     //double initialPoint;
 
     public SwerveWheel(SwerveWheelDrive drive, int m_steer, int analogEnc, int zeroOffset, String name, boolean isReversePhase) 
@@ -39,6 +41,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         this.name = name;
 
         this.drive = drive;
+
+        steerValue = m_steer;
 
         countsWhenFrwd = zeroOffset;
 
@@ -57,8 +61,8 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 		// has 0 position on startup
 
         //we reviewed this and it is correct :)
-		//steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
-        steerMotor.setSelectedSensorPosition(0);
+        steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
+        //steerMotor.setSelectedSensorPosition(0);
 
         // sets the current quadrature position relative to the analog position to make sure the motor has 0 position on startup
         //sets the input range of the PIDF so that it will only accept angles between -180 and 180
@@ -80,7 +84,11 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     */
      //we reviewed this and it is correct :)
     public int getAbsAngleDeg() {
+        if (steerValue == 4) {
+            return (int) ((absoluteEncoder.getValue() - countsWhenFrwd) * 360 / twoAnalogCountsPerRotation);
+        } else {
         return (int)((absoluteEncoder.getValue() - countsWhenFrwd) * 360 / analogCountsPerRotation);
+    }
     }
 
     //get current ticks
@@ -125,8 +133,9 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
         return (int)(getAbsAngleDeg() * quadCountsPerRotation / 180);
     }
 
-    //not sure what this class does
-    
+    public void resetDigitalEnc() {
+        steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
+    }    
     
     @Override
     protected void useOutput(double output, double setpoint) {

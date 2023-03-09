@@ -75,8 +75,14 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
          // x = strafe, y = speed, z = rotation 
     // Holonomic drive
-    public void drive(double x, double y, double z, double gyroValue) {
+    public void drive(double x, double y, double z, double gyroValue, boolean aButton) {
 
+        if (aButton) {
+            frontRight.resetDigitalEnc();
+            frontLeft.resetDigitalEnc();
+            backRight.resetDigitalEnc();
+            backLeft.resetDigitalEnc();
+        }
         //inverts y for drive
         y *= -1;
         //gves max speed

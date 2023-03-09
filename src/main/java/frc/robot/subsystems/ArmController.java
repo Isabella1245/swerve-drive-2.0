@@ -52,10 +52,10 @@ public class ArmController extends SubsystemBase implements Constants {
         if (leftY > 0.15 && actuatorArm.getPot() < 3000){
             actuatorArm.setspeed(leftY * -0.7);
         }
-        else if (leftY < -0.15 && actuatorArm.getPot() > 200){
+        else if (leftY < -0.15 && actuatorArm.getPot() > 240){
             actuatorArm.setspeed(leftY * -0.7);
         } 
-        else if (leftY < -0.15 && actuatorArm.getPot() < 200){
+        else if (leftY < -0.15 && actuatorArm.getPot() < 240){
             actuatorArm.setspeed(-0.7);
         } 
         //mid extension height button
@@ -101,7 +101,7 @@ public class ArmController extends SubsystemBase implements Constants {
             extension.setspeed(rightY * 0.7);
             position = extension.getArmEnc();
         }
-        else if (rightY < -0.15 && extension.getArmEnc() > -1200){
+        else if (rightY < -0.15 && extension.getArmEnc() > -1250){
             extension.setspeed(rightY * 0.7);
             position = extension.getArmEnc();
         }
@@ -184,35 +184,43 @@ public class ArmController extends SubsystemBase implements Constants {
     } 
 
     //angle & extension button TOP HEIGHT
-    public void topHeightArm(boolean yButton) {
-        if (yButton && actuatorArm.getPot() < topHeight && actuatorArm.getPot() < potThreshold){
+    public void setGamePiece(double setHeight, double setExtension, double setWrist) {
+        if (actuatorArm.getPot() < setHeight && actuatorArm.getPot() < potThreshold){
             actuatorArm.setspeed(-0.8); 
             extension.setspeed(0.05);
 
-        } else if (yButton && actuatorArm.getPot() < topHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < topExtenstion){
+        } else if (actuatorArm.getPot() < setHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < setExtension){
             actuatorArm.setspeed(-0.8); 
             extension.setspeed(-0.4);
 
-        } else if (yButton && actuatorArm.getPot() >= topHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < topExtenstion){
+        } else if (actuatorArm.getPot() >= setHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() < setExtension){
             extension.setspeed(-0.4);
             actuatorArm.setspeed(0);
 
-        } else if (yButton && actuatorArm.getPot() < topHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() >= topExtenstion){
+        } else if (actuatorArm.getPot() < setHeight && actuatorArm.getPot() > potThreshold && extension.getArmEnc() >= setExtension){
             actuatorArm.setspeed(-0.8);
             extension.setspeed(0.05);
 
-        } else {
+        } else if (actuatorArm.getPot() > setHeight && extension.getArmEnc() > setExtension && armRotation.getArmEnc() > setWrist) {
+            actuatorArm.setspeed(0);
+            extension.setspeed(0);
+            armRotation.setspeed(0.3);
+        }
+        else {
             actuatorArm.setspeed(0);
             extension.setspeed(0.05);
+            armRotation.setspeed(-0.1);
         }
+
+
     }
 
     //auton claw buttons
     public void OpenClaw() {
-            claw.solenoidSet(true);
+            claw.solenoidSet(false);
     }
     public void CloseClaw() {
-            claw.solenoidSet(false);
+            claw.solenoidSet(true);
     }
     
 
