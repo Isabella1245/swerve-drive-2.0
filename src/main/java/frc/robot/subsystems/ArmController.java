@@ -113,7 +113,7 @@ public class ArmController extends SubsystemBase implements Constants {
         if (rightTrigger > 0.15 && armRotation.getArmEnc() < 1500){
             armRotation.setspeed(rightTrigger * 0.4);
         }
-        else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1200){
+        else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1220){
             armRotation.setspeed(-leftTrigger * 0.4);
         }else{
             armRotation.setspeed(0.05);
@@ -211,7 +211,7 @@ public class ArmController extends SubsystemBase implements Constants {
             actuatorArm.setspeed(0);
             extension.setspeed(0.05);
             //tried positive speed 
-            armRotation.setspeed(0.1);
+            armRotation.setspeed(0.3);
         }
 
 
@@ -219,10 +219,10 @@ public class ArmController extends SubsystemBase implements Constants {
 
     //auton claw buttons
     public void OpenClaw() {
-            claw.solenoidSet(false);
+            claw.solenoidSet(true);
     }
     public void CloseClaw() {
-            claw.solenoidSet(true);
+            claw.solenoidSet(false);
     }
     
 
