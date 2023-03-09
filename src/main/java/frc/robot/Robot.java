@@ -59,6 +59,8 @@ public class Robot extends TimedRobot implements Constants{
   private static final String kScoreMobilityDockR2 = "R2: Score + Mobility + Dock";
   private static final String kScoreMobilityDockR3 = "R3: Score + Mobility + Dock";
 
+  private static final String kTestDriveSeg = "drive test";
+
 
 
   
@@ -72,6 +74,8 @@ public class Robot extends TimedRobot implements Constants{
     CameraServer.startAutomaticCapture();
     //put the schedule instance on the smart dashboard when the robot initializes
     SmartDashboard.putData(CommandScheduler.getInstance());
+
+    autonChooser.setDefaultOption("test drive", kTestDriveSeg);
 
     //score + mobility
     autonChooser.addOption("B1: Score + Mobility", kScoreMobilityB1);
@@ -110,8 +114,11 @@ public class Robot extends TimedRobot implements Constants{
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
     //score+mobility
+    if (autonSelection.equals(kTestDriveSeg)) {
+      sequence = new DriveSegment(swerve, B1MobSpeed, B1MobAngle, B1MobTime);
+    }
     /*B1*/
-    if (autonSelection.equals(kScoreMobilityB1)) {
+    else if (autonSelection.equals(kScoreMobilityB1)) {
       sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));

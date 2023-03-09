@@ -211,7 +211,7 @@ public class ArmController extends SubsystemBase implements Constants {
             actuatorArm.setspeed(0);
             extension.setspeed(0.05);
             //tried positive speed 
-            armRotation.setspeed(0.3);
+            armRotation.setspeed(0.2);
         }
 
 
