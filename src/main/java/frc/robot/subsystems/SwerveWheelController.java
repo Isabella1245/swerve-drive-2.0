@@ -139,7 +139,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 d = y + (W / r);
             }*/
 
-
+            /* 
             frontLeftSpeed = Math.sqrt((b * b) + (c * c));
             frontRightSpeed = Math.sqrt((b * b) + (d * d));
             backRightSpeed = Math.sqrt((a * a) + (d * d));
@@ -148,7 +148,24 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             backRightAngle = Math.atan2(a, d) * 180 / Math.PI;
             backLeftAngle = Math.atan2(a, c) * 180 / Math.PI;
             frontRightAngle = Math.atan2(b, d) * 180 / Math.PI;
-            frontLeftAngle = Math.atan2(b, c) * 180 / Math.PI ;   
+            frontLeftAngle = Math.atan2(b, c) * 180 / Math.PI ;  
+            */ 
+
+            //apparently the c and d parts for fr/l and br/l were mixed up
+            //those silly vikings!!! XD
+            
+            frontRightSpeed = Math.sqrt((b * b) + (c * c));
+            frontLeftSpeed = Math.sqrt((b * b) + (d * d));
+            backLeftSpeed = Math.sqrt((a * a) + (d * d));
+            backRightSpeed = Math.sqrt((a * a) + (c * c));
+
+            frontRightAngle = Math.atan2(b, c) * 180 / Math.PI;
+            frontLeftAngle = Math.atan2(b, d) * 180 / Math.PI; 
+            backLeftAngle = Math.atan2(a, d) * 180 / Math.PI;
+            backRightAngle = Math.atan2(a, c) * 180 / Math.PI;
+
+
+
             
 
             // This bit of code normalizes the speed
