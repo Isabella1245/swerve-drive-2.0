@@ -42,7 +42,7 @@ SmartDashboard.putBoolean("fod", currentFOD);
 					 Robot.driver.getControllerRightStickX(), swerve.gyroAngle());
 		 */
 		swerve.drive(Robot.LowerDriver.getControllerLeftStickX(), Robot.LowerDriver.getControllerLeftStickY(),
-		Robot.LowerDriver.getControllerRightStickX(), swerve.gyroAngle());
+		Robot.LowerDriver.getControllerRightStickX(), swerve.gyroAngle(), Robot.LowerDriver.getControllerAButton());
 	}
 
 	
