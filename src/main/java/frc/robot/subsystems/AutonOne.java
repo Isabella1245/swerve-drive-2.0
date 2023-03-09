@@ -173,33 +173,4 @@ public class AutonOne extends SubsystemBase implements Constants {
 
     } */
 
-    public void moveDistance(double speed, double angle, double ramprate, double time) {
-        moveDistanceTimer.reset();
-        moveDistanceTimer.start();
-
-        double direction;
-        double maxSpeed;
-        if (speed < 0) {
-            maxSpeed = speed + 0.1;
-            direction = -0.1;
-
-        } else {
-            maxSpeed = speed - 0.1;
-            direction = 0.1;
-        }
-        if (moveDistanceTimer.get() < time) {
-        frontRight.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
-        frontLeft.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
-        backRight.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
-        backLeft.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
-        } else {
-            frontRight.setSpeed(0);
-            frontLeft.setSpeed(0);
-            backRight.setSpeed(0);
-            backLeft.setSpeed(0);
-
-        }
-    }
-
-
 } 

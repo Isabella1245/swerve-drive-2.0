@@ -109,11 +109,12 @@ public class ArmController extends SubsystemBase implements Constants {
             extension.setspeed(0.1);
         }
 
-        if (rightTrigger > 0.15 && armRotation.getArmEnc() < 1024){
-            armRotation.setspeed(rightTrigger * 0.7);
+        //claw wrist
+        if (rightTrigger > 0.15 && armRotation.getArmEnc() < 1500){
+            armRotation.setspeed(rightTrigger * 0.4);
         }
         else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1200){
-            armRotation.setspeed(-leftTrigger * 0.7);
+            armRotation.setspeed(-leftTrigger * 0.4);
         }else{
             armRotation.setspeed(0.05);
         }

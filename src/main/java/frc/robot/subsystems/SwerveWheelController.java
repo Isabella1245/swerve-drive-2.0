@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.SwerveWheel;
+import edu.wpi.first.wpilibj.Timer;
+
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -317,6 +319,35 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 backRight.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
                 backLeft.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
             }
+        } else {
+            frontRight.setSpeed(0);
+            frontLeft.setSpeed(0);
+            backRight.setSpeed(0);
+            backLeft.setSpeed(0);
+
+        }
+    }
+
+    public void moveDistance(double speed, double angle, double ramprate, double time) {
+        Timer moveDistanceTimer = new Timer();
+        moveDistanceTimer.reset();
+        moveDistanceTimer.start();
+
+        double direction;
+        double maxSpeed;
+        if (speed < 0) {
+            maxSpeed = speed + 0.1;
+            direction = -0.1;
+
+        } else {
+            maxSpeed = speed - 0.1;
+            direction = 0.1;
+        }
+        if (moveDistanceTimer.get() < time) {
+        frontRight.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
+        frontLeft.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
+        backRight.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
+        backLeft.setSpeed(((maxSpeed/(1+Math.exp(-(ramprate*moveDistanceTimer.get()) + 4)))+direction));
         } else {
             frontRight.setSpeed(0);
             frontLeft.setSpeed(0);

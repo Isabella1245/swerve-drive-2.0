@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.CloseClaw;
+import frc.robot.commands.OpenClaw;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ArmController;
 import frc.robot.subsystems.SwerveWheel;
@@ -11,8 +13,7 @@ import frc.robot.subsystems.SwerveWheelDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.AnalogInput;
-
-import javax.sound.midi.Sequence;
+import edu.wpi.first.wpilibj2.command.Command;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -25,7 +26,7 @@ public class Robot extends TimedRobot {
   public static XboxControllers LowerDriver = new XboxControllers(2);
   public static XboxControllers UpperDriver = new XboxControllers(0);
   //public static Joystick driver = new Joystick(0);
-	private static CommandScheduler scheduler = CommandScheduler.getInstance();
+	private static CommandScheduler scheduler;
   Timer timer = new Timer();
 
   private SwerveWheelController swerve;
@@ -41,8 +42,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     swerve = SwerveWheelController.getInstance();
     arm = ArmController.getInstance();
+    scheduler = CommandScheduler.getInstance();
 
-    ArmController.getInstance();
     CameraServer.startAutomaticCapture();
     //put the schedule instance on the smart dashboard when the robot initializes
     SmartDashboard.putData(CommandScheduler.getInstance());
@@ -61,13 +62,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    System.out.println("Disabled");
   }
 
   @Override
   public void autonomousInit() {
-    System.out.println("Autonomous");
+    Command sequence;
     scheduler.cancelAll();
+    sequence = new OpenClaw(arm);
+    sequence = sequence.andThen(new CloseClaw(arm));
+    scheduler.schedule(sequence);
   }
 
   @Override
