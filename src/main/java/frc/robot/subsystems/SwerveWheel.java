@@ -130,7 +130,7 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     }
 
     public int getQuadEncZeroSetpoint() {
-        return (int)(getAbsAngleDeg() * quadCountsPerRotation / 180);
+        return (int)(getAbsAngleDeg() * quadCountsPerRotation / 360);
     }
 
     public void resetDigitalEnc() {
@@ -139,9 +139,9 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 
     public void resetTurnMotors() {
         if (getAbsAngleDeg() > 3 && getAbsAngleDeg() <= 180) {
-            steerMotor.set(ControlMode.PercentOutput, -0.1);
+            steerMotor.set(ControlMode.PercentOutput, -0.5);
         } else if (getAbsAngleDeg() < 357 && getAbsAngleDeg() > 180) {
-            steerMotor.set(ControlMode.PercentOutput, 0.1);
+            steerMotor.set(ControlMode.PercentOutput, 0.5);
         } else {
             steerMotor.set(ControlMode.PercentOutput, 0);
             resetDigitalEnc();

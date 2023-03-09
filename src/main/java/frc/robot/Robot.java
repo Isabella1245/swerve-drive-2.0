@@ -41,8 +41,15 @@ public class Robot extends TimedRobot implements Constants{
 
   private String autonSelection;
 
-  private static final String kB1 = "B1";
-  private static final String kOnePiece = "One piece drive out";
+  private static final String kScoreMobilityB1 = "B1: Score + Mobility";
+  private static final String kScoreMobilityB2 = "B2: Score + Mobility";
+  private static final String kScoreMobilityB3 = "B3: Score + Mobility";
+
+  private static final String kScoreMobilityR1 = "R1: Score + Mobility";
+  private static final String kScoreMobilityR2 = "R2: Score + Mobility";
+  private static final String kScoreMobilityR3 = "R3: Score + Mobility";
+
+
 
   
 
@@ -56,11 +63,15 @@ public class Robot extends TimedRobot implements Constants{
     //put the schedule instance on the smart dashboard when the robot initializes
     SmartDashboard.putData(CommandScheduler.getInstance());
 
-    autonChooser.setDefaultOption("1 piece drive out", kOnePiece);
-    autonChooser.addOption("3 piece blue side (B1)", kB1);
-    autonChooser.addOption("3 piece red side", "R1");
-    autonChooser.addOption("1 piece and balance blue side", "B2");
-    autonChooser.addOption("1 piece and balance red side", "R2");
+    autonChooser.setDefaultOption("B1: Score + Mobility", kScoreMobilityB1);
+    autonChooser.addOption("B2: Score + Mobility", kScoreMobilityB2);
+    autonChooser.addOption("B3: Score + Mobility", kScoreMobilityB3);
+
+    autonChooser.addOption("R1: Score + Mobility", kScoreMobilityR1);
+    autonChooser.addOption("R2: Score + Mobility", kScoreMobilityR2);
+    autonChooser.addOption("R3: Score + Mobility", kScoreMobilityR3);
+
+    
     SmartDashboard.putData(autonChooser);
   }
 
@@ -78,7 +89,7 @@ public class Robot extends TimedRobot implements Constants{
     Command sequence;
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
-    if (autonSelection.equals(kOnePiece)) {
+    if (autonSelection.equals(kScoreMobilityB1)) {
       sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
       sequence = sequence.andThen(new OpenClaw(arm));
     } else {
