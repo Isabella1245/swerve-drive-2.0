@@ -136,6 +136,17 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
     public void resetDigitalEnc() {
         steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
     }    
+
+    public void resetTurnMotors() {
+        if (getAbsAngleDeg() > 3 && getAbsAngleDeg() <= 180) {
+            steerMotor.set(ControlMode.PercentOutput, -0.1);
+        } else if (getAbsAngleDeg() < 357 && getAbsAngleDeg() > 180) {
+            steerMotor.set(ControlMode.PercentOutput, 0.1);
+        } else {
+            steerMotor.set(ControlMode.PercentOutput, 0);
+            resetDigitalEnc();
+        }
+    }
     
     @Override
     protected void useOutput(double output, double setpoint) {

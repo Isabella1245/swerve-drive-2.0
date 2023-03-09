@@ -71,6 +71,11 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         frontLeft.enable();
         backRight.enable();
         backLeft.enable();
+
+        frontRight.resetTurnMotors();
+        frontLeft.resetTurnMotors();
+        backRight.resetTurnMotors();
+        backLeft.resetTurnMotors();
     }
 
          // x = strafe, y = speed, z = rotation 
@@ -78,10 +83,10 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     public void drive(double x, double y, double z, double gyroValue, boolean aButton) {
 
         if (aButton) {
-            frontRight.resetDigitalEnc();
-            frontLeft.resetDigitalEnc();
-            backRight.resetDigitalEnc();
-            backLeft.resetDigitalEnc();
+            frontRight.resetTurnMotors();
+            frontLeft.resetTurnMotors();
+            backRight.resetTurnMotors();
+            backLeft.resetTurnMotors();
         }
         //inverts y for drive
         y *= -1;
@@ -93,7 +98,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         z *= 0.3;
 
         //calculate magnitude
-        double magnitude = Math.sqrt((Math.pow(x, 2)) + (Math.pow(y,2)));
+        double magnitude = Math.sqrt((Math.pow(x, 2)) + (Math.pow(y,2)) + Math.pow(z,2));
         
         double frontLeftSpeed = 0;
         double frontRightSpeed = 0;
@@ -106,7 +111,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         double backRightAngle = 0;
 
    
-        if (magnitude >= 0.3) {
+        if (magnitude >= 0.1) {
 
             // I got this bit of code from the NavX website
             if (isFieldCentric == true && gyroEnabled == true) {
