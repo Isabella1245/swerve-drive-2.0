@@ -9,6 +9,7 @@ import frc.robot.commands.DriveSegment;
 import frc.robot.commands.SetGamePiece;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.ArmController;
+import frc.robot.subsystems.ArmPart;
 import frc.robot.subsystems.SwerveWheel;
 import frc.robot.subsystems.SwerveWheelController;
 import frc.robot.subsystems.SwerveWheelDrive;
