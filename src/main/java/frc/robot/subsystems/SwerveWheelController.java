@@ -79,6 +79,9 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
         //inverts y for drive
         y *= -1;
+        //gves max speed
+        y *= 0.50;
+        x *= 0.50;
 
         //caps z at 0.2
         z *= 0.3;
