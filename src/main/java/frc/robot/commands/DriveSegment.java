@@ -19,5 +19,10 @@ public class DriveSegment extends CommandBase {
     public void execute() {
         swerve.driveSegment(speed, angle);
     }
+
+    @Override
+    public void end(boolean interrupted){
+
+    }
     
 }

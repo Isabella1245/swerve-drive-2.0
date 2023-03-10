@@ -66,6 +66,14 @@ public interface Constants{
     public final int analogPotMax = 790;
     public final int analogPotMin = 315;
 
+    //extension
+    public final int extensionElevatorMax = 6330;
+    public final int extensionElevatorMin = -1450;
+
+    //wrist
+    public final int wristMax = 1420;
+    public final int wristMin = -40;
+
 
     //arm encoders (digital)
     public final int extensionEncoderA = 1;
@@ -97,6 +105,7 @@ public interface Constants{
     public final double retractHeight = 1000;
     public final double retractExtension = -100;
 
+    //recalculate threshold height, actuator values have changed
     public final double thresholdHeight = 1000;
 
     //AUTON CONSTANTE

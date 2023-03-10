@@ -113,6 +113,10 @@ public class ArmController extends SubsystemBase implements Constants {
 
     //AUTON STUFF
     public void setActuatorArmPos(double setHeight) {
+        if (setHeight > analogPotMax) {
+            setHeight = analogPotMax;
+        }
+
         if (actuatorArm.getPot() < setHeight - 25) {
             actuatorArm.setspeed(-0.8);
         } else if (actuatorArm.getPot() > setHeight + 25) {
@@ -123,6 +127,10 @@ public class ArmController extends SubsystemBase implements Constants {
     } 
 
     public void setExtensionPos(double setExtension) {
+        if (setExtension > extensionElevatorMax) { 
+            setExtension = extensionElevatorMax;
+        }
+
         if (extension.getArmEnc() < setExtension - 50) {
             extension.setspeed(-0.4);
         } else if (extension.getArmEnc() > setExtension + 50) {
@@ -133,7 +141,9 @@ public class ArmController extends SubsystemBase implements Constants {
     } 
 
     public void setArmRotationPos(double setWrist) {
-       
+       if (setWrist > wristMax) {
+        setWrist = wristMax;
+       }
         /*if (armRotation.getArmEnc() < setWrist - 25) {
             armRotation.setspeed(-0.3);
         } else if (armRotation.getArmEnc() > setWrist + 25) {
@@ -173,6 +183,34 @@ public class ArmController extends SubsystemBase implements Constants {
             armRotation.setArmPosition(setWrist);
         }
 
+
+    }
+
+    public void setGamePiece2(double setHeight, double setExtension, double setWrist) {
+       
+        setActuatorArmPos(setHeight);
+        setExtensionPos(setExtension);
+        setArmRotationPos(setWrist);
+    }
+
+    public void setGamePiece3(double setHeight, double setExtension, double setWrist) {
+        if (actuatorArm.getPot() < setHeight) {
+            actuatorArm.setspeed(-0.5); 
+        } else {
+            actuatorArm.setspeed(0);
+        }
+
+        if (extension.getArmEnc() < setExtension) {
+            extension.setspeed(-0.3);
+        } else {
+            extension.setspeed(0);
+        }
+
+        if (armRotation.getArmEnc() < wristSet) {
+            armRotation.setspeed(0.3);
+        } else {
+            armRotation.setspeed(0);
+        }
 
     }
 

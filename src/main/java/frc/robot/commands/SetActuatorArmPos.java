@@ -18,5 +18,10 @@ public class SetActuatorArmPos extends CommandBase{
     public void execute() {
         arm.setActuatorArmPos(setHeight);
     }
+
+    @Override
+    public void end(boolean interrupted){        
+        
+    }
     
 }

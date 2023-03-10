@@ -18,4 +18,9 @@ public class SetArmRotationPos extends CommandBase{
     public void execute() {
         arm.setArmRotationPos(setWrist);
     }
+
+    @Override
+    public void end(boolean interrupted){        
+        
+    }
 }

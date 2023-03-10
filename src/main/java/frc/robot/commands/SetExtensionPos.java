@@ -18,4 +18,9 @@ public class SetExtensionPos extends CommandBase{
     public void execute() {
         arm.setExtensionPos(setExtension);
     }
+
+    @Override
+    public void end(boolean interrupted){        
+        
+    }
 }
