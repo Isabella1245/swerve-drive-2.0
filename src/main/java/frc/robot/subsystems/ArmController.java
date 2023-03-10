@@ -86,10 +86,10 @@ public class ArmController extends SubsystemBase implements Constants {
 
         //claw wrist
         if (rightTrigger > 0.15 && armRotation.getArmEnc() < 1500){
-            armRotation.setspeed(rightTrigger * 0.4);
+            armRotation.setspeed(rightTrigger * 0.3);
         }
         else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1220){
-            armRotation.setspeed(-leftTrigger * 0.4);
+            armRotation.setspeed(-leftTrigger * 0.3);
         }else{
             armRotation.setspeed(0.05);
         }
