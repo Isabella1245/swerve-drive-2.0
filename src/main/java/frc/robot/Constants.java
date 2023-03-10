@@ -17,8 +17,8 @@ public interface Constants{
     public final double kF = 0.0;
 
     //arm pid
-    public final double P = 0.2;
-    public final double I = 0.0;
+    public final double P = 0.1;
+    public final double I = 0.002;
     public final double D = 0.0009;
     public final double F = 0.0;
 
@@ -82,7 +82,7 @@ public interface Constants{
     public final double floorHeight = 400;
     public final double midHeight = 2420;
     
-    public final double topHeight = 2103; //2103
+    public final double topHeight1 = 2103; //2103
     public final double topHeight2 = 2014;
 
     public final double floorExtenstion = 250;
@@ -94,8 +94,7 @@ public interface Constants{
     public final double retractHeight = 1000;
     public final double retractExtension = -100;
 
-    public final double potThreshold = 1000;
-    public final double retractThreshold = 1000;
+    public final double thresholdHeight = 1000;
 
     //AUTON CONSTANTE
 

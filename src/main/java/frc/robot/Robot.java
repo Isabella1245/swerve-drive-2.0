@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.OpenClaw;
+import frc.robot.commands.SetActuatorArmPos;
+import frc.robot.commands.SetArmRotationPos;
+import frc.robot.commands.SetExtensionPos;
 import frc.robot.commands.CloseClaw;
 import frc.robot.commands.DriveSegment;
 import frc.robot.commands.SetGamePiece;
@@ -57,13 +60,7 @@ public class Robot extends TimedRobot implements Constants{
 
   private static final String kScoreMobilityDockR1 = "R1: Score + Mobility + Dock";
   private static final String kScoreMobilityDockR2 = "R2: Score + Mobility + Dock";
-  private static final String kScoreMobilityDockR3 = "R3: Score + Mobility + Dock";
-
-  private static final String kTestDriveSeg = "drive test";
-
-
-
-  
+  private static final String kScoreMobilityDockR3 = "R3: Score + Mobility + Dock";  
 
   @Override
   public void robotInit() {
@@ -74,8 +71,6 @@ public class Robot extends TimedRobot implements Constants{
     CameraServer.startAutomaticCapture();
     //put the schedule instance on the smart dashboard when the robot initializes
     SmartDashboard.putData(CommandScheduler.getInstance());
-
-    autonChooser.setDefaultOption("test drive", kTestDriveSeg);
 
     //score + mobility
     autonChooser.addOption("B1: Score + Mobility", kScoreMobilityB1);
@@ -95,7 +90,6 @@ public class Robot extends TimedRobot implements Constants{
     autonChooser.addOption("R2: Score + Mobility + Dock", kScoreMobilityDockR2);
     autonChooser.addOption("R3: Score + Mobility + Dock", kScoreMobilityDockR3);
 
-    
     SmartDashboard.putData(autonChooser);
   }
 
@@ -114,46 +108,44 @@ public class Robot extends TimedRobot implements Constants{
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
     //SCORE + MOBILITY
-    if (autonSelection.equals(kTestDriveSeg)) {
-      sequence = new DriveSegment(swerve, B1MobSpeed, B1MobAngle, B1MobTime);
-    }
+    
     /*B1*/
-    else if (autonSelection.equals(kScoreMobilityB1)) {
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
-      sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
+    if (autonSelection.equals(kScoreMobilityB1)) {
+      sequence = new SetActuatorArmPos(arm, thresholdHeight);
+      sequence = sequence.andThen(new SetActuatorArmPos(arm, topHeight1)).alongWith(new SetExtensionPos(arm, topExtenstion)).alongWith(new SetArmRotationPos(arm, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, B1MobSpeed, B1MobAngle, B1MobTime));
     /*B2*/
     } else if (autonSelection.equals(kScoreMobilityB2)) {
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, B2MobSpeed, B2MobAngle, B2MobTime));
     
       /*B3*/
     } else if (autonSelection.equals(kScoreMobilityB3)) {
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, B3MobSpeed, B3MobAngle, B3MobTime));
     
       /*R1*/
     } else if (autonSelection.equals(kScoreMobilityR1)) {
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, R1MobSpeed, R1MobAngle, R1MobTime));
     
       /*R2*/
     } else if (autonSelection.equals(kScoreMobilityR2)) {
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, R2MobSpeed, R2MobAngle, R2MobTime));
     
       /*R3*/
     } else if (autonSelection.equals(kScoreMobilityR3)) {
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, R3MobSpeed, R3MobAngle, R3MobTime));
@@ -161,40 +153,40 @@ public class Robot extends TimedRobot implements Constants{
       //SCORE + MOBILITY + DOCK
     /*B1*/
     else if (autonSelection.equals(kScoreMobilityDockB1)){
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, B1DockSpeed1, B1DockAngle1, B1DockTime1));
       sequence = sequence.andThen(new DriveSegment(swerve, B1DockSpeed2, B1DockAngle2, B2DockTime1));
     /*B2*/
     } else if (autonSelection.equals(kScoreMobilityDockB2)){
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, B2DockSpeed1, B2DockAngle1, B2DockTime1));
     /*B3*/
     } else if (autonSelection.equals(kScoreMobilityDockB3)){
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, B3DockSpeed1, B3DockAngle1, B3DockTime1));
       sequence = sequence.andThen(new DriveSegment(swerve, B3DockSpeed2, B3DockAngle2, B3DockTime1));
     /*R1*/
     } else if (autonSelection.equals(kScoreMobilityDockR1)){
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, R1DockSpeed1, R1DockAngle1, R1DockTime1));
       sequence = sequence.andThen(new DriveSegment(swerve, R1DockSpeed2, R1DockAngle2, R1DockTime2));
     /*R2*/
     } else if (autonSelection.equals(kScoreMobilityDockR2)){
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, R2DockSpeed1, R2DockAngle1, R2DockTime1));
     /*R3*/
     } else if (autonSelection.equals(kScoreMobilityDockR1)){
-      sequence = new SetGamePiece(arm, topHeight, topExtenstion, wristSet);
+      sequence = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet);
       sequence = sequence.andThen(new SetGamePiece(arm, topHeight2, topExtenstion, wristSet));
       sequence = sequence.andThen(new OpenClaw(arm));
       sequence = sequence.andThen(new DriveSegment(swerve, R3DockSpeed1, R3DockAngle1, R3DockTime1));

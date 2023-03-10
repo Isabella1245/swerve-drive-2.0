@@ -13,7 +13,7 @@ import frc.robot.Constants;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 
-public class ArmPart extends PIDSubsystem implements Constants {
+public class ArmPart extends SubsystemBase implements Constants {
 
     //constructors
 
@@ -24,6 +24,8 @@ public class ArmPart extends PIDSubsystem implements Constants {
     private WPI_TalonSRX armMotor;
     private Encoder encoder;
     public AnalogPotentiometer analogPot;
+    PIDController armPID;
+    boolean armPID_Enabled;
 
     //encoder/potentiometer ID
     private int encIDA;
@@ -33,8 +35,7 @@ public class ArmPart extends PIDSubsystem implements Constants {
     private int AnalogMin;
     public ArmPart(String name, int motorID, int armEncA, int armEncB, int analogPort, int analogMax, int analogMin){
 
-        super(new PIDController(P, I, D));
-
+        armPID = new PIDController(P, I, D);
         this.name = name;
         armMotor = new WPI_TalonSRX(motorID);
 
@@ -63,18 +64,29 @@ public class ArmPart extends PIDSubsystem implements Constants {
         return(double) encoder.getDistance();
     }
 
-    @Override
-    protected void useOutput(double output, double setpoint) {
-		armMotor.set(ControlMode.PercentOutput, output);
-	}
-
-    @Override
-    protected double getMeasurement() {
-        if (analogId == 1) {
-            return (double) analogPot.get();
-        } else {
-            return (double) encoder.getDistance();
+    public void setArmPosition(double desiredArmPosition) {
+        double actualArmPosition = getArmEnc();
+        double armMotorOutput = armPID.calculate(actualArmPosition, desiredArmPosition);
+        double delta = Math.abs(actualArmPosition - desiredArmPosition);
+        if (delta > 50) {
+            armPID_Enabled = true;
         }
+        if (delta < 50 && armPID_Enabled) {
+            armPID_Enabled = false;
+        }
+        if (Math.abs(armMotorOutput) > 50) {
+            armMotorOutput = Math.signum(armMotorOutput) * 0.25;
+        }
+        if (!armPID_Enabled) {
+            armMotorOutput = 0;
+        }
+
+        setArmMotorOutput(armMotorOutput);
+    }
+
+    
+    public void setArmMotorOutput(double armMotorOutput) {
+        armMotor.set(ControlMode.PercentOutput, armMotorOutput);
     }
     
 
