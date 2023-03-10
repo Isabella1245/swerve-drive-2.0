@@ -66,7 +66,7 @@ public interface Constants{
     public final int analogPotMax = 2150;
     public final int analogPotMin = 240;
 
-    
+
     //arm encoders (digital)
     public final int extensionEncoderA = 1;
     public final int extensionEncoderB = 0;
@@ -81,17 +81,18 @@ public interface Constants{
 
     //arm auton constants
     //angles in potentiometer values
-    public final double floorHeight = 400;
-    public final double midHeight = 2420;
+    public final double floorHeight = 540;
+    public final double midHeight = 1370;
     
-    public final double topHeight1 = 2103; //2103
-    public final double topHeight2 = 2014;
+    public final double topHeight1 = 1560; //2103
+    public final double topHeight2 = 1520;
 
-    public final double floorExtenstion = 250;
-    public final double midExtenstion = 0;
-    public final double topExtenstion = 6745; //6745
+    public final double floorExtenstion = 2300;
+    public final double midExtenstion = -310;
+    public final double topExtenstion = 5890; //6745
 
-    public final double wristSet = 1087;
+    public final double wristSet = 940;
+    public final double wristFloor = 590;
 
     public final double retractHeight = 1000;
     public final double retractExtension = -100;
