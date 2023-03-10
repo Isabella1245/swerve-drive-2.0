@@ -32,7 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class Robot extends TimedRobot implements Constants{
   
-  public static XboxControllers LowerDriver = new XboxControllers(2);
+  public static XboxControllers LowerDriver = new XboxControllers(1);
   public static XboxControllers UpperDriver = new XboxControllers(0);
   //public static Joystick driver = new Joystick(0);
 	private static CommandScheduler scheduler;
@@ -117,23 +117,25 @@ public class Robot extends TimedRobot implements Constants{
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
     dockSelection = dockChooser.getSelected();
+    autonSelection.equals(kScoreMobilityB1);
     //SCORE + MOBILITY
     /*B1: Score + Mobility*/
     if (autonSelection.equals(kScoreMobilityB1)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityB1);
       //sequence = new SetActuatorArmPos(arm, thresholdHeight);
       //sequence = sequence.andThen(new SetActuatorArmPos(arm, topHeight1)).alongWith(new SetExtensionPos(arm, topExtenstion)).alongWith(new SetArmRotationPos(arm, wristSet));
-      sequence = new SetActuatorArmPos(arm, topHeight1);
-      sequence = sequence.andThen(new SetExtensionPos(arm, topExtenstion));
-      sequence = sequence.andThen(new SetArmRotationPos(arm, wristSet));
-      sequence = sequence.andThen(new OpenClaw(arm));
+      //sequence = new SetActuatorArmPos(arm, topHeight1).withTimeout(2.5);
+      //sequence = sequence.andThen(new SetExtensionPos(arm, topExtenstion)).withTimeout(2);
+      //sequence = sequence.andThen(new SetArmRotationPos(arm, wristSet)).withTimeout(1);
+      sequence = new SetGamePiece(arm, analogPotMax, topExtenstion, wristSet).withTimeout(6);
+      sequence = sequence.andThen(new OpenClaw(arm)).withTimeout(1);
       sequence = sequence.andThen(new DriveSegment(swerve, B1MobSpeed, B1MobAngle).withTimeout(B1MobTime));
       if (dockSelection.equals(kDockYes)) {
         sequence = sequence.andThen(new DriveSegment(swerve, B1DockSpeed1, B1DockAngle1)).withTimeout(B1DockTime1);
         sequence = sequence.andThen(new BalanceRobot(swerve));
       }
       else {
-        sequence = new CloseClaw(arm);
+        sequence = sequence.andThen(new CloseClaw(arm));
       }
       /*B2: Score + Mobility*/
     } else if (autonSelection.equals(kScoreMobilityB2)) {

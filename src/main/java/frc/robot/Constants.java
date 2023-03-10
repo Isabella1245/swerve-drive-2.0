@@ -63,8 +63,8 @@ public interface Constants{
 
     //analog potentiometer
     public final int analogPotID = 4;
-    public final int analogPotMax = 2150;
-    public final int analogPotMin = 240;
+    public final int analogPotMax = 790;
+    public final int analogPotMin = 315;
 
 
     //arm encoders (digital)
@@ -84,7 +84,7 @@ public interface Constants{
     public final double floorHeight = 540;
     public final double midHeight = 1370;
     
-    public final double topHeight1 = 1560; //2103
+    public final double topHeight1 = 700; //2103
     public final double topHeight2 = 1520;
 
     public final double floorExtenstion = 2300;
