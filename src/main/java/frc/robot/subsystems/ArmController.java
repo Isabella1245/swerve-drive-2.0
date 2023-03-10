@@ -58,38 +58,13 @@ public class ArmController extends SubsystemBase implements Constants {
         else if (leftY < -0.15 && actuatorArm.getPot() < 240){
             actuatorArm.setspeed(-0.7);
         } 
-        //mid extension height button
-        else if (bButton && actuatorArm.getPot() < midHeight && actuatorArm.getPot() < thresholdHeight){
-            actuatorArm.setspeed(-0.8); 
-            extension.setspeed(0.05);
-
-        } else if (bButton && actuatorArm.getPot() < midHeight && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() < midExtenstion){
-            actuatorArm.setspeed(-0.8); 
-            extension.setspeed(0.4);
-
-        } else if (bButton && actuatorArm.getPot() >= midHeight && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() < midExtenstion){
-            extension.setspeed(0.4);
-
-        } else if (bButton && actuatorArm.getPot() < midHeight && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() >= midExtenstion){
-            actuatorArm.setspeed(-0.8);
-            extension.setspeed(0.05);
-        //top extensions height button
-        } else if (yButton && actuatorArm.getPot() < topHeight1 && actuatorArm.getPot() < thresholdHeight){
-            actuatorArm.setspeed(-0.8); 
-            extension.setspeed(0.05);
-
-        } else if (yButton && actuatorArm.getPot() < topHeight1 && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() < topExtenstion){
-            actuatorArm.setspeed(-0.8); 
-            extension.setspeed(-0.4);
-
-        } else if (yButton && actuatorArm.getPot() >= topHeight1 && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() < topExtenstion){
-            extension.setspeed(-0.4);
-            actuatorArm.setspeed(0);
-
-        } else if (yButton && actuatorArm.getPot() < topHeight1 && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() >= topExtenstion){
-            actuatorArm.setspeed(-0.8);
-            extension.setspeed(0.05);
-
+        //mid arm height button
+        else if (bButton){
+            setGamePiece(midHeight, midExtenstion, wristSet);
+        //top arm height button
+        } else if (yButton){
+            setGamePiece(topHeight1, topExtenstion, wristSet);
+        
         } else {
             actuatorArm.setspeed(0);
             extension.setspeed(0.05);
@@ -138,18 +113,22 @@ public class ArmController extends SubsystemBase implements Constants {
 
     //AUTON STUFF
     public void setActuatorArmPos(double setHeight) {
-        if (actuatorArm.getPot() < setHeight - 10) {
+        if (actuatorArm.getPot() < setHeight - 25) {
             actuatorArm.setspeed(-0.8);
-        } else if (actuatorArm.getPot() > setHeight + 10) {
+        } else if (actuatorArm.getPot() > setHeight + 25) {
             actuatorArm.setspeed(0.8);
+        } else {
+            actuatorArm.setspeed(0);
         }
     } 
 
     public void setExtensionPos(double setExtension) {
-        if (extension.getArmEnc() < setExtension - 25) {
+        if (extension.getArmEnc() < setExtension - 50) {
             extension.setspeed(-0.4);
-        } else if (extension.getArmEnc() > setExtension + 25) {
+        } else if (extension.getArmEnc() > setExtension + 50) {
             extension.setspeed(0.4);
+        } else {
+            extension.setspeed(0);
         }
     } 
 
@@ -185,13 +164,13 @@ public class ArmController extends SubsystemBase implements Constants {
             actuatorArm.setspeed(0);
             extension.setspeed(0);
             //tried negative speed
-            armRotation.setspeed(-0.3);
+            armRotation.setArmPosition(setWrist);
         }
         else {
             actuatorArm.setspeed(0);
             extension.setspeed(0.05);
             //tried positive speed 
-            armRotation.setspeed(0.2);
+            armRotation.setArmPosition(setWrist);
         }
 
 

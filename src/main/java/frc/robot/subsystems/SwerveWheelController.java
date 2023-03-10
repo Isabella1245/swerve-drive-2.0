@@ -362,7 +362,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         }
     }
 
-    public void driveSegment(double speed, double angle, double timeSeconds) {
+    public void driveSegmentOld(double speed, double angle, double timeSeconds) {
         moveDistanceTimer.reset();
         moveDistanceTimer.start();
 
@@ -391,9 +391,59 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
     }
 
-    public void balanceRobot(){
-        if(gyro.getRoll() > 4 && gyro.getRoll() < 8) {
-            
+    public void driveSegment(double speed, double angle) {
+        frontRight.setSetpoint(angle);
+        frontLeft.setSetpoint(angle);
+        backRight.setSetpoint(angle);
+        backLeft.setSetpoint(angle);
+
+        frontRight.setSpeed(speed);
+        frontLeft.setSpeed(speed);
+        backRight.setSpeed(speed);
+        backLeft.setSpeed(speed);
+    }
+
+    public boolean isGyroReqMet() {
+        boolean gyroReqMet;
+        if (Math.abs(gyro.getRoll()) > 15) {
+            gyroReqMet = true;
+        } else {
+            gyroReqMet = false;
+        }
+        return gyroReqMet;
+    }
+
+    public void balanceRobot() {
+
+        if(Math.abs(gyro.getRoll()) > 25) {
+            frontRight.setSpeed(dockRampSpeed * Math.signum(gyro.getRoll()));
+            frontLeft.setSpeed(dockRampSpeed * Math.signum(gyro.getRoll()));
+            backRight.setSpeed(dockRampSpeed * Math.signum(gyro.getRoll()));
+            backLeft.setSpeed(dockRampSpeed * Math.signum(gyro.getRoll()));
+
+        } else if (Math.abs(gyro.getRoll()) > dockPlatformAngle1 && gyro.getRoll() < 25) {
+            frontRight.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
+            frontLeft.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
+            backRight.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
+            backLeft.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
+
+        } else if (Math.abs(gyro.getRoll()) < dockPlatformAngle1 && gyro.getRoll() > 8){
+            frontRight.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
+            frontLeft.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
+            backRight.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
+            backLeft.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
+
+        } else if (Math.abs(gyro.getRoll()) < 8 && gyro.getRoll() > 3) {
+            frontRight.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
+            frontLeft.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
+            backRight.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
+            backLeft.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
+
+        } else if (Math.abs(gyro.getRoll()) < 3) {
+            frontRight.setSpeed(0);
+        frontLeft.setSpeed(0);
+        backRight.setSpeed(0);
+        backLeft.setSpeed(0);
         }
     }
     //might not use

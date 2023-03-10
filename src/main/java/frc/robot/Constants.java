@@ -180,7 +180,8 @@ public interface Constants{
      public final double R3DockTime1 = 2; //R3MobTime
      public final double R3DockTime2 = 2;
 
-    //position 1 - blue
+    /*//position 1 - blue
+
     public final double p1BlueSpeed = 1;
     //public final double p1BlueRamprate
 
@@ -257,6 +258,17 @@ public interface Constants{
 
     public final double frSpinAngle = -52.4;
     public final double flSpinAngle = 52.4;
+    */
+
+    //balance constants
+    public final double dockRampAngle1 = 34.55;
+    public final double dockRampAngle2 = 10.55;
+    public final double dockPlatformAngle1 = 15; 
+
+    public final double dockRampSpeed = 0.3;
+    public final double dockPlatformSpeed1 = 0.2;
+    public final double dockPlatformSpeed2 = 0.15;
+    public final double dockPlatformSpeed3 = 0.1;
 
 }
 
