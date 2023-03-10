@@ -101,7 +101,7 @@ public class ArmController extends SubsystemBase implements Constants {
             extension.setspeed(rightY * 0.7);
             position = extension.getArmEnc();
         }
-        else if (rightY < -0.15 && extension.getArmEnc() > -1250){
+        else if (rightY < -0.15 && extension.getArmEnc() > -1350){
             extension.setspeed(rightY * 0.7);
             position = extension.getArmEnc();
         }

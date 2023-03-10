@@ -73,7 +73,7 @@ public class Robot extends TimedRobot implements Constants{
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     //score + mobility
-    autonChooser.addOption("B1: Score + Mobility", kScoreMobilityB1);
+    autonChooser.setDefaultOption("B1: Score + Mobility", kScoreMobilityB1);
     autonChooser.addOption("B2: Score + Mobility", kScoreMobilityB2);
     autonChooser.addOption("B3: Score + Mobility", kScoreMobilityB3);
 

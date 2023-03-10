@@ -63,8 +63,10 @@ public interface Constants{
 
     //analog potentiometer
     public final int analogPotID = 4;
-    public final int analogPotMax = 3600;
-    public final int analogPotMin = -100;
+    public final int analogPotMax = 2150;
+    public final int analogPotMin = 240;
+
+    
     //arm encoders (digital)
     public final int extensionEncoderA = 1;
     public final int extensionEncoderB = 0;
