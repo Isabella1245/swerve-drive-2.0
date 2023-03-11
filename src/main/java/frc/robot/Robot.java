@@ -44,8 +44,8 @@ public class Robot extends TimedRobot implements Constants{
   private SwerveWheelController swerve;
   private ArmController arm;
 
-  public final SendableChooser<String> autonChooser = new SendableChooser<String>();
-  public final SendableChooser<String> dockChooser = new SendableChooser<String>();
+  public final SendableChooser<String> autonChooser = new SendableChooser<>();;
+  public final SendableChooser<String> dockChooser = new SendableChooser<>();;
 
   private TeleopDrive  teleDrive;
 
@@ -125,7 +125,6 @@ public class Robot extends TimedRobot implements Constants{
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
     dockSelection = dockChooser.getSelected();
-    autonSelection.equals(kScoreMobilityB1);
     //SCORE + MOBILITY
     /*B1: Score + Mobility*/
     if (autonSelection.equals(kScoreMobilityB1)) {
@@ -135,38 +134,34 @@ public class Robot extends TimedRobot implements Constants{
       sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
       //sequence1 = new OpenClaw(arm);
       sequence1 = sequence1.andThen(new DriveSegment(swerve, B1MobSpeed, B1MobAngle)).withTimeout(B1MobTime);
-      //sequence2 = new DriveSegmentWithTime(swerve, B1MobSpeed, B1MobAngle, timer.get());
-      //PLAN B- running commands separately, not together
-      //sequence1 = new SetActuatorArmPos(arm, topHeight1).withTimeout(2.5);
-      //sequence1 = sequence1.andThen(new SetExtensionPos(arm, topExtenstion)).withTimeout(2);
-      //sequence1 = sequence1.andThen(new SetArmRotationPos(arm, wristSet)).withTimeout(1);
-
 
       /*if (dockSelection.equals(kDockYes)) {
-        sequence2 = new DriveSegment(swerve, B1DockSpeed1, B1DockAngle1).withTimeout(B1DockTime1);
-        sequence2 = sequence2.andThen(new BalanceRobot(swerve));
+        sequence1 = new DriveSegment(swerve, B1DockSpeed1, B1DockAngle1)).withTimeout(B1DockTime1);
+        sequence1 = sequence1.andThen(new DriveSegment(swerve, B1DockSpeed2, B1DockAngle2)).withTimeout(B1DockTime2);
+        sequence1 = sequence1.andThen(new BalanceRobot(swerve));
       }
-      else {
-        sequence2 = sequence2.andThen(new CloseClaw(arm));
-      }*/
+      */
 
-    /* B2: Score + Mobility
+     //B2: Score + Mobility
     } else if (autonSelection.equals(kScoreMobilityB2)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityB2);
-      sequence1 = new SetActuatorArmPos(arm, topHeight1);
-      sequence1 = sequence1.andThen(new SetExtensionPos(arm, topExtenstion));
-      sequence1 = sequence1.andThen(new SetArmRotationPos(arm, wristSet));
-      sequence1 = sequence1.andThen(new OpenClaw(arm));
-      sequence1 = sequence1.andThen(new DriveSegment(swerve, B2MobSpeed, B2MobAngle).withTimeout(B2MobTime));
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
+      sequence1 = sequence1.andThen(new DriveSegment(swerve, B2MobSpeed, B2MobAngle)).withTimeout(B2MobTime);
+      sequence1 = sequence1.andThen(new BalanceRobot(swerve));
+      //save
+
+      //hiiiiiii
     //B3: Score + Mobility
     } else if (autonSelection.equals(kScoreMobilityB3)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityB3);
-      sequence1 = new SetActuatorArmPos(arm, topHeight1);
-      sequence1 = sequence1.andThen(new SetExtensionPos(arm, topExtenstion));
-      sequence1 = sequence1.andThen(new SetArmRotationPos(arm, wristSet));
-      sequence1 = sequence1.andThen(new OpenClaw(arm));
-      sequence1 = sequence1.andThen(new DriveSegment(swerve, B3MobSpeed, B3MobAngle).withTimeout(B3MobTime));
-      //R1: Score + Mobility
+
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
+      //sequence1 = new OpenClaw(arm);
+      sequence1 = sequence1.andThen(new DriveSegment(swerve, B3MobSpeed, B3MobAngle)).withTimeout(B3MobTime);
+      
+     /* //R1: Score + Mobility
     } else if (autonSelection.equals(kScoreMobilityR1)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityR1);
       sequence1 = new SetActuatorArmPos(arm, topHeight1);
