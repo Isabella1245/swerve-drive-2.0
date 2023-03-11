@@ -83,8 +83,13 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
          // x = strafe, y = speed, z = rotation 
     // Holonomic drive
-    public void drive(double x, double y, double z, double gyroValue, boolean rBumper) {
+    public void drive(double x, double y, double z, double gyroValue, boolean rBumper, boolean lBumper) {
 
+        if (lBumper) {
+            y *= 0.5;
+            x *= 0.5;
+        }
+        
         if (rBumper) {
             y *= 1.5;
             x *= 1.5;
