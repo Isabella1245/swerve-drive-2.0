@@ -97,7 +97,7 @@ public interface Constants{
 
     public final double floorExtenstion = 2300;
     public final double midExtenstion = -310;
-    public final double topExtenstion = 3000; //5890
+    public final double topExtenstion = 5890; //5890
 
     public final double wristSet = 400;
     public final double wristFloor = 590;
@@ -128,7 +128,7 @@ public interface Constants{
     public final double R2MobAngle = 0;
     public final double R3MobAngle = 0;
         //time
-    public final double B1MobTime = 2;
+    public final double B1MobTime = 5.6;
     public final double B2MobTime = 4;
     public final double B3MobTime = 4;
 
