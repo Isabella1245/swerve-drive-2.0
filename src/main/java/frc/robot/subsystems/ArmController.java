@@ -140,7 +140,7 @@ public class ArmController extends SubsystemBase implements Constants {
         }
     } 
 
-    public void setArmRotationPos(double setWrist) {
+   /* public void setArmRotationPos(double setWrist) {
        if (setWrist > wristMax) {
         setWrist = wristMax;
        }
@@ -148,39 +148,41 @@ public class ArmController extends SubsystemBase implements Constants {
             armRotation.setspeed(-0.3);
         } else if (armRotation.getArmEnc() > setWrist + 25) {
             armRotation.setspeed(0.3);
-        }*/
+        }
 
-        armRotation.setArmPosition(setWrist);
-    } 
+        //armRotation.setArmPosition(setWrist);
+    } */
 
     public void setGamePiece(double setHeight, double setExtension, double setWrist) {
         if (actuatorArm.getPot() < setHeight && actuatorArm.getPot() < thresholdHeight){
-            actuatorArm.setspeed(-0.8); 
+            actuatorArm.setspeed(-0.85); 
             extension.setspeed(0.05);
 
         } else if (actuatorArm.getPot() < setHeight && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() < setExtension){
-            actuatorArm.setspeed(-0.8); 
-            extension.setspeed(-0.4);
+            actuatorArm.setspeed(-0.85); 
+            extension.setspeed(-0.6);
 
         } else if (actuatorArm.getPot() >= setHeight && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() < setExtension){
-            extension.setspeed(-0.4);
+            extension.setspeed(-0.6);
             actuatorArm.setspeed(0);
 
         } else if (actuatorArm.getPot() < setHeight && actuatorArm.getPot() > thresholdHeight && extension.getArmEnc() >= setExtension){
-            actuatorArm.setspeed(-0.8);
+            actuatorArm.setspeed(-0.85);
             extension.setspeed(0.05);
 
         } else if (actuatorArm.getPot() >= setHeight && extension.getArmEnc() >= setExtension && armRotation.getArmEnc() < setWrist) {
             actuatorArm.setspeed(0);
             extension.setspeed(0);
             //tried negative speed
-            armRotation.setArmPosition(setWrist);
+            //armRotation.setArmPosition(setWrist);
+            armRotation.setspeed(-0.3);
         }
         else {
             actuatorArm.setspeed(0);
-            extension.setspeed(0.05);
+            extension.setspeed(0.0);
             //tried positive speed 
-            armRotation.setArmPosition(setWrist);
+            //armRotation.setArmPosition(setWrist);
+            //armRotation.setspeed(0.1);
         }
 
 
@@ -190,7 +192,7 @@ public class ArmController extends SubsystemBase implements Constants {
        
         setActuatorArmPos(setHeight);
         setExtensionPos(setExtension);
-        setArmRotationPos(setWrist);
+        //setArmRotationPos(setWrist);
     }
 
     public void setGamePiece3(double setHeight, double setExtension, double setWrist) {

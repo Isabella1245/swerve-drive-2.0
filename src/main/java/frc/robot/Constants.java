@@ -97,16 +97,16 @@ public interface Constants{
 
     public final double floorExtenstion = 2300;
     public final double midExtenstion = -310;
-    public final double topExtenstion = 5890; //6745
+    public final double topExtenstion = 3000; //5890
 
-    public final double wristSet = 940;
+    public final double wristSet = 400;
     public final double wristFloor = 590;
 
     public final double retractHeight = 1000;
     public final double retractExtension = -100;
 
     //recalculate threshold height, actuator values have changed
-    public final double thresholdHeight = 1000;
+    public final double thresholdHeight = 600;
 
     //AUTON CONSTANTE
 

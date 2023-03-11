@@ -24,8 +24,8 @@ public class ArmPart extends SubsystemBase implements Constants {
     private WPI_TalonSRX armMotor;
     private Encoder encoder;
     public AnalogPotentiometer analogPot;
-    PIDController armPID;
-    boolean armPID_Enabled;
+    //PIDController armPID;
+    //boolean armPID_Enabled;
 
     //encoder/potentiometer ID
     private int encIDA;
@@ -35,7 +35,7 @@ public class ArmPart extends SubsystemBase implements Constants {
     private int AnalogMin;
     public ArmPart(String name, int motorID, int armEncA, int armEncB, int analogPort, int analogMax, int analogMin){
 
-        armPID = new PIDController(P, I, D);
+        //armPID = new PIDController(P, I, D);
         this.name = name;
         armMotor = new WPI_TalonSRX(motorID);
 
@@ -63,7 +63,7 @@ public class ArmPart extends SubsystemBase implements Constants {
     public double getArmEnc(){
         return(double) encoder.getDistance();
     }
-
+/* 
     public void setArmPosition(double desiredArmPosition) {
         double actualArmPosition = getArmEnc();
         double armMotorOutput = armPID.calculate(actualArmPosition, desiredArmPosition);
@@ -88,6 +88,6 @@ public class ArmPart extends SubsystemBase implements Constants {
     public void setArmMotorOutput(double armMotorOutput) {
         armMotor.set(ControlMode.PercentOutput, armMotorOutput);
     }
-    
+    */
 
 }
