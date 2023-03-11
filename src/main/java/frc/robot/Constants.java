@@ -128,7 +128,7 @@ public interface Constants{
     public final double R2MobAngle = 0;
     public final double R3MobAngle = 0;
         //time
-    public final double B1MobTime = 5.6;
+    public final double B1MobTime = 6.1;
     public final double B2MobTime = 4;
     public final double B3MobTime = 4;
 

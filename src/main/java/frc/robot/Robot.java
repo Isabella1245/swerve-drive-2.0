@@ -131,8 +131,8 @@ public class Robot extends TimedRobot implements Constants{
     if (autonSelection.equals(kScoreMobilityB1)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityB1);
       
-      sequence1 = new SetGamePiece(arm, analogPotMax, topExtenstion, wristSet).withTimeout(4.6);
-      sequence1 = sequence1.andThen(new OpenClaw(arm));//.withTimeout(1);
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
       //sequence1 = new OpenClaw(arm);
       sequence1 = sequence1.andThen(new DriveSegment(swerve, B1MobSpeed, B1MobAngle)).withTimeout(B1MobTime);
       //sequence2 = new DriveSegmentWithTime(swerve, B1MobSpeed, B1MobAngle, timer.get());
