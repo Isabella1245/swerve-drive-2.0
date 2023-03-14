@@ -33,10 +33,10 @@ SmartDashboard.putBoolean("fod", currentFOD);
 			swerve.resetGyro();
 		}
 
-		/*if (Robot.LowerDriver.getControllerBButtonPressed()) {
+		if (Robot.LowerDriver.getControllerBButtonPressed()) {
 			currentFOD = !currentFOD;
 			swerve.setFOD(currentFOD);
-		}*/
+		}
 		/*
 		 * swerve.drive(Robot.driver.getControllerLeftStickX(), Robot.driver.getControllerLeftStickY(),
 					 Robot.driver.getControllerRightStickX(), swerve.gyroAngle());

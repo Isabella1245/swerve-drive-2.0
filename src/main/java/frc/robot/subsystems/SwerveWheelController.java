@@ -369,24 +369,24 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         moveDistanceTimer.reset();
         moveDistanceTimer.start();
 
-        frontRight.setSetpoint(angle);
-        frontLeft.setSetpoint(angle);
+        //frontRight.setSetpoint(angle);
+        //frontLeft.setSetpoint(angle);
         backRight.setSetpoint(angle);
         backLeft.setSetpoint(angle);
 
         if(moveDistanceTimer.get() < timeSeconds) {
-            frontRight.setSpeed(speed);
-            frontLeft.setSpeed(speed);
+            //frontRight.setSpeed(speed);
+            //frontLeft.setSpeed(speed);
             backRight.setSpeed(speed);
             backLeft.setSpeed(speed);
             
-            frontRight.setSetpoint(angle);
-            frontLeft.setSetpoint(angle);
+            //frontRight.setSetpoint(angle);
+            //frontLeft.setSetpoint(angle);
             backRight.setSetpoint(angle);
             backLeft.setSetpoint(angle);
         } else {
-            frontRight.setSpeed(0);
-            frontLeft.setSpeed(0);
+            //frontRight.setSpeed(0);
+            //frontLeft.setSpeed(0);
             backRight.setSpeed(0);
             backLeft.setSpeed(0);
             moveDistanceTimer.stop();

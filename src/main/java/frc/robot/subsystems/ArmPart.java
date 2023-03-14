@@ -60,6 +60,7 @@ public class ArmPart extends SubsystemBase implements Constants {
         return(double) analogPot.get();
 
     }
+    
     public double getArmEnc(){
         return(double) encoder.getDistance();
     }
