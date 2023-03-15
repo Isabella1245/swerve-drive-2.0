@@ -126,15 +126,23 @@ public class Robot extends TimedRobot implements Constants{
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
     dockSelection = dockChooser.getSelected();
-    String manualAutonSelection = kScoreMobilityB2;
+
+
+    String manualAutonSelection = kScoreMobilityR3;
+
+
+     
     //SCORE + MOBILITY
     /*B1: Score + Mobility*/
     if (manualAutonSelection.equals(kScoreMobilityB1)) {
       //SmartDashboard.putString("Auton Program:", kScoreMobilityB1);
+      //save
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(3.8);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new DriveSegment(swerve, B1MobSpeed, B1MobAngle)).withTimeout(5.3);
+      sequence1 = sequence1.andThen(new SetExtensionPos(arm, 0)).withTimeout(7.3);
       
-      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
-      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
-      sequence1 = sequence1.andThen(new DriveSegment(swerve, B1MobSpeed, B1MobAngle)).withTimeout(B1MobTime);
+
       //sequence1 = sequence1.andThen(new DriveSegment(swerve, B1DockSpeed1, B1DockAngle1)).withTimeout(B1DockTime1);
       //sequence1 = sequence1.andThen(new DriveSegment(swerve, B1DockSpeed2, B1DockAngle2)).withTimeout(B1DockTime2);
       
@@ -149,8 +157,10 @@ public class Robot extends TimedRobot implements Constants{
      //B2: Score + Mobility
     } else if (manualAutonSelection.equals(kScoreMobilityB2)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityB2);
-      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
-      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(3.8);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new SetExtensionPos(arm, 0)).withTimeout(6.3);
+
       //sequence1 = sequence1.andThen(new DriveSegment(swerve, B2MobSpeed, B2MobAngle)).withTimeout(B2MobTime);
       //sequence1 = sequence1.andThen(new BalanceRobot(swerve));
       
@@ -160,9 +170,11 @@ public class Robot extends TimedRobot implements Constants{
     } else if (manualAutonSelection.equals(kScoreMobilityB3)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityB3);
 
-      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
-      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
-      sequence1 = sequence1.andThen(new DriveSegment(swerve, B3MobSpeed, B3MobAngle)).withTimeout(B3MobTime);
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(3.8);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new DriveSegment(swerve, B3MobSpeed, B3MobAngle)).withTimeout(5.3);
+      sequence1 = sequence1.andThen(new SetExtensionPos(arm, 0)).withTimeout(7.3);
+
       //sequence1 = sequence1.andThen(new DriveSegment(swerve, B3DockSpeed1, B3DockAngle1)).withTimeout(B3DockTime1);
       //sequence1 = sequence1.andThen(new DriveSegment(swerve, B3DockSpeed2, B3DockAngle2)).withTimeout(B3DockTime2);
       
@@ -171,17 +183,20 @@ public class Robot extends TimedRobot implements Constants{
     } else if (manualAutonSelection.equals(kScoreMobilityR1)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityR1);
 
-      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
-      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
-      sequence1 = sequence1.andThen(new DriveSegment(swerve, R1MobSpeed, R1MobAngle)).withTimeout(R1MobTime);
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(3.8);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new DriveSegment(swerve, R1MobSpeed, R1MobAngle)).withTimeout(5.3);
+      sequence1 = sequence1.andThen(new SetExtensionPos(arm, 0)).withTimeout(7.3);
 
 
       //R2: Score + Mobility
     } else if (manualAutonSelection.equals(kScoreMobilityR2)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityR2);
 
-      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
-      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(3.8);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new SetExtensionPos(arm, 0)).withTimeout(6.3);
+
       //sequence1 = sequence1.andThen(new DriveSegment(swerve, R2MobSpeed, R2MobAngle)).withTimeout(R2MobTime);
       //sequence1 = sequence1.andThen(new BalanceRobot(swerve));
       
@@ -189,10 +204,11 @@ public class Robot extends TimedRobot implements Constants{
     } else if (manualAutonSelection.equals(kScoreMobilityR3)) {
       SmartDashboard.putString("Auton Program:", kScoreMobilityR3);
 
-      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(4.3);
-      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.8);
-      sequence1 = sequence1.andThen(new DriveSegment(swerve, R3MobSpeed, R3MobAngle)).withTimeout(R3MobTime);
-      
+      sequence1 = new SetGamePiece(arm, topHeight1, topExtenstion, wristSet).withTimeout(3.8);
+      sequence1 = sequence1.andThen(new OpenClaw(arm)).withTimeout(4.3);
+      sequence1 = sequence1.andThen(new DriveSegment(swerve, R3MobSpeed, R3MobAngle)).withTimeout(5.3);
+      sequence1 = sequence1.andThen(new SetExtensionPos(arm, 0)).withTimeout(7.3);
+//save
     }
      /* //SCORE + MOBILITY + DOCK
     //B1

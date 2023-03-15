@@ -97,8 +97,8 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //inverts y for drive
         y *= -1;
         //gves max speed
-        y *= 0.50;
-        x *= 0.50;
+        y *= 0.70;
+        x *= 0.70;
 
         //caps z at 0.2
         z *= 0.3;
@@ -125,9 +125,9 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 double gyro = gyroValue * Math.PI / 180;
 
                 //field orientation math
-                double temp = x * Math.cos(gyro) + y * Math.sin(gyro); 
-                y = -x * Math.sin(gyro) + y * Math.cos(gyro); 
-                x = temp;
+                double temp = y * Math.cos(gyro) + x * Math.sin(gyro); 
+                x = -y * Math.sin(gyro) + x * Math.cos(gyro); 
+                y = temp;
             }
 
             // -------------------------------------
@@ -192,7 +192,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 backLeftSpeed /= max;
             }
 
-            /* *********** */
+            /* */
 
 
             //Q1 and Q2
@@ -207,46 +207,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 backRight.setSpeed(backRightSpeed);
                 backLeft.setSpeed(backLeftSpeed);
 
-            } else if (isFieldCentric) {
-                //fixing the field centric angles because they are off by 90                
-                frontRight.setSetpoint(frontRightAngle - 90);
-                frontLeft.setSetpoint(frontLeftAngle - 90);
-                backRight.setSetpoint(backRightAngle - 90);
-                backLeft.setSetpoint(backLeftAngle - 90);
-
-                frontLeft.setSpeed(frontLeftSpeed);
-                frontRight.setSpeed(frontRightSpeed);
-                backRight.setSpeed(backRightSpeed);
-                backLeft.setSpeed(backLeftSpeed);
-            }
-            //Q3 and Q4
-            /* 
-            if (y < 0 && !isFieldCentric) {
-                frontRight.setSetpoint(frontRightAngle - 180);
-                frontLeft.setSetpoint(frontLeftAngle - 180);
-                backRight.setSetpoint(backRightAngle - 180);
-                backLeft.setSetpoint(backLeftAngle - 180);
-
-                frontLeft.setSpeed(-frontLeftSpeed * 0.6);
-                frontRight.setSpeed(-frontRightSpeed * 0.6);
-                backRight.setSpeed(-backRightSpeed * 0.6);
-                backLeft.setSpeed(-backLeftSpeed * 0.6);
-
-            } else if (y < 0 && isFieldCentric) {
-                //fixing the field centric angles because they are off by 90
-                //original substracted 180 from the angle
-                frontRight.setSetpoint(frontRightAngle - 180);
-                frontLeft.setSetpoint(frontLeftAngle - 180);
-                backRight.setSetpoint(backRightAngle - 180);
-                backLeft.setSetpoint(backLeftAngle - 180);
-
-                frontLeft.setSpeed(-frontLeftSpeed);
-                frontRight.setSpeed(-frontRightSpeed);
-                backRight.setSpeed(-backRightSpeed);
-                backLeft.setSpeed(-backLeftSpeed);
-            }
-            */
-            
+          
         } 
         else {
             frontLeft.setSpeed(0);
@@ -320,7 +281,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         SmartDashboard.putNumber("BL QuadEnc Angle", backLeft.getMeasurement());
         SmartDashboard.putNumber("BL Turn Motor speed", backLeft.getTurnMotorSpeed());
         //SmartDashboard.putNumber("ticks to angle", frontRight.ticksToAngle());
-
+    }
 
     }
 
@@ -369,24 +330,24 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         moveDistanceTimer.reset();
         moveDistanceTimer.start();
 
-        frontRight.setSetpoint(angle);
-        frontLeft.setSetpoint(angle);
+        //frontRight.setSetpoint(angle);
+        //frontLeft.setSetpoint(angle);
         backRight.setSetpoint(angle);
         backLeft.setSetpoint(angle);
 
         if(moveDistanceTimer.get() < timeSeconds) {
-            frontRight.setSpeed(speed);
-            frontLeft.setSpeed(speed);
+            //frontRight.setSpeed(speed);
+            //frontLeft.setSpeed(speed);
             backRight.setSpeed(speed);
             backLeft.setSpeed(speed);
             
-            frontRight.setSetpoint(angle);
-            frontLeft.setSetpoint(angle);
+            //frontRight.setSetpoint(angle);
+            //frontLeft.setSetpoint(angle);
             backRight.setSetpoint(angle);
             backLeft.setSetpoint(angle);
         } else {
-            frontRight.setSpeed(0);
-            frontLeft.setSpeed(0);
+            //frontRight.setSpeed(0);
+            //frontLeft.setSpeed(0);
             backRight.setSpeed(0);
             backLeft.setSpeed(0);
             moveDistanceTimer.stop();

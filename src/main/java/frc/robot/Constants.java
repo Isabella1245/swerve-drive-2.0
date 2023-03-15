@@ -66,13 +66,13 @@ public interface Constants{
     public final int analogPotMax = 790;
     public final int analogPotMin = 315;
 
-    //extension
+    //extension- recheck
     public final int extensionElevatorMax = 6330;
     public final int extensionElevatorMin = -1450;
 
     //wrist
     public final int wristMax = 1420;
-    public final int wristMin = -40;
+    public final int wristMin = -100;
 
 
     //arm encoders (digital)
@@ -89,21 +89,25 @@ public interface Constants{
 
     //arm auton constants
     //angles in potentiometer values
-    public final double floorHeight = 540;
+    public final double floorHeight = 426;
     public final double midHeight = 1370;
     
     public final double topHeight1 = 720; //2103
     public final double topHeight2 = 1520;
 
-    public final double floorExtenstion = 2300;
+    public final double floorExtenstion = 4460;
     public final double midExtenstion = -310;
     public final double topExtenstion = 5890; //5890
 
     public final double wristSet = 400;
-    public final double wristFloor = 590;
+    public final double wristFloor = 529;
 
     public final double retractHeight = 1000;
     public final double retractExtension = -100;
+
+    public final double substationHeight = 680;
+    public final double substationExtension = 0;
+    public final double substationWrist = 811;
 
     //recalculate threshold height, actuator values have changed
     public final double thresholdHeight = 600;
@@ -111,22 +115,22 @@ public interface Constants{
     //AUTON CONSTANTE
 
     //MOBILITY
-        //speed
-    public final double B1MobSpeed = -0.4; //40% speed: 13ft 3 sec
-    public final double B2MobSpeed = -0.8; //9 ft/s
-    public final double B3MobSpeed = -0.4;
+        //speed: 40% speed: 13ft 3 sec and 80%: 9 ft/s
+    public final double B1MobSpeed = -0.3; //Same as R3
+    public final double B2MobSpeed = -0.8; 
+    public final double B3MobSpeed = -0.45; //Same as R1
         
-    public final double R1MobSpeed = -0.4;
+    public final double R1MobSpeed = -0.45; // Same as B3
     public final double R2MobSpeed = -0.3;
-    public final double R3MobSpeed = -0.4;
+    public final double R3MobSpeed = -0.3; //Same as B1
         //angle
-    public final double B1MobAngle = 0;
+    public final double B1MobAngle = 0; //-3
     public final double B2MobAngle = -5;
-    public final double B3MobAngle = 0;
+    public final double B3MobAngle = -2; //-3
 
-    public final double R1MobAngle = 0;
+    public final double R1MobAngle = -2; //-3
     public final double R2MobAngle = 0;
-    public final double R3MobAngle = 0;
+    public final double R3MobAngle = 0; //-3
         //time
     public final double B1MobTime = 7.8;
     public final double B2MobTime = 6.5;
@@ -134,7 +138,7 @@ public interface Constants{
 
     public final double R1MobTime = 7.8;
     public final double R2MobTime = 0;
-    public final double R3MobTime = 7.8;
+    public final double R3MobTime = 5.8;
     
 
     //DOCKING

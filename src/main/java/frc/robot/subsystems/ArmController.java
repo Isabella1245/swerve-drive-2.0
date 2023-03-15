@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.SetArmRotationPos;
 import frc.robot.commands.TeleopArm;
 import frc.robot.subsystems.ArmPart;
 import edu.wpi.first.wpilibj.Timer;
@@ -18,6 +19,9 @@ public class ArmController extends SubsystemBase implements Constants {
     private ArmPart armRotation = null;
     private PneumaticClaw claw = null;
     private Timer timer;
+
+    boolean actuatorDone = false;
+    boolean extensionDone = false;
     
 
     public ArmController() {
@@ -38,7 +42,7 @@ public class ArmController extends SubsystemBase implements Constants {
      */
 
     
-    public void armControl(double leftY, double rightY, double leftTrigger, double rightTrigger, boolean aButton, boolean xButton, boolean yButton, boolean bButton) {
+    public void armControl(double leftY, double rightY, double leftTrigger, double rightTrigger, boolean aButton, boolean xButton, boolean yButton, boolean bButton, boolean rBumper, boolean lBumper) {
 
         boolean ybutton = false;
         //here is where we'll need to calculate angle and distance and rotation.
@@ -60,14 +64,43 @@ public class ArmController extends SubsystemBase implements Constants {
         } 
         //mid arm height button
         else if (bButton){
-            setGamePiece(midHeight, midExtenstion, wristSet);
+            //setGamePiece(midHeight, midExtenstion, wristSet);
+
+            setActuatorArmPos(midHeight);
+            setExtensionPos(midExtenstion);
+            setArmRotationPos(wristSet);
+
         //top arm height button
         } else if (yButton){
-            setGamePiece(topHeight1, topExtenstion, wristSet);
+            //setGamePiece(topHeight1, topExtenstion, wristSet);
+
+            setActuatorArmPos(topHeight1);
+
+            if (actuatorDone) {
+            setExtensionPos(topExtenstion);
+            setArmRotationPos(wristSet);
+            }
         
+        } else if (rBumper) {
+            //SUBSTATION BUTTON
+
+            setActuatorArmPos(substationHeight);
+            if (actuatorArm.getPot() > thresholdHeight) {
+                setExtensionPos(substationExtension);
+                setArmRotationPos(substationWrist);
+            }
+
+        } else if (lBumper) {
+            //FLOOR PICKUP BUTTON
+
+            setActuatorArmPos(floorHeight);
+            setExtensionPos(floorExtenstion);
+            setArmRotationPos(wristFloor);
+
         } else {
+
             actuatorArm.setspeed(0);
-            extension.setspeed(0.05);
+            //extension.setspeed(0.0);
         }
 
         double position = 0;
@@ -80,7 +113,7 @@ public class ArmController extends SubsystemBase implements Constants {
             extension.setspeed(rightY * 0.7);
             position = extension.getArmEnc();
         }
-        else if (rightY > -0.15 && rightY < 0.15){
+        else if (rightY > -0.15 && rightY < 0.15 && !yButton && !rBumper && !lBumper){
             extension.setspeed(0.1);
         }
 
@@ -90,7 +123,7 @@ public class ArmController extends SubsystemBase implements Constants {
         }
         else if (leftTrigger > 0.15 && armRotation.getArmEnc() > -1220){
             armRotation.setspeed(-leftTrigger * 0.3);
-        }else{
+        }else if (leftTrigger < 0.15 && rightTrigger < 0.15 && !yButton && !rBumper && !lBumper) {
             armRotation.setspeed(0.05);
         }
 
@@ -117,12 +150,13 @@ public class ArmController extends SubsystemBase implements Constants {
             setHeight = analogPotMax;
         }
 
-        if (actuatorArm.getPot() < setHeight - 25) {
+        if (actuatorArm.getPot() < setHeight - 3) {
             actuatorArm.setspeed(-0.8);
-        } else if (actuatorArm.getPot() > setHeight + 25) {
+        } else if (actuatorArm.getPot() > setHeight + 3) {
             actuatorArm.setspeed(0.8);
         } else {
             actuatorArm.setspeed(0);
+            actuatorDone = true;
         }
     } 
 
@@ -132,26 +166,28 @@ public class ArmController extends SubsystemBase implements Constants {
         }
 
         if (extension.getArmEnc() < setExtension - 50) {
-            extension.setspeed(-0.4);
+            extension.setspeed(-0.5);
         } else if (extension.getArmEnc() > setExtension + 50) {
-            extension.setspeed(0.4);
+            extension.setspeed(0.5);
         } else {
             extension.setspeed(0);
+            extensionDone = true;
         }
     } 
 
-   /* public void setArmRotationPos(double setWrist) {
+    public void setArmRotationPos(double setWrist) {
        if (setWrist > wristMax) {
         setWrist = wristMax;
        }
-        /*if (armRotation.getArmEnc() < setWrist - 25) {
+        if (armRotation.getArmEnc() < setWrist - 25) {
             armRotation.setspeed(-0.3);
         } else if (armRotation.getArmEnc() > setWrist + 25) {
             armRotation.setspeed(0.3);
         }
+    }
 
         //armRotation.setArmPosition(setWrist);
-    } */
+    
 
     public void setGamePiece(double setHeight, double setExtension, double setWrist) {
         if (actuatorArm.getPot() < setHeight && actuatorArm.getPot() < thresholdHeight){
@@ -175,7 +211,7 @@ public class ArmController extends SubsystemBase implements Constants {
             extension.setspeed(0);
             //tried negative speed
             //armRotation.setArmPosition(setWrist);
-            armRotation.setspeed(-0.3);
+            armRotation.setspeed(-0.4);
         }
         else {
             actuatorArm.setspeed(0);
