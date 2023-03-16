@@ -128,7 +128,7 @@ public class Robot extends TimedRobot implements Constants{
     dockSelection = dockChooser.getSelected();
 
 
-    String manualAutonSelection = kScoreMobilityR3;
+    String manualAutonSelection = kScoreMobilityR2;
 
 
      

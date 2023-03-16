@@ -24,8 +24,8 @@ public interface Constants{
 
     //quadrature encoder ticks per rotation
     public final int quadCountsPerRotation = 1658;
-    public final int analogCountsPerRotation = 2700;
-    public final int twoAnalogCountsPerRotation = 4000;
+    public final int analogCountsPerRotation = 2703;
+    public final int twoAnalogCountsPerRotation = 4096;
     
     public final int armQuadCountsPerRotation = 8192;
     //Turn motor CAN ID

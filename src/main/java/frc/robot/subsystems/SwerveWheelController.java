@@ -86,19 +86,19 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     public void drive(double x, double y, double z, double gyroValue, boolean rBumper, boolean lBumper) {
 
         if (lBumper) {
-            y *= 0.5;
-            x *= 0.5;
+            y *= 0.3;
+            x *= 0.3;
         }
         
         if (rBumper) {
-            y *= 1.5;
-            x *= 1.5;
+            y *= 1.6;
+            x *= 1.6;
         }
         //inverts y for drive
         y *= -1;
         //gves max speed
-        y *= 0.70;
-        x *= 0.70;
+        y *= 0.50;
+        x *= 0.50;
 
         //caps z at 0.2
         z *= 0.3;
@@ -196,16 +196,14 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
 
             //Q1 and Q2
-            if (!isFieldCentric) {
-                frontRight.setSetpoint(frontRightAngle);
-                frontLeft.setSetpoint(frontLeftAngle);
-                backRight.setSetpoint(backRightAngle);
-                backLeft.setSetpoint(backLeftAngle);
-
-                frontLeft.setSpeed(frontLeftSpeed);
-                frontRight.setSpeed(frontRightSpeed);
-                backRight.setSpeed(backRightSpeed);
-                backLeft.setSpeed(backLeftSpeed);
+            frontRight.setSetpoint(frontRightAngle);
+            frontLeft.setSetpoint(frontLeftAngle);
+            backRight.setSetpoint(backRightAngle);
+            backLeft.setSetpoint(backLeftAngle);
+            frontLeft.setSpeed(frontLeftSpeed);
+            frontRight.setSpeed(frontRightSpeed);
+            backRight.setSpeed(backRightSpeed);
+            backLeft.setSpeed(backLeftSpeed);
 
           
         } 
@@ -214,12 +212,6 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             frontRight.setSpeed(0);
             backRight.setSpeed(0);
             backLeft.setSpeed(0);
-
-            //sets the motors back to 0 if we are not driving anymore
-            //frontRight.setSetpoint(0);
-            //frontLeft.setSetpoint(0);
-            //backRight.setSetpoint(0);
-            //backLeft.setSetpoint(0);
         }
 
         //SmartDashboard.putNumber("magnitude", magnitude);
@@ -283,7 +275,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         //SmartDashboard.putNumber("ticks to angle", frontRight.ticksToAngle());
     }
 
-    }
+    
 
 
     //AUTON STUFF

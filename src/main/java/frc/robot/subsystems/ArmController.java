@@ -54,13 +54,13 @@ public class ArmController extends SubsystemBase implements Constants {
 
         //actuator code
         if (leftY < -0.15 && actuatorArm.getPot() < analogPotMax){
-            actuatorArm.setspeed(leftY * 0.7);
+            actuatorArm.setspeed(leftY);
         }
         else if (leftY > 0.15 && actuatorArm.getPot() > analogPotMin){
-            actuatorArm.setspeed(leftY * 0.7);
+            actuatorArm.setspeed(leftY);
         } 
         else if (leftY < 0.15 && actuatorArm.getPot() < analogPotMin){
-            actuatorArm.setspeed(0.7);
+            actuatorArm.setspeed(0);
         } 
         //mid arm height button
         else if (bButton){
