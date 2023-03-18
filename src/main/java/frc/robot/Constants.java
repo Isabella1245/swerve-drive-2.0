@@ -79,8 +79,8 @@ public interface Constants{
 
 
     //arm encoders (digital)
-    public final int extensionEncoderA = 1;
-    public final int extensionEncoderB = 0;
+    public final int extensionEncoderA = 0;
+    public final int extensionEncoderB = 1;
     public final int clawEncoderA = 2;
     public final int clawEncoderB = 3;
 
