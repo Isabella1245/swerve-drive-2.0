@@ -41,8 +41,8 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     // Get distance between wheels
     public double r = Math.sqrt((L * L) + (W * W));
 
-    public boolean isFieldCentric = false;
-    public boolean gyroEnabled = false;
+    public boolean isFieldCentric = true;
+    public boolean gyroEnabled = true;
 
     public SwerveWheelController(){
     
@@ -119,6 +119,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
    
         if (magnitude >= 0.1) {
 
+            gyroValue -= 180;
             // I got this bit of code from the NavX website
             if (isFieldCentric == true && gyroEnabled == true) {
                 // Convert gyro angle to radians

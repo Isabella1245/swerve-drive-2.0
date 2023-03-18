@@ -54,12 +54,20 @@ public class ArmActuator extends SubsystemBase implements Constants {
             setHeight = analogPotMax;
         }
 
-        if (getPot() < setHeight - 3) {
+        if (getPot() < (setHeight - 50)) {
             setspeed(-0.8);
             isActuatorDone = false;
-        } else if (getPot() > setHeight + 3) {
+        } else if (getPot() > (setHeight - 50) && getPot() < (setHeight - 5)) {
+            setspeed(-0.4);
+            isActuatorDone = false;
+
+        } else if (getPot() > setHeight + 50) {
             setspeed(0.8);
             isActuatorDone = false;
+        } else if (getPot() < (setHeight + 50) && getPot() > (setHeight + 5)) {
+            setspeed(0.4);
+            isActuatorDone = false;
+
         } else {
             setspeed(0);
             isActuatorDone = true;

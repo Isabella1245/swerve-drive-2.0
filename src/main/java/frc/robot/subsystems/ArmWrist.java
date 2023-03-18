@@ -78,12 +78,22 @@ public class ArmWrist extends SubsystemBase implements Constants {
             setWrist = wristMax;
         }
 
-        if (getWristEnc() < setWrist - 25) {
+        if (getWristEnc() < (setWrist - 50)) {
             setWristMotorOutput(-0.5);
             isWristDone = false;
-        } else if (getWristEnc() > setWrist + 25) {
+        } else if (getWristEnc() > (setWrist - 50) && getWristEnc() < (setWrist - 5)) {
+            setWristMotorOutput(-0.25);
+            isWristDone = false;
+        
+        
+        } else if (getWristEnc() > (setWrist + 50)) {
             setWristMotorOutput(0.5);
             isWristDone = false;
+        } else if (getWristEnc() < (setWrist + 50) && getWristEnc() > (setWrist + 5)) {
+            setWristMotorOutput(0.25);
+            isWristDone = false;
+        
+        
         } else {
             setWristMotorOutput(0);
             isWristDone = true;

@@ -82,13 +82,23 @@ public class ArmExtension extends SubsystemBase implements Constants{
             setExtension = extensionElevatorMax;
         }
 
-        if (getExtensionEnc() < setExtension - 50) {
+        if (getExtensionEnc() < (setExtension - 100)) {
             setExtensionMotorOutput(-0.5);
             isExtensionDone = false;
-        } else if (getExtensionEnc() > setExtension + 50) {
+        } else if (getExtensionEnc() > (setExtension - 100) && getExtensionEnc() < (setExtension - 10)) {
+            setExtensionMotorOutput(-0.25);
+            isExtensionDone = false;
+
+
+        } else if (getExtensionEnc() > (setExtension + 100)) {
             setExtensionMotorOutput(0.5);
             isExtensionDone = false;
-        } else {
+        } else if (getExtensionEnc() < (setExtension + 100) && getExtensionEnc() > (setExtension + 10)) {
+            setExtensionMotorOutput(0.25);
+            isExtensionDone = false;
+        }
+        
+        else {
             setExtensionMotorOutput(0);
             isExtensionDone = true;
         }
