@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class XboxControllers {
 
@@ -90,8 +92,13 @@ public class XboxControllers {
 	 * @return The State of the button
 	 */
 	public boolean getControllerLBumper() {
-		return controller.getRawButton(5);
+		return controller.getLeftBumper();
 	}
+	//Trigger lBumper = new JoystickButton(controller, XboxController.Button.kLeftBumper.value);
+	public Trigger lBumper() {
+		return new Trigger(() -> controller.getLeftBumper());
+	}
+
 	/**
 	 * Checks if the Right Bumper was pressed since the last check
 	 * @return Whether the button was pressed since the last check
@@ -104,8 +111,13 @@ public class XboxControllers {
 	 * @return The State of the button
 	 */
 	public boolean getControllerRBumper() {
-		return controller.getRawButton(6);
+		return controller.getRightBumper();
 	}
+	//Trigger rBumper = new JoystickButton(controller, XboxController.Button.kRightBumper.value);
+	public Trigger rBumper() {
+		return new Trigger(() -> controller.getRightBumper());
+	} 
+
 	/**
 	 * Checks if the A button was pressed since the last check
 	 * @return Whether the button was pressed since the last check
@@ -120,6 +132,10 @@ public class XboxControllers {
 	public boolean getControllerAButton() {
 		return controller.getAButton();
 	}
+	//Trigger aButton = new JoystickButton(controller, XboxController.Button.kA.value);
+	public Trigger aButton() {
+		return new Trigger(() -> controller.getAButton());
+	}
 	/**
 	 * Checks if the B button was pressed since the last check 
 	 * @return Whether the button was pressed since the last check
@@ -127,6 +143,11 @@ public class XboxControllers {
 	public boolean getControllerBButtonPressed() {
 		return controller.getBButtonPressed();
 	}
+	//Trigger bButton = new JoystickButton(controller, XboxController.Button.kB.value);
+	public Trigger bButton() {
+		return new Trigger(() -> controller.getBButton());
+	}
+
 	/**
 	 * Checks the state of the B button
 	 * @return The State of the button
@@ -141,6 +162,11 @@ public class XboxControllers {
 	public boolean getControllerXButtonPressed() {
 		return controller.getXButtonPressed();
 	}
+	//Trigger xButton = new JoystickButton(controller, XboxController.Button.kX.value);
+	public Trigger xButton() {
+		return new Trigger(() -> controller.getXButton());
+	}
+
 	/**
 	 * Checks if the Y button was pressed since the last check 
 	 * @return Whether the button was pressed since the last check
@@ -152,6 +178,11 @@ public class XboxControllers {
 	public boolean getControllerYButton() {
 		return controller.getYButton();
 	}
+	//Trigger yButton = new JoystickButton(controller, XboxController.Button.kY.value);
+	public Trigger yButton() {
+		return new Trigger(() -> controller.getYButton());
+	}
+
 	/**
 	 * Checks if the Start button was pressed since the last check
 	 * @return Whether the button was pressed since last check 

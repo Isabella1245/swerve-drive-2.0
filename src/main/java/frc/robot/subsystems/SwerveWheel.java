@@ -61,6 +61,7 @@ public class SwerveWheel extends PIDSubsystem implements Constants {
 		// has 0 position on startup
 
         //we reviewed this and it is correct :)
+        
         steerMotor.setSelectedSensorPosition((getAbsAngleDeg() * quadCountsPerRotation) / 360);
         //steerMotor.setSelectedSensorPosition(0);
 

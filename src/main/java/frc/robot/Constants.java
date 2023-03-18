@@ -16,16 +16,19 @@ public interface Constants{
     public final double kD = 0.0009;//50 //5
     public final double kF = 0.0;
 
-    //arm pid
-    public final double P = 0.1;
-    public final double I = 0.002;
-    public final double D = 0.0009;
-    public final double F = 0.0;
+    //ArmExtension PID
+    public final double eP = 0.1;
+    public final double eI = 0.002;
+    public final double eD = 0.0009;
+    //ArmWrist PID
+    public final double wP = 0.1;
+    public final double wI = 0.002;
+    public final double wD = 0.0009;
 
     //quadrature encoder ticks per rotation
     public final int quadCountsPerRotation = 1658;
-    public final int analogCountsPerRotation = 2700;
-    public final int twoAnalogCountsPerRotation = 4000;
+    public final int analogCountsPerRotation = 2703;
+    public final int twoAnalogCountsPerRotation = 4096;
     
     public final int armQuadCountsPerRotation = 8192;
     //Turn motor CAN ID
@@ -89,21 +92,21 @@ public interface Constants{
 
     //arm auton constants
     //angles in potentiometer values
-    public final double floorHeight = 426;
-    public final double midHeight = 1370;
-    
-    public final double topHeight1 = 720; //2103
-    public final double topHeight2 = 1520;
+    public final double floorHeight = 420;
+    public final double midHeight = 650;
+    public final double clearHeight = 420;
+    public final double topHeight = 740;
 
-    public final double floorExtenstion = 4460;
-    public final double midExtenstion = -310;
-    public final double topExtenstion = 5890; //5890
+    public final double floorExtenstion = 3360;
+    public final double midExtenstion = 710;
+    public final double topExtenstion = 5470;
 
-    public final double wristSet = 400;
-    public final double wristFloor = 529;
+    public final double floorWrist = 540;
+    public final double midWrist = 780;
+    public final double topWrist = 840;
 
-    public final double retractHeight = 1000;
-    public final double retractExtension = -100;
+    public final double retractHeight = 420;
+    public final double retractExtension = 3360;
 
     public final double substationHeight = 680;
     public final double substationExtension = 0;
