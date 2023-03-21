@@ -33,7 +33,7 @@ public class ArmExtension extends SubsystemBase implements Constants{
             setExtensionMotorOutput(rightY * 0.7);
         }
         else {
-            setExtensionMotorOutput(0);
+            setExtensionMotorOutput(0.1);
         }
 
         SmartDashboard.putNumber("extension encoder", getExtensionEnc());
@@ -82,24 +82,24 @@ public class ArmExtension extends SubsystemBase implements Constants{
             setExtension = extensionElevatorMax;
         }
 
-        if (getExtensionEnc() < (setExtension - 100)) {
+        if (getExtensionEnc() < (setExtension - 150)) {
             setExtensionMotorOutput(-0.5);
             isExtensionDone = false;
-        } else if (getExtensionEnc() > (setExtension - 100) && getExtensionEnc() < (setExtension - 10)) {
-            setExtensionMotorOutput(-0.25);
+        } else if (getExtensionEnc() > (setExtension - 150) && getExtensionEnc() < (setExtension - 10)) {
+            setExtensionMotorOutput(-0.2);
             isExtensionDone = false;
 
 
-        } else if (getExtensionEnc() > (setExtension + 100)) {
+        } else if (getExtensionEnc() > (setExtension + 150)) {
             setExtensionMotorOutput(0.5);
             isExtensionDone = false;
-        } else if (getExtensionEnc() < (setExtension + 100) && getExtensionEnc() > (setExtension + 10)) {
-            setExtensionMotorOutput(0.25);
+        } else if (getExtensionEnc() < (setExtension + 150) && getExtensionEnc() > (setExtension + 10)) {
+            setExtensionMotorOutput(0.2);
             isExtensionDone = false;
         }
         
         else {
-            setExtensionMotorOutput(0);
+            setExtensionMotorOutput(-0.1);
             isExtensionDone = true;
         }
     } 

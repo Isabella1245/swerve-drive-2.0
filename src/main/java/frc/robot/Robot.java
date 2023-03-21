@@ -67,7 +67,7 @@ public class Robot extends TimedRobot implements Constants{
 
   private static final double kDockYes = 1;
   private static final double kDockNo = 0;
-
+  Command seqArmBot, seqArmMid, seqArmTop, seqArmLoad;
   @Override
   public void robotInit() {
     swerve = SwerveWheelController.getInstance();
@@ -101,6 +101,7 @@ public class Robot extends TimedRobot implements Constants{
     SmartDashboard.putData(autonChooser);
     SmartDashboard.putData(dockChooser);
     System.out.println((autonSelection));
+    
   }
 
   @Override
@@ -197,31 +198,35 @@ public class Robot extends TimedRobot implements Constants{
 
     //FLOOR HEIGHT BUTTON
     //fixed for now- ready to test
+
+    /*
     if (armActuator.getPot() > floorHeight) {
-      seqArmBot = new ArmExtensionMove(armExtension,floorExtenstion).alongWith(new ArmActuatorMove(armActuator, floorHeight).alongWith(new ArmWristMove(armWrist,floorWrist)));
-      //seqArmBot = Commands.parallel(new ArmExtensionMove(armExtension, floorExtenstion), new ArmActuatorMove(armActuator, floorHeight), new ArmWristMove(armWrist,floorWrist));
+      //seqArmBot = new ArmExtensionMove(armExtension,floorExtenstion).alongWith(new ArmActuatorMove(armActuator, floorHeight).alongWith(new ArmWristMove(armWrist,floorWrist)));
+      seqArmBot = Commands.parallel(new ArmExtensionMove(armExtension, floorExtenstion), new ArmActuatorMove(armActuator, floorHeight), new ArmWristMove(armWrist,floorWrist));
     } else {
     seqArmBot = new ArmActuatorMove(armActuator, floorHeight);
     seqArmBot = seqArmBot.andThen(new ArmExtensionMove(armExtension,floorExtenstion).alongWith(new ArmWristMove(armWrist,floorWrist)));
     }
-    upperDriver.aButton().whileTrue(seqArmBot);
+    */
+    //seqArmBot = Commands.parallel(new ArmExtensionMove(armExtension, floorExtenstion), new ArmActuatorMove(armActuator, floorHeight), new ArmWristMove(armWrist,floorWrist));
+    //upperDriver.aButton().whileTrue(seqArmBot);
 
     //MID HEIGHT BUTTON
     //fixed for now- ready to test
-    if (armActuator.getPot() > floorHeight) {
+    /*if (armActuator.getPot() > floorHeight) {
       seqArmMid = new ArmActuatorMove(armActuator, midHeight).alongWith(new ArmExtensionMove(armExtension, midExtenstion).alongWith(new ArmWristMove(armWrist, midWrist)));
       //seqArmMid = Commands.parallel(new ArmExtensionMove(armExtension, midExtenstion), new ArmActuatorMove(armActuator, midHeight), new ArmWristMove(armWrist,midWrist));
     } else {
     seqArmMid = new ArmActuatorMove(armActuator, midHeight);
     seqArmMid = seqArmMid.andThen(new ArmExtensionMove(armExtension,midExtenstion).alongWith(new ArmWristMove(armWrist,midWrist)));
     }
-    upperDriver.bButton().whileTrue(seqArmMid);
+    upperDriver.bButton().whileTrue(seqArmMid);*/
 
     //TOP ARM BUTTON
     //fixed
-    seqArmTop = new ArmActuatorMove(armActuator, topHeight);
+    /*seqArmTop = new ArmActuatorMove(armActuator, topHeight);
     seqArmTop = seqArmTop.andThen(new ArmExtensionMove(armExtension,topExtenstion).alongWith(new ArmWristMove(armWrist,topWrist)));
-    upperDriver.yButton().whileTrue(seqArmTop);
+    upperDriver.yButton().whileTrue(seqArmTop);*/
 
     //SUBSTATION HEIGHT BUTTON
     //fixed
@@ -231,7 +236,35 @@ public class Robot extends TimedRobot implements Constants{
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    //FLOOR HEIGHT
+    if (armActuator.getPot() > floorHeight) {
+      seqArmBot = new ArmExtensionMove(armExtension,floorExtenstion);
+      seqArmBot = seqArmBot.andThen(Commands.parallel(new ArmActuatorMove(armActuator, floorHeight), new ArmWristMove(armWrist,floorWrist)));
+    } else {
+    seqArmBot = new ArmActuatorMove(armActuator, floorHeight);
+    seqArmBot = seqArmBot.andThen(Commands.parallel(new ArmExtensionMove(armExtension,floorExtenstion), new ArmWristMove(armWrist,floorWrist)));
+    }
+    upperDriver.aButton().whileTrue(seqArmBot);
+
+    //MID HEIGHT
+    if (armActuator.getPot() > floorHeight) {
+      seqArmMid = Commands.parallel(new ArmActuatorMove(armActuator, midHeight), new ArmWristMove(armWrist,midWrist),new ArmExtensionMove(armExtension,midExtenstion));
+    } else {
+    seqArmMid = new ArmActuatorMove(armActuator, midHeight);
+    seqArmMid = seqArmMid.andThen(Commands.parallel(new ArmExtensionMove(armExtension,midExtenstion), new ArmWristMove(armWrist,midWrist)));
+    }
+    upperDriver.bButton().whileTrue(seqArmMid);
+
+    //TOP HEIGHT
+    if (armActuator.getPot() > floorHeight) {
+      seqArmTop = Commands.parallel(new ArmActuatorMove(armActuator, topHeight), new ArmWristMove(armWrist,topWrist),new ArmExtensionMove(armExtension,topExtenstion));
+    } else {
+    seqArmTop = new ArmActuatorMove(armActuator, topHeight);
+    seqArmTop = seqArmTop.andThen(Commands.parallel(new ArmExtensionMove(armExtension,topExtenstion), new ArmWristMove(armWrist,topWrist)));
+    }
+    upperDriver.yButton().whileTrue(seqArmTop);
+  }
 
   @Override
   public void testInit() {}
