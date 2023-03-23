@@ -36,13 +36,22 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
     public AHRS gyro = null;
 
     Timer moveDistanceTimer = new Timer();
+    Timer timer = new Timer();
 
 
     // Get distance between wheels
     public double r = Math.sqrt((L * L) + (W * W));
 
     public boolean isFieldCentric = true;
-    public boolean gyroEnabled = true;
+    public boolean gyroEnabled = true; //false
+
+    boolean isDriveFinished = false;
+    boolean isBalanceFinished = false;
+    boolean isTurnRobotFinished = false;
+
+double gyroAngle = 0;
+double kP = 0.09;
+double error;
 
     public SwerveWheelController(){
     
@@ -75,10 +84,10 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         backRight.enable();
         backLeft.enable();
 
-        //frontRight.resetTurnMotors();
-        //frontLeft.resetTurnMotors();
-        //backRight.resetTurnMotors();
-        //backLeft.resetTurnMotors();
+        frontRight.resetTurnMotors();
+        frontLeft.resetTurnMotors();
+        backRight.resetTurnMotors();
+        backLeft.resetTurnMotors();
     }
 
          // x = strafe, y = speed, z = rotation 
@@ -91,8 +100,8 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
         }
         
         if (rBumper) {
-            y *= 1.6;
-            x *= 1.6;
+            y *= 1.6; //1.5
+            x *= 1.6; //1.5
         }
         //inverts y for drive
         y *= -1;
@@ -119,7 +128,7 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
    
         if (magnitude >= 0.1) {
 
-            gyroValue -= 180;
+            gyroValue -= 180; //comment out
             // I got this bit of code from the NavX website
             if (isFieldCentric == true && gyroEnabled == true) {
                 // Convert gyro angle to radians
@@ -292,11 +301,13 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 frontLeft.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
                 backRight.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))-0.1));
                 backLeft.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+                isTurnRobotFinished = false;
             } else if (gyro.getYaw() > turnAngle/2 ) {
                 frontRight.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
                 frontLeft.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
                 backRight.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
                 backLeft.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
+                isTurnRobotFinished = false;
             }   
         } else if (turnAngle < gyro.getYaw()) {
             if (gyro.getYaw() > 90) {
@@ -304,21 +315,26 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
                 frontLeft.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
                 backRight.setSpeed(((1.1/(1+Math.exp((gyro.getYaw()) - 177)))+0.1));
                 backLeft.setSpeed(-((1.1/(1+Math.exp((gyro.getYaw()) - 177)))-0.1));
+                isTurnRobotFinished = false;
             } else if (gyro.getYaw() < 90 ) {
                 frontRight.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
                 frontLeft.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
                 backRight.setSpeed(((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
                 backLeft.setSpeed(-((0.95/(1+Math.exp(-(gyro.getYaw()) + 4)))+0.1));
+                isTurnRobotFinished = false;
             }
         } else {
             frontRight.setSpeed(0);
             frontLeft.setSpeed(0);
             backRight.setSpeed(0);
             backLeft.setSpeed(0);
+            isTurnRobotFinished = true;
 
         }
     }
-
+    public boolean isTurnRobotDone(){
+        return isTurnRobotFinished;
+    }
     public void driveSegmentOld(double speed, double angle, double timeSeconds) {
         moveDistanceTimer.reset();
         moveDistanceTimer.start();
@@ -348,18 +364,23 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
 
     }
 
-    public void driveSegment(double speed, double angle) {
+    public void driveSegment(double speed, double angle) { //new changes
+        error = gyroAngle - gyro.getAngle();
         frontRight.setSetpoint(angle);
         frontLeft.setSetpoint(angle);
         backRight.setSetpoint(angle);
         backLeft.setSetpoint(angle);
 
-        frontRight.setSpeed(speed);
-        frontLeft.setSpeed(speed);
-        backRight.setSpeed(speed);
-        backLeft.setSpeed(speed);
+        frontRight.setSpeed(speed + (kP * error));
+        frontLeft.setSpeed(speed - (kP * error));
+        backRight.setSpeed(speed + (kP * error));
+        backLeft.setSpeed(speed - (kP * error));
     }
 
+    
+    /*public boolean isDriveDone() {
+        return isDriveFinished;
+    }*/
     
 
     public boolean isGyroReqMet() {
@@ -379,31 +400,35 @@ public class SwerveWheelController extends SubsystemBase implements Constants  {
             frontLeft.setSpeed(dockRampSpeed * Math.signum(gyro.getRoll()));
             backRight.setSpeed(dockRampSpeed * Math.signum(gyro.getRoll()));
             backLeft.setSpeed(dockRampSpeed * Math.signum(gyro.getRoll()));
-
+            isBalanceFinished = false;
         } else if (Math.abs(gyro.getRoll()) > dockPlatformAngle1 && gyro.getRoll() < 25) {
             frontRight.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
             frontLeft.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
             backRight.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
             backLeft.setSpeed(dockPlatformSpeed1 * Math.signum(gyro.getRoll()));
-
+            isBalanceFinished = false;
         } else if (Math.abs(gyro.getRoll()) < dockPlatformAngle1 && gyro.getRoll() > 8){
             frontRight.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
             frontLeft.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
             backRight.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
             backLeft.setSpeed(dockPlatformSpeed2 * Math.signum(gyro.getRoll()));
-
+            isBalanceFinished = false;
         } else if (Math.abs(gyro.getRoll()) < 8 && gyro.getRoll() > 3) {
             frontRight.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
             frontLeft.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
             backRight.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
             backLeft.setSpeed(dockPlatformSpeed3 * Math.signum(gyro.getRoll()));
-
+            isBalanceFinished = false;
         } else if (Math.abs(gyro.getRoll()) < 3) {
             frontRight.setSpeed(0);
         frontLeft.setSpeed(0);
         backRight.setSpeed(0);
         backLeft.setSpeed(0);
+        isBalanceFinished = true;
         }
+    }
+    public boolean isBalanceDone(){
+        return isBalanceFinished;
     }
     //might not use
     public void moveDistance(double speed, double angle, double ramprate, double time) {

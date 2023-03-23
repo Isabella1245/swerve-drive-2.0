@@ -19,7 +19,7 @@ public class DriveSegmentWithTime extends CommandBase {
 
     @Override
     public void execute() {
-        swerve.driveSegment(speed, angle);
+        swerve.driveSegmentOld(speed, angle, time);
     }
 
     @Override

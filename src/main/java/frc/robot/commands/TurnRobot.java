@@ -14,6 +14,15 @@ public class TurnRobot extends CommandBase{
 
     @Override
     public void execute(){
-        swerve.turnRobot(0, 0, 0);
+        swerve.turnRobot(-52.4, 52.4, 45);
+    }
+    @Override
+    public boolean isFinished(){
+        return swerve.isTurnRobotDone();
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        swerve.stop();
     }
 }

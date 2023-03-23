@@ -127,7 +127,7 @@ public interface Constants{
     public final double R2MobSpeed = -0.3;
     public final double R3MobSpeed = -0.3; //Same as B1
         //angle
-    public final double B1MobAngle = 0; //-3
+    public final double B1MobAngle = -1; //-3
     public final double B2MobAngle = -5;
     public final double B3MobAngle = -2; //-3
 

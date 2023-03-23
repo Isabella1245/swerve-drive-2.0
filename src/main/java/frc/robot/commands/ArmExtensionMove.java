@@ -24,6 +24,7 @@ public class ArmExtensionMove extends CommandBase{
     public boolean isFinished() {
         return extend.isExtensionFinished();
     }
+    
     @Override
     public void end(boolean interrupted){        
         extend.setExtensionMotorOutput(0);

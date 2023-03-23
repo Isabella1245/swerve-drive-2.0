@@ -16,4 +16,15 @@ public class BalanceRobot extends CommandBase {
     public void execute() {
         swerve.balanceRobot();
     }
+
+    @Override
+    public boolean isFinished(){
+        return swerve.isBalanceDone();
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        swerve.stop();
+    }
+    
 }

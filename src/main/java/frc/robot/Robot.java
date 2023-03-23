@@ -16,6 +16,7 @@ import frc.robot.commands.CloseClaw;
 import frc.robot.commands.DriveSegment;
 import frc.robot.commands.DriveSegmentWithTime;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.TurnRobot;
 import frc.robot.commands.TeleopClaw;
 import frc.robot.subsystems.ArmActuator;
 import frc.robot.subsystems.ArmExtension;
@@ -67,7 +68,7 @@ public class Robot extends TimedRobot implements Constants{
 
   private static final double kDockYes = 1;
   private static final double kDockNo = 0;
-  Command seqArmBot, seqArmMid, seqArmTop, seqArmLoad;
+  //Command seqArmBot, seqArmMid, seqArmTop, seqArmLoad;
   @Override
   public void robotInit() {
     swerve = SwerveWheelController.getInstance();
@@ -115,61 +116,49 @@ public class Robot extends TimedRobot implements Constants{
 
   @Override
   public void autonomousInit() {
-    timer.reset();
-    timer.start();
     
-    
-    Command scoreTop, mobility, sequence;
+    Command scoreTop, shortMobility, sequence, longMobility, rampMobility;
     scheduler.cancelAll();
     autonSelection = autonChooser.getSelected();
     dockSelection = dockChooser.getSelected();
 
-    String manualAutonSelection = "test";
+    double manualAutonSelection = 1;
 
     scoreTop = new ArmActuatorMove(armActuator, topHeight);
     scoreTop = scoreTop.andThen(new ArmExtensionMove(armExtension,topExtenstion));
-    scoreTop = scoreTop.alongWith(new ArmWristMove(armWrist,topWrist));
+    scoreTop = scoreTop.andThen(new ArmWristMove(armWrist,topWrist));
     scoreTop = scoreTop.andThen(new OpenClaw(claw));
 
-    mobility = new DriveSegment(swerve, B1MobSpeed, B1MobAngle).withTimeout(5.3);
-    mobility = mobility.andThen(new ArmExtensionMove(armExtension, floorExtenstion));
-     
+    shortMobility = new DriveSegment(swerve, B1MobSpeed, B1MobAngle, B1MobTime);
+    shortMobility = shortMobility.andThen(new ArmExtensionMove(armExtension, floorExtenstion));
+    //determine if arm extension elevator resets to zero in the right spot in teleop 
+    longMobility = new DriveSegment(swerve, B3MobSpeed, B3MobAngle, B3MobTime);
+    longMobility = longMobility.andThen(new ArmExtensionMove(armExtension, floorExtenstion));
+
+    rampMobility = new ArmExtensionMove(armExtension, floorExtenstion);
+    //rampMobility = rampMobility.andThen(new TurnRobot(swerve));
+    //rampMobility = rampMobility.andThen(new DriveSegment(swerve,B2MobSpeed, B2MobAngle, B2MobTime));
+    //rampMobility = rampMobility.andThen(new BalanceRobot(swerve));
+// Cole made this
     //SCORE + MOBILITY
-    /*B1: Score + Mobility*/
-    if (autonChooser.getSelected() == (kScoreMobilityB1)) {
+    /*B1/R3: Score + Mobility*/
+    if (manualAutonSelection == (kScoreMobilityB1)) {
       SmartDashboard.putNumber("Auton Program:", kScoreMobilityB1);
       sequence = scoreTop;
-      sequence = sequence.andThen(mobility);
-      
-     //B2: Score + Mobility
-    } else if (autonSelection == (kScoreMobilityB2)) {
+      sequence = sequence.andThen(shortMobility);
+     //B2/R2: Score + Ramp = ?
+    } else if (manualAutonSelection == (kScoreMobilityB2)) {
       SmartDashboard.putNumber("Auton Program:", kScoreMobilityB2);
       sequence = scoreTop;
-
-    //B3: Score + Mobility
-    } else if (autonSelection == (kScoreMobilityB3)) {
+      sequence = sequence.andThen(rampMobility);
+    //B3/R1: Score + Mobility
+    } else if (manualAutonSelection == (kScoreMobilityB3)) {
       SmartDashboard.putNumber("Auton Program:", kScoreMobilityB3);
       sequence = scoreTop;
-      sequence = sequence.andThen(mobility);
+      sequence = sequence.andThen(longMobility);
 
-    //R1: Score + Mobility
-    } else if (autonSelection == (kScoreMobilityR1)) {
-      SmartDashboard.putNumber("Auton Program:", kScoreMobilityR1);
-      sequence = scoreTop;
-      sequence = sequence.andThen(mobility);
-
-      //R2: Score + Mobility
-    } else if (autonSelection == (kScoreMobilityR2)) {
-      SmartDashboard.putNumber("Auton Program:", kScoreMobilityR2);
-      sequence = scoreTop;
-      
-      //R3: Score + Mobility
-    } else if (autonSelection == (kScoreMobilityR3)) {
-      SmartDashboard.putNumber("Auton Program:", kScoreMobilityR3);
-      sequence = scoreTop;
-      sequence = sequence.andThen(mobility);
-
-    }     
+    
+    }
     else {
       sequence = new OpenClaw(claw);
     }
@@ -197,47 +186,33 @@ public class Robot extends TimedRobot implements Constants{
     claw.setDefaultCommand(new TeleopClaw(claw, upperDriver));
 
     //FLOOR HEIGHT BUTTON
-    //fixed for now- ready to test
-
-    /*
-    if (armActuator.getPot() > floorHeight) {
-      //seqArmBot = new ArmExtensionMove(armExtension,floorExtenstion).alongWith(new ArmActuatorMove(armActuator, floorHeight).alongWith(new ArmWristMove(armWrist,floorWrist)));
-      seqArmBot = Commands.parallel(new ArmExtensionMove(armExtension, floorExtenstion), new ArmActuatorMove(armActuator, floorHeight), new ArmWristMove(armWrist,floorWrist));
-    } else {
-    seqArmBot = new ArmActuatorMove(armActuator, floorHeight);
-    seqArmBot = seqArmBot.andThen(new ArmExtensionMove(armExtension,floorExtenstion).alongWith(new ArmWristMove(armWrist,floorWrist)));
-    }
-    */
-    //seqArmBot = Commands.parallel(new ArmExtensionMove(armExtension, floorExtenstion), new ArmActuatorMove(armActuator, floorHeight), new ArmWristMove(armWrist,floorWrist));
-    //upperDriver.aButton().whileTrue(seqArmBot);
+    //no safety feature
+    
+    seqArmBot = Commands.parallel(new ArmActuatorMove(armActuator, floorHeight), new ArmExtensionMove(armExtension, floorExtenstion), new ArmWristMove(armWrist, floorWrist));
+    upperDriver.aButton().whileTrue(seqArmBot);
 
     //MID HEIGHT BUTTON
-    //fixed for now- ready to test
-    /*if (armActuator.getPot() > floorHeight) {
-      seqArmMid = new ArmActuatorMove(armActuator, midHeight).alongWith(new ArmExtensionMove(armExtension, midExtenstion).alongWith(new ArmWristMove(armWrist, midWrist)));
-      //seqArmMid = Commands.parallel(new ArmExtensionMove(armExtension, midExtenstion), new ArmActuatorMove(armActuator, midHeight), new ArmWristMove(armWrist,midWrist));
-    } else {
-    seqArmMid = new ArmActuatorMove(armActuator, midHeight);
-    seqArmMid = seqArmMid.andThen(new ArmExtensionMove(armExtension,midExtenstion).alongWith(new ArmWristMove(armWrist,midWrist)));
-    }
-    upperDriver.bButton().whileTrue(seqArmMid);*/
+    //no safety feature
+
+    seqArmMid = Commands.parallel(new ArmExtensionMove(armExtension, midExtenstion), new ArmActuatorMove(armActuator, midHeight), new ArmWristMove(armWrist,midWrist));
+    upperDriver.bButton().whileTrue(seqArmMid);
 
     //TOP ARM BUTTON
-    //fixed
-    /*seqArmTop = new ArmActuatorMove(armActuator, topHeight);
-    seqArmTop = seqArmTop.andThen(new ArmExtensionMove(armExtension,topExtenstion).alongWith(new ArmWristMove(armWrist,topWrist)));
-    upperDriver.yButton().whileTrue(seqArmTop);*/
+    //no safety feature
+    seqArmTop = Commands.parallel(new ArmExtensionMove(armExtension, topExtenstion), new ArmActuatorMove(armActuator, topHeight), new ArmWristMove(armWrist,topWrist));
+    upperDriver.yButton().whileTrue(seqArmTop);
 
     //SUBSTATION HEIGHT BUTTON
-    //fixed
-    seqArmLoad = new ArmActuatorMove(armActuator, substationHeight);
-    seqArmLoad = seqArmLoad.andThen(new ArmExtensionMove(armExtension,substationExtension).alongWith(new ArmWristMove(armWrist,substationWrist)));
+    //no safety feature
+    seqArmLoad = Commands.parallel(new ArmExtensionMove(armExtension, substationExtension), new ArmActuatorMove(armActuator, substationHeight), new ArmWristMove(armWrist,substationWrist));
     upperDriver.xButton().whileTrue(seqArmLoad);
   }
 
   @Override
   public void teleopPeriodic() {
     //FLOOR HEIGHT
+    //test one more time to see if drive jitters 
+    /*
     if (armActuator.getPot() > floorHeight) {
       seqArmBot = new ArmExtensionMove(armExtension,floorExtenstion);
       seqArmBot = seqArmBot.andThen(Commands.parallel(new ArmActuatorMove(armActuator, floorHeight), new ArmWristMove(armWrist,floorWrist)));
@@ -245,7 +220,8 @@ public class Robot extends TimedRobot implements Constants{
     seqArmBot = new ArmActuatorMove(armActuator, floorHeight);
     seqArmBot = seqArmBot.andThen(Commands.parallel(new ArmExtensionMove(armExtension,floorExtenstion), new ArmWristMove(armWrist,floorWrist)));
     }
-    upperDriver.aButton().whileTrue(seqArmBot);
+    //upperDriver.aButton().whileTrue(seqArmBot);
+    
 
     //MID HEIGHT
     if (armActuator.getPot() > floorHeight) {
@@ -254,7 +230,7 @@ public class Robot extends TimedRobot implements Constants{
     seqArmMid = new ArmActuatorMove(armActuator, midHeight);
     seqArmMid = seqArmMid.andThen(Commands.parallel(new ArmExtensionMove(armExtension,midExtenstion), new ArmWristMove(armWrist,midWrist)));
     }
-    upperDriver.bButton().whileTrue(seqArmMid);
+    //upperDriver.bButton().whileTrue(seqArmMid);
 
     //TOP HEIGHT
     if (armActuator.getPot() > floorHeight) {
@@ -263,7 +239,9 @@ public class Robot extends TimedRobot implements Constants{
     seqArmTop = new ArmActuatorMove(armActuator, topHeight);
     seqArmTop = seqArmTop.andThen(Commands.parallel(new ArmExtensionMove(armExtension,topExtenstion), new ArmWristMove(armWrist,topWrist)));
     }
-    upperDriver.yButton().whileTrue(seqArmTop);
+    //upperDriver.yButton().whileTrue(seqArmTop);
+    */
+    
   }
 
   @Override
