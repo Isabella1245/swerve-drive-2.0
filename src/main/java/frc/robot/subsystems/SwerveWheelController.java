@@ -84,10 +84,11 @@ double error;
         backRight.enable();
         backLeft.enable();
 
-        frontRight.resetTurnMotors();
+        /*frontRight.resetTurnMotors();
         frontLeft.resetTurnMotors();
         backRight.resetTurnMotors();
         backLeft.resetTurnMotors();
+        */ //
     }
 
          // x = strafe, y = speed, z = rotation 

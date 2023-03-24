@@ -122,7 +122,7 @@ public class Robot extends TimedRobot implements Constants{
     autonSelection = autonChooser.getSelected();
     dockSelection = dockChooser.getSelected();
 
-    double manualAutonSelection = 1;
+    double manualAutonSelection = 2;
 
     scoreTop = new ArmActuatorMove(armActuator, topHeight);
     scoreTop = scoreTop.andThen(new ArmExtensionMove(armExtension,topExtenstion));
@@ -199,12 +199,12 @@ public class Robot extends TimedRobot implements Constants{
 
     //TOP ARM BUTTON
     //no safety feature
-    seqArmTop = Commands.parallel(new ArmExtensionMove(armExtension, topExtenstion), new ArmActuatorMove(armActuator, topHeight), new ArmWristMove(armWrist,topWrist));
+    seqArmTop = Commands.parallel(new ArmExtensionMove(armExtension, topExtenstion), new ArmActuatorMove(armActuator, topHeight)).andThen(new ArmWristMove(armWrist,topWrist));
     upperDriver.yButton().whileTrue(seqArmTop);
 
     //SUBSTATION HEIGHT BUTTON
     //no safety feature
-    seqArmLoad = Commands.parallel(new ArmExtensionMove(armExtension, substationExtension), new ArmActuatorMove(armActuator, substationHeight), new ArmWristMove(armWrist,substationWrist));
+    seqArmLoad = Commands.parallel(new ArmExtensionMove(armExtension, substationExtension), new ArmActuatorMove(armActuator, substationHeight)).andThen(new ArmWristMove(armWrist,substationWrist));
     upperDriver.xButton().whileTrue(seqArmLoad);
   }
 

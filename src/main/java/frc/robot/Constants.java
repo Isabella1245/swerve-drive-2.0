@@ -61,7 +61,7 @@ public interface Constants{
     //ARM STUFF
     //IDs for arm motors
     public final int actuatorMotorID = 3;
-    public final int extensionMotorID = 9;
+    public final int extensionMotorID = 7;
     public final int clawTwistMotorID = 6;
 
     //analog potentiometer
@@ -108,9 +108,9 @@ public interface Constants{
     public final double retractHeight = 420;
     public final double retractExtension = 3360;
 
-    public final double substationHeight = 680;
-    public final double substationExtension = 0;
-    public final double substationWrist = 811;
+    public final double substationHeight = 695;
+    public final double substationExtension = 1769;
+    public final double substationWrist = 775;
 
     //recalculate threshold height, actuator values have changed
     public final double thresholdHeight = 600;

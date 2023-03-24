@@ -95,7 +95,7 @@ public class ArmWrist extends SubsystemBase implements Constants {
         
         
         } else {
-            setWristMotorOutput(0);
+            setWristMotorOutput(0.1);
             isWristDone = true;
         }
     }    
