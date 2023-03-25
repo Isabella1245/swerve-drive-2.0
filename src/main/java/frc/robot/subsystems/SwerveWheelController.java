@@ -372,10 +372,14 @@ double error;
         backRight.setSetpoint(angle);
         backLeft.setSetpoint(angle);
 
-        frontRight.setSpeed(speed + (kP * error));
+        /*frontRight.setSpeed(speed + (kP * error));
         frontLeft.setSpeed(speed - (kP * error));
         backRight.setSpeed(speed + (kP * error));
-        backLeft.setSpeed(speed - (kP * error));
+        backLeft.setSpeed(speed - (kP * error));*/
+        frontRight.setSpeed(speed);
+        frontLeft.setSpeed(speed);
+        backRight.setSpeed(speed);
+        backLeft.setSpeed(speed);
     }
 
     

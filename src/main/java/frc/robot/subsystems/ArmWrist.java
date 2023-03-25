@@ -82,7 +82,7 @@ public class ArmWrist extends SubsystemBase implements Constants {
             setWristMotorOutput(-0.5);
             isWristDone = false;
         } else if (getWristEnc() > (setWrist - 50) && getWristEnc() < (setWrist - 5)) {
-            setWristMotorOutput(-0.25);
+            setWristMotorOutput(-0.3);
             isWristDone = false;
         
         
@@ -90,12 +90,12 @@ public class ArmWrist extends SubsystemBase implements Constants {
             setWristMotorOutput(0.5);
             isWristDone = false;
         } else if (getWristEnc() < (setWrist + 50) && getWristEnc() > (setWrist + 5)) {
-            setWristMotorOutput(0.25);
+            setWristMotorOutput(0.3);
             isWristDone = false;
         
         
         } else {
-            setWristMotorOutput(0.1);
+            setWristMotorOutput(0.2);
             isWristDone = true;
         }
     }    

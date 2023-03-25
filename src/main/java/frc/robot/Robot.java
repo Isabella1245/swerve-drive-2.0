@@ -122,7 +122,7 @@ public class Robot extends TimedRobot implements Constants{
     autonSelection = autonChooser.getSelected();
     dockSelection = dockChooser.getSelected();
 
-    double manualAutonSelection = 2;
+    double manualAutonSelection = 1;
 
     scoreTop = new ArmActuatorMove(armActuator, topHeight);
     scoreTop = scoreTop.andThen(new ArmExtensionMove(armExtension,topExtenstion));
@@ -130,12 +130,12 @@ public class Robot extends TimedRobot implements Constants{
     scoreTop = scoreTop.andThen(new OpenClaw(claw));
 
     shortMobility = new DriveSegment(swerve, B1MobSpeed, B1MobAngle, B1MobTime);
-    shortMobility = shortMobility.andThen(new ArmExtensionMove(armExtension, floorExtenstion));
+    shortMobility = shortMobility.andThen(new ArmExtensionMove(armExtension, 0));
     //determine if arm extension elevator resets to zero in the right spot in teleop 
     longMobility = new DriveSegment(swerve, B3MobSpeed, B3MobAngle, B3MobTime);
-    longMobility = longMobility.andThen(new ArmExtensionMove(armExtension, floorExtenstion));
+    longMobility = longMobility.andThen(new ArmExtensionMove(armExtension, 0));
 
-    rampMobility = new ArmExtensionMove(armExtension, floorExtenstion);
+    rampMobility = new ArmExtensionMove(armExtension, 0);
     //rampMobility = rampMobility.andThen(new TurnRobot(swerve));
     //rampMobility = rampMobility.andThen(new DriveSegment(swerve,B2MobSpeed, B2MobAngle, B2MobTime));
     //rampMobility = rampMobility.andThen(new BalanceRobot(swerve));

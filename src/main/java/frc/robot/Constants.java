@@ -61,7 +61,7 @@ public interface Constants{
     //ARM STUFF
     //IDs for arm motors
     public final int actuatorMotorID = 3;
-    public final int extensionMotorID = 7;
+    public final int extensionMotorID = 9;
     public final int clawTwistMotorID = 6;
 
     //analog potentiometer
@@ -135,7 +135,7 @@ public interface Constants{
     public final double R2MobAngle = 0;
     public final double R3MobAngle = 0; //-3
         //time
-    public final double B1MobTime = 7.8;
+    public final double B1MobTime = 0.5;
     public final double B2MobTime = 6.5;
     public final double B3MobTime = 7.8;
 

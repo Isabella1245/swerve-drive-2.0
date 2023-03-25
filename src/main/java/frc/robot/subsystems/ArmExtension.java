@@ -83,7 +83,7 @@ public class ArmExtension extends SubsystemBase implements Constants{
         }
 
         if (getExtensionEnc() < (setExtension - 150)) {
-            setExtensionMotorOutput(-0.5);
+            setExtensionMotorOutput(-0.7);
             isExtensionDone = false;
         } else if (getExtensionEnc() > (setExtension - 150) && getExtensionEnc() < (setExtension - 10)) {
             setExtensionMotorOutput(-0.2);
@@ -91,7 +91,7 @@ public class ArmExtension extends SubsystemBase implements Constants{
 
 
         } else if (getExtensionEnc() > (setExtension + 150)) {
-            setExtensionMotorOutput(0.5);
+            setExtensionMotorOutput(0.7);
             isExtensionDone = false;
         } else if (getExtensionEnc() < (setExtension + 150) && getExtensionEnc() > (setExtension + 10)) {
             setExtensionMotorOutput(0.2);
